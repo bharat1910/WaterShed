@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<!--Load the ArcGIS API for Maps-->
+<script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<!--Load the AJAX API for Google Charts-->
+<script src="https://www.google.com/jsapi"></script>
+
+<script type="text/javascript" src="dss_bmp_eval.js"></script>
+<script type="text/javascript" src="dss_pareto.js"></script>
+<script type="text/javascript" src="dss_hru_bmp_constraint.js"></script>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+		<title>Best Management Practice - Estimation</title>
+		<link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/esri/css/esri.css">
+		
+		<!--For Progress Bar-->
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  
+		<style>
+		html, body, #map {
+			height: 100%;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		  }
+		#map { 
+			display: inline-block; 
+			overflow:hidden;
+		}
+		.bmptable {
+			border:1px solid #000000;
+			border-collapse:collapse;
+			width:400px;
+		}
+		.bmptable td{
+			background:#CCFFFF;
+			border:1px solid #000000;
+			font-family:Arial,Helvetica,sans-serif;
+			text-align:center;
+		}
+		.bmptable th{
+			background:#66B2FF;
+			border:1px solid #000000;
+			font-family:Arial,Helvetica,sans-serif;
+		}
+		.thick{
+			font-weight:bold;
+			font-family:Arial,Helvetica,sans-serif;
+		}
+		.progress{
+			font-weight:bold;
+			color:#000000;
+			font-size:25px;
+		}
+		</style>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+			google.load("visualization", "1", {packages:["corechart"]});
+		</script>
+	</head>
+
+	<body onload="loadData()">
+		<!-- <div style="background: url(http://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Illinois_River,_seen_from_Starved_Rock.jpg/256px-Illinois_River,_seen_from_Starved_Rock.jpg) no-repeat;height:400px;background-size:100%;"> -->
+		<div>
+			<h2 align="center" >Decision Support System for BMP Evaluation</h2>
+		</div>
+		
+		<div id="main">
+			<table border="1" width="100%">
+				<tr>
+					<td>
+						<label>Select Watershed</label>
+						<select id="wstype" onchange="displayMap()">
+							  <option value="default">---Select---</option>
+							  <option value="bd">Big Ditch</option>
+							  <option value="blc">Big-Long Creek</option>
+						</select>					
+						Select Subbasin
+						<select id="subbasin_id" onchange="displayHruIDs()">
+							<option value="default" >----</option>
+						</select>
+						Select BMP
+						<select id="bmp" onchange="paretoWarning()">
+							<option value="default">----</option>
+							<option value="1">Filter Strip (FS)</option>
+							<option value="2">Grassed Waterways (GW)</option>
+							<option value="3">Constructed Wetland (CW)</option>
+							<option value="4">Bioreactors (BR)</option>
+							<option value="5">Crop Cover (CC)</option>
+							<option value="6">Drainage Water Management (DM)</option>
+							<option value="7">Saturated Buffer (SB)</option>
+							<option value="8">Nutrient Management (NM)</option>
+							<option value="9">Perennial Crops (PC)</option>
+						</select>				
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div id="bmp_params_cc" style="display:none">
+							<br>
+							<!-- Cover Crops Parameters-->
+							<label>Cover Crop Category</label>
+							<select id="bmp_params_cc_type">
+								<option value="1">Cereal Rye</option>
+								<option value="2">Annual Ryegrass</option>
+								<option value="3">Tillage Radish</option>
+								<option value="4">Winter Peas</option>
+								<option value="5">Crimson Clover</option>
+							</select>
+							<label>Cost per acre (USD)</label>
+							<input type="text" id="bmp_params_cc_cost" onkeypress="return isNumberKey(event)"/>
+						</div>
+						<div id="bmp_params_pc" style="display:none">
+							<br>
+							<!-- Perennial Crops Parameters-->
+							<label>Perennial Crop Category</label>
+							<select id="bmp_params_pc_type">
+								<option value="1">Alfalfa</option>
+								<option value="2">Eastern Gamagrass</option>
+							</select>
+							<label>Cost per acre (USD)</label>
+							<input type="text" id="bmp_params_pc_cost" onkeypress="return isNumberKey(event)"/>
+						</div>
+						<div id="bmp_params_nm" style="display:none">
+							<br>
+							<!-- Nutrient Management Parameters-->
+							<label style="display:none">Elemental Nitrogen Cost per ton (USD)</label>
+							<input type="text" id="bmp_params_nm_cost1" onkeypress="return isNumberKey(event)" style="display:none"/>
+							<label>Anhydrous Ammonia Cost per ton (USD)</label>
+							<input type="text" id="bmp_params_nm_cost2" onkeypress="return isNumberKey(event)" onchange="computeEleN2(this)"/>
+							<label>Urea-Ammonium Nitrate Cost per ton (USD)</label>
+							<input type="text" id="bmp_params_nm_cost3" onkeypress="return isNumberKey(event)"/>
+							<label>Di-Ammonium Phosphate Cost per ton (USD)</label>
+							<input type="text" id="bmp_params_nm_cost4" onkeypress="return isNumberKey(event)"/>
+							<br><br>
+							<label>Fertilizer Application Rate (lb/ha)</label>
+							<input type="text" id="bmp_params_nm_rate" maxlength="3" onkeypress="return isNumberKey(event)" onchange="validateFertRate(this)"/>
+							<label>Before Planting Ratio</label>
+							<input type="text" id="bmp_params_nm_ratio1" onkeypress="return isFloatValue(event,this)" onchange="validateRatio(this)"/>
+							<label>After Planting ratio</label>
+							<input type="text" id="bmp_params_nm_ratio2" onkeypress="return isFloatValue(event,this)" onchange="validateRatio(this)"/>
+						</div>
+						<div id="bmp_params_fs" style="display:none">
+							<br>
+							<!-- Filter Strip Parameters-->
+							<label>Cost per acre (USD)</label>
+							<input type="text" id="bmp_params_fs_cost" onkeypress="return isNumberKey(event)"/>
+						</div>
+						<div id="bmp_params_gw" style="display:none">
+							<br>
+							<!-- Grassed Waterway Parameters-->
+							<label>Cost per acre (USD)</label>
+							<input type="text" id="bmp_params_gw_cost" onkeypress="return isNumberKey(event)"/>
+						</div>
+						<div id="bmp_params_cw" style="display:none">
+							<br>
+							<!-- Constructed Wetland Parameters-->
+							<label>Cost per acre (USD)</label>
+							<input type="text" id="bmp_params_cw_cost" onkeypress="return isNumberKey(event)"/>
+						</div>
+						<div id="bmp_params_br" style="display:none">
+							<br>
+							<!-- Bio Reactors Parameters-->
+							<label>Cost per acre (USD)</label>
+							<input type="text" id="bmp_params_br_cost" onkeypress="return isNumberKey(event)"/>
+						</div>
+						<div id="bmp_params_dm" style="display:none">
+							<br>
+							<!-- DM Parameters-->
+							<label>Cost per acre (USD)</label>
+							<input type="text" id="bmp_params_dm_cost" onkeypress="return isNumberKey(event)"/>
+						</div>
+						<div id="bmp_params_sb" style="display:none">
+							<br>
+							<!-- Saturated Buffer Parameters-->
+							<label>Cost per acre (USD)</label>
+							<input type="text" id="bmp_params_sb_cost" onkeypress="return isNumberKey(event)"/>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<br>
+						Agricultural HRUs in selected Subbasin (non-agricultural HRUs are not eligible for BMP)
+						<br></br>
+						<div id="hru_info"> </div>
+						<div> <p> </p> </div>
+						<div align="center">
+							Select all HRUs for BMP<input type="checkbox" id="allHRU" onclick="selectAllHRU()">
+							<button type="button" onclick="selectHRU()">Select HRUs (%)</button>
+							<input type="text" id="hru_perc" size="5" maxlength="3" onkeypress="return isNumberKey(event)"><br></br>
+							<button type="button" onclick="assignBMP()">Assign BMP for HRU</button>
+							<button type="button" onclick="clearBMP()">Clear BMPs</button>
+							<button type="button" onclick="addSubbasinForBMP()">Submit</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+				</tr>
+				<tr>
+					<td>
+						Selected Subbasins for BMP
+						<select id="selected_subbasins">
+						</select>
+						<button type="button" onclick="removeSubbasinForBMP()">Remove BMP</button>
+						
+						<!-- TODO: Refacotring : folowing code needs to be removed. necessary updates to javascript have to be made -->
+						<label style="display:none">Cost per acre for BMP (USD) </label>
+						<select id="selected_bmps" onchange="displayCost()" style="display:none">
+							<option value="default">----</option>
+							<option value="100">Filter Strip (FS)</option>
+							<option value="100">Grassed Waterways (GW)</option>
+							<option value="100">Constructed Wetland (CW)</option>
+							<option value="100">Bioreactors (BR)</option>
+							<option value="100">Crop Cover (CC)</option>
+							<option value="100">Drainage Water Management (DM)</option>
+							<option value="100">Saturated Buffer (SB)</option>
+							<option value="100">Nutrient Management (NM)</option>
+							<option value="100">Perennial Crops (PC)</option>
+						</select>
+						<input type="text" id="bmp_cost" style="display:none"/>
+						<button type="button" onclick="assignBMPCost()" style="display:none">Assign Cost</button>
+						<!--  TODO: Refacotring ends  -->	
+						
+						<select id="selected_subbasin_temp" style="display:none"></select>
+						<!---<select id="selected_subbasin_hruIDs"></select>
+						<select id="selected_subbasin_hruID_bmp"></select>-->
+						<select id="selected_subbasin_bmp" style="display:none"></select>
+						<select id="hruIDs_temp" style="display:none"></select>
+						<select id="hruIDs_area_temp" style="display:none"></select>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<button type="button" id="evaluate">Evaluate</button>
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<table border="0">
+							<tr>
+								<td>							
+									<!-- <a id="bd_report" href="http://swsbear:4567/downloadReport?wshIndex=bd">Download Big Ditch HRU/Landuse/Soil Report</a>
+									<a id="blc_report" href="http://swsbear:4567/downloadReport?wshIndex=blc">Download Big/Long Creek HRU/Landuse/Soil Report</a> -->								
+									<button id="bd_report" type="button" onclick="downloadReport()">Download HRU/Landuse/Soil Report</button>
+									<button id="blc_report" type="button" onclick="downloadReport()">Download HRU/Landuse/Soil Report</button>
+								</td>
+								<td>
+									<select id="reportFileType">							
+											<option value="txt">txt</option>
+											<option value="csv">csv</option>
+									</select>
+								</td>
+							</tr>
+						</table>						
+					</td>
+				</tr>
+			</table>
+		</div>
+		<table width="100%">
+			<tr>
+				<td align="center">
+					<button id="restart" type="button" onclick="startAgain()">Start Again</button>
+				</td>
+			</tr>
+		</table>
+		<div style="height:700px;width:1600px">
+			<div id="map" style="height:700px;width:800px;float:left;">
+			</div>
+			<div id="bmp_display" style="height:850px;width:800px;float:left;">
+				<div id="bmp_table" style="height:250px;width:800px;overflow-y:auto;" align="center"></div>
+				<div id="bmp_progress" style="height:50px;width:800px;" align="center"></div>
+				<div id="bmp_chart" style="height:550px;">
+					<div id="bmp_chart_nit" style="height:550px;width:800px;float:left;"></div>
+					<!-- <div id="bmp_chart_pho" style="height:550px;width:550px;float:left;"></div> -->
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
