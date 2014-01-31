@@ -23,7 +23,12 @@
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-  
+		
+		<!-- For select boxes-->
+		<script type="text/javascript" src="chosen.jquery.min.js"></script>
+		<script type="text/javascript" src="chosen.proto.min.js"></script>
+		<link href="http://harvesthq.github.com/chosen/chosen.css" rel="stylesheet" type="text/css"/>
+
 		<style>
 		html, body, #map {
 			height: 100%;
@@ -79,7 +84,7 @@
 					<td>
 						<label>Select Watershed</label>
 						<select id="wstype" onchange="displayMap()">
-							  <option value="default">---Select---</option>
+							  <option value="default"></option>
 							  <option value="bd">Big Ditch</option>
 							  <option value="blc">Big-Long Creek</option>
 						</select>					
@@ -284,5 +289,11 @@
 				</div>
 			</div>
 		</div>
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+		    $("#wstype").chosen();
+		});
+		</script>
 	</body>
 </html>
