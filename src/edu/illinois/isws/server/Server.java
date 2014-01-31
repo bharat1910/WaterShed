@@ -99,8 +99,7 @@ public class Server {
 				// set the response type
 				if (js_file_name.equals("dss_pareto.js")
 						|| js_file_name.equals("dss_bmp_eval.js")
-						|| js_file_name.equals("dss_hru_bmp_constraint.js")
-						|| js_file_name.equals("chosen.jquery.min.js")) {
+						|| js_file_name.equals("dss_hru_bmp_constraint.js")) {
 					response.type("script");
 					try {
 						result = FileUtils
