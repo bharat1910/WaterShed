@@ -80,7 +80,7 @@
 		//remove all options from the select element
 		document.getElementById("subbasin_id").options.length = 0;
 		var optn = document.createElement("OPTION");
-		optn.text = "---";
+		optn.text = "";
 		optn.value = "default";
 		document.getElementById("subbasin_id").options.add(optn);
 		//end here
@@ -181,6 +181,8 @@
 					document.getElementById("subbasin_id").options.add(optn);
 				}
 				document.getElementById("subbasin_id").options.selectedIndex=0;
+				
+				$("#subbasin_id").chosen();
 			}, function(errorMsg){
 				alert("Error while fetching Subbasin IDs:"+errorMsg);
 			});
