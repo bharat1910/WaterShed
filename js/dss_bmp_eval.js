@@ -258,9 +258,13 @@
 					var i;
 					//hru_ids = "";
 					var hru_info_div = document.getElementById("hru_info");
+					var hru_info_div_temp$ = $("#hru_info_temp");
 					while( hru_info_div.hasChildNodes() ){
 						hru_info_div.removeChild(hru_info_div.lastChild);
 					}
+					
+					hru_info_div_temp$.append("<select id='hru_info_temp_select' multiple style='width:30%'></select>");
+					
 					for (i=0; i < objectIds.features.length;i++){
 						var featureAttributes = objectIds.features[i].attributes;
 						/*if(i != objectIds.features.length-1){
@@ -283,6 +287,10 @@
 						hru_info_div.appendChild(label);
 						//add the HRU as a checkbox ends here
 						
+						$(hru_info_div_temp$.find('select')[0]).append("<option val='" + featureAttributes["HRU_ID"] + "'>" +
+												  "HRU "+ featureAttributes["HRU_ID"].toString() +
+								 				  "("+ Math.floor(featureAttributes["HRU_FR"] * 100  * 100) / 100 + "%)" + "</option>");
+						
 						//add the HRU IDs to a temp list
 						var optn_temp = document.createElement("OPTION");
 						optn_temp.text = featureAttributes["HRU_ID"];
@@ -294,7 +302,7 @@
 						optn_area.text = Math.floor(featureAttributes["HRU_FR"]*100*100)/100;
 						optn_area.value = Math.floor(featureAttributes["HRU_FR"]*100*100)/100;
 						document.getElementById("hruIDs_area_temp").options.add(optn_area);
-					}				
+					}
 				}, function(errorMsg){
 					alert("Error while fetching HRU IDs:"+errorMsg);
 				});		
