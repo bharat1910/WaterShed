@@ -101,7 +101,9 @@ public class Server {
 						|| js_file_name.equals("dss_bmp_eval.js")
 						|| js_file_name.equals("dss_hru_bmp_constraint.js")
 						|| js_file_name.equals("chosen.jquery.min.js")
-						|| js_file_name.equals("chosen.proto.min.js")) {
+						|| js_file_name.equals("chosen.proto.min.js")
+						|| js_file_name.equals("jquery.multi-select.js")
+						|| js_file_name.equals("multi-select.css")) {
 					response.type("script");
 					try {
 						result = FileUtils

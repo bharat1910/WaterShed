@@ -182,7 +182,12 @@
 				}
 				document.getElementById("subbasin_id").options.selectedIndex=0;
 				
+				$("#subbasin_label").show();
+				$("#subbasin_id").show();
+				$("#bmp_label").show();
+				$("#bmp").show();
 				$("#subbasin_id").chosen();
+				$("#bmp").chosen();
 			}, function(errorMsg){
 				alert("Error while fetching Subbasin IDs:"+errorMsg);
 			});

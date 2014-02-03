@@ -29,8 +29,21 @@
 		<script type="text/javascript" src="chosen.proto.min.js"></script>
 		<link href="http://harvesthq.github.com/chosen/chosen.css" rel="stylesheet" type="text/css"/>
 
+		<!-- For multiselect boxes -->
+		<script type="text/javascript" src="jquery.multi-select.js"></script>
+		<link href="multi-select.css" rel="stylesheet" type="text/css"/>
+
 		<style>
-		html, body, #map {
+		body {
+			background: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#eeeeee));
+			background: -moz-linear-gradient(top, #cccccc, #eeeeee);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#eeeeee');
+			height: 100%;
+			width: 100%;
+			margin: 0;
+			padding: 0;
+		  }
+		html, #map {
 			height: 100%;
 			width: 100%;
 			margin: 0;
@@ -78,23 +91,25 @@
 			<h2 align="center" >Decision Support System for BMP Evaluation</h2>
 		</div>
 		
-		<div id="main">
-			<table border="1" width="100%">
+		<div>
+			<table width="100%">
 				<tr>
 					<td>
 						<label>Select Watershed</label>
-						<select id="wstype" onchange="displayMap()">
+						<select id="wstype" onchange="displayMap()" style="width:10%">
 							  <option value="default"></option>
 							  <option value="bd">Big Ditch</option>
 							  <option value="blc">Big-Long Creek</option>
-						</select>					
-						Select Subbasin
-						<select id="subbasin_id" onchange="displayHruIDs()">
+						</select>
+						&nbsp;			
+						<label id="subbasin_label" style="display:none">Select Subbasin</label>
+						<select id="subbasin_id" onchange="displayHruIDs()" style="width:5%;display:none">
 							<option value="default" ></option>
 						</select>
-						Select BMP
-						<select id="bmp" onchange="paretoWarning()">
-							<option value="default">----</option>
+						&nbsp;
+						<label id="bmp_label" style="display:none">Select BMP</label>
+						<select id="bmp" onchange="paretoWarning()" style="display:none">
+							<option value="default"></option>
 							<option value="1">Filter Strip (FS)</option>
 							<option value="2">Grassed Waterways (GW)</option>
 							<option value="3">Constructed Wetland (CW)</option>
@@ -194,11 +209,11 @@
 				<tr>
 					<td>
 						<br>
-						Agricultural HRUs in selected Subbasin (non-agricultural HRUs are not eligible for BMP)
+						<label id="hru_info_label">Agricultural HRUs in selected Subbasin (non-agricultural HRUs are not eligible for BMP)</label>
 						<br></br>
 						<div id="hru_info"> </div>
 						<div> <p> </p> </div>
-						<div align="center">
+						<div align="center" id="hru_selection_for_bmp">
 							Select all HRUs for BMP<input type="checkbox" id="allHRU" onclick="selectAllHRU()">
 							<button type="button" onclick="selectHRU()">Select HRUs (%)</button>
 							<input type="text" id="hru_perc" size="5" maxlength="3" onkeypress="return isNumberKey(event)"><br></br>
@@ -212,14 +227,14 @@
 				</tr>
 				<tr>
 					<td>
-						Selected Subbasins for BMP
-						<select id="selected_subbasins">
+						<label id="selected_subbasins_label">Selected Subbasins for BMP</label>
+						<select id="selected_subbasins" style="display:none">
 						</select>
 						<button type="button" onclick="removeSubbasinForBMP()">Remove BMP</button>
 						
 						<!-- TODO: Refacotring : folowing code needs to be removed. necessary updates to javascript have to be made -->
-						<label style="display:none">Cost per acre for BMP (USD) </label>
-						<select id="selected_bmps" onchange="displayCost()" style="display:none">
+						<label style="display:none" style="display:none">Cost per acre for BMP (USD) </label>
+						<select id="selected_bmps" onchange="displayCost()" style="display:none" style="display:none">
 							<option value="default">----</option>
 							<option value="100">Filter Strip (FS)</option>
 							<option value="100">Grassed Waterways (GW)</option>
@@ -255,11 +270,11 @@
 								<td>							
 									<!-- <a id="bd_report" href="http://swsbear:4567/downloadReport?wshIndex=bd">Download Big Ditch HRU/Landuse/Soil Report</a>
 									<a id="blc_report" href="http://swsbear:4567/downloadReport?wshIndex=blc">Download Big/Long Creek HRU/Landuse/Soil Report</a> -->								
-									<button id="bd_report" type="button" onclick="downloadReport()">Download HRU/Landuse/Soil Report</button>
-									<button id="blc_report" type="button" onclick="downloadReport()">Download HRU/Landuse/Soil Report</button>
+									<button id="bd_report" type="button" onclick="downloadReport()" style="display:none">Download HRU/Landuse/Soil Report</button>
+									<button id="blc_report" type="button" onclick="downloadReport()" style="display:none">Download HRU/Landuse/Soil Report</button>
 								</td>
 								<td>
-									<select id="reportFileType">							
+									<select id="reportFileType" style="display:none">							
 											<option value="txt">txt</option>
 											<option value="csv">csv</option>
 									</select>
@@ -273,7 +288,7 @@
 		<table width="100%">
 			<tr>
 				<td align="center">
-					<button id="restart" type="button" onclick="startAgain()">Start Again</button>
+					<button id="restart" type="button" onclick="startAgain()" style="display:none">Start Again</button>
 				</td>
 			</tr>
 		</table>
