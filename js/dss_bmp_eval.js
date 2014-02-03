@@ -303,6 +303,8 @@
 						optn_area.value = Math.floor(featureAttributes["HRU_FR"]*100*100)/100;
 						document.getElementById("hruIDs_area_temp").options.add(optn_area);
 					}
+					
+					$(hru_info_div_temp$.find('select')[0]).chosen();
 				}, function(errorMsg){
 					alert("Error while fetching HRU IDs:"+errorMsg);
 				});		
