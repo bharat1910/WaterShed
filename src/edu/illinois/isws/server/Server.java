@@ -23,7 +23,7 @@ public class Server {
 		final String REPORT_DIR = "HRULandUseSoilsReport/";
 		final String SUBBASIN_REDUCTION = "subbasin_reduction.txt";
 		final String DSS_HOME_PAGE = "html/ws_bmp_allBMP.html";
-		final String JS_DIR = "js/";		
+		final String JS_DIR = "js/";
 		
 		/* 
 		 * Home page for the Decision Support System

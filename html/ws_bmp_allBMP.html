@@ -78,6 +78,12 @@
 			color:#000000;
 			font-size:25px;
 		}
+		.notification {
+			color:#FF0000;
+			font-style:italic;
+			background-color:#b0c4de;
+			padding-left:50px;
+		}
 		</style>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<script type="text/javascript">
@@ -90,25 +96,26 @@
 		<div>
 			<h2 align="center" >Decision Support System for BMP Evaluation</h2>
 		</div>
+	
+		<div style="display:none" id="info_label" class="notification"></div> 
+		
+		<br>
 		
 		<div>
 			<table width="100%">
 				<tr>
 					<td>
-						<label>Select Watershed</label>
-						<select id="wstype" onchange="displayMap()" style="width:10%">
+						<select data-placeholder="Select WaterShed ..." id="wstype" onchange="displayMap()" style="width:10%">
 							  <option value="default"></option>
 							  <option value="bd">Big Ditch</option>
 							  <option value="blc">Big-Long Creek</option>
 						</select>
 						&nbsp;			
-						<label id="subbasin_label" style="display:none">Select Subbasin</label>
-						<select id="subbasin_id" onchange="displayHruIDs()" style="width:5%;display:none">
+						<select data-placeholder="Select Subbasin ..." id="subbasin_id" onchange="displayHruIDs()" style="width:10%;display:none">
 							<option value="default" ></option>
 						</select>
 						&nbsp;
-						<label id="bmp_label" style="display:none">Select BMP</label>
-						<select id="bmp" onchange="paretoWarning()" style="display:none">
+						<select data-placeholder="Select BMP ..." id="bmp" onchange="paretoWarning()" style="display:none">
 							<option value="default"></option>
 							<option value="1">Filter Strip (FS)</option>
 							<option value="2">Grassed Waterways (GW)</option>
@@ -208,11 +215,10 @@
 				</tr>
 				<tr>
 					<td>
-						<br>
-						<label id="hru_info_label">Agricultural HRUs in selected Subbasin (non-agricultural HRUs are not eligible for BMP)</label>
-						<br></br>
 						<div id="hru_info"> </div>
-						<div id="hru_info_temp"> </div>
+						<label style="display:none" id="select_all_hru">Select All</label>
+						<div style="display:none" id="hru_info_temp">
+						</div>
 						<div> <p> </p> </div>
 						<div align="center" id="hru_selection_for_bmp">
 							Select all HRUs for BMP<input type="checkbox" id="allHRU" onclick="selectAllHRU()">

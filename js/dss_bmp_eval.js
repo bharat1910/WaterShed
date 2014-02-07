@@ -263,7 +263,7 @@
 						hru_info_div.removeChild(hru_info_div.lastChild);
 					}
 					
-					hru_info_div_temp$.append("<select id='hru_info_temp_select' multiple style='width:30%'></select>");
+					hru_info_div_temp$.append("<select id='hru_info_temp_select' multiple style='width:30%; height:1%'></select>");
 					
 					for (i=0; i < objectIds.features.length;i++){
 						var featureAttributes = objectIds.features[i].attributes;
@@ -304,6 +304,12 @@
 						document.getElementById("hruIDs_area_temp").options.add(optn_area);
 					}
 					
+					$("#hru_info_temp").show();
+					$("#select_all_hru").show();
+					
+					showInfoLabelForHRUs();
+					setTimeout(hideInfoLabel, 5000);
+					
 					$(hru_info_div_temp$.find('select')[0]).chosen();
 				}, function(errorMsg){
 					alert("Error while fetching HRU IDs:"+errorMsg);
@@ -311,6 +317,16 @@
 			}
 		);
 
+	}
+	
+	function showInfoLabelForHRUs()
+	{
+		$("#info_label").empty().append("Non agricultural HRU's are not eligible for a BMP!").show(1000);
+	}
+	
+	function hideInfoLabel()
+	{
+		$("#info_label").hide(1000);
 	}
 	
 	/*
@@ -1677,10 +1693,16 @@
 		chart.draw(data, options);
 	}
 	
+	function showInfoLabelForMultipleBMPs()
+	{
+		$("#info_label").empty().append("Warning: If multiple BMPs are selected for evaluation, then optimal data will not be displayed in the evaluation results!").show(1000);
+	}
+	
 	//Just a warning message that pareto optimal data will not be shown for multiple BMP selection
 	function paretoWarning(){
 		if(document.getElementById("bmp").value != "default"){
-			alert("Warning: If multiple BMPs are selected for evaluation, then optimal data will not be displayed in the evaluation results!");
+			showInfoLabelForMultipleBMPs();
+			setTimeout(hideInfoLabel, 5000);
 		}
 		
 		bmpParamDisplayOff();
