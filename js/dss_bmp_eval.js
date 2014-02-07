@@ -287,7 +287,7 @@
 						hru_info_div.appendChild(label);
 						//add the HRU as a checkbox ends here
 						
-						$(hru_info_div_temp$.find('select')[0]).append("<option val='" + featureAttributes["HRU_ID"] + "'>" +
+						$(hru_info_div_temp$.find('select')[0]).append("<option value='" + featureAttributes["HRU_ID"] + "'>" +
 												  "HRU "+ featureAttributes["HRU_ID"].toString() +
 								 				  "("+ Math.floor(featureAttributes["HRU_FR"] * 100  * 100) / 100 + "%)" + "</option>");
 						
@@ -443,6 +443,7 @@
 		}
 		
 		area_fraction = 0;
+		area_fraction_temp = 0;
 		for(i=0 ; i < document.getElementById("hruIDs_temp").options.length ; i++){
 			var hru_id = document.getElementById("hruIDs_temp").options[i].value;			
 			if( !document.getElementById(hru_id).disabled && document.getElementById(hru_id).checked){
@@ -450,10 +451,15 @@
 				document.getElementById(hru_id).setAttribute("name",document.getElementById("bmp").value);
 				document.getElementById(hru_id).disabled = true;
 				//alert(document.getElementById(hru_id).name);
+				console.log(document.getElementById(hru_id).value);
 				area_fraction = parseFloat(area_fraction) + parseFloat(document.getElementById(hru_id).value);
 				//alert(document.getElementById(hru_id).value);
 			}
 		}
+		
+		$("#hru_info_temp_select option:selected").each(function() {
+		    area_fraction_temp = parseFloat(area_fraction_temp) + parseFloat(document.getElementById($(this).val()).value);
+		});
 		
 		if(area_fraction == 0){
 			alert("Select HRUs for BMP");
