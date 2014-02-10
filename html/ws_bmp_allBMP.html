@@ -136,13 +136,13 @@
 			<table width="100%">
 				<tr>
 					<td>
-						<select data-placeholder="Select WaterShed ..." id="wstype" onchange="displayMap()" style="width:10%">
+						<select data-placeholder="Select WaterShed ..." id="wstype" onchange="displayMap()" style="width:15%">
 							  <option value="default"></option>
 							  <option value="bd">Big Ditch</option>
 							  <option value="blc">Big-Long Creek</option>
 						</select>
 						&nbsp;			
-						<select data-placeholder="Select Subbasin ..." id="subbasin_id" onchange="displayHruIDs()" style="width:10%;display:none">
+						<select data-placeholder="Select Subbasin ..." id="subbasin_id" onchange="displayHruIDs()" style="width:15%;display:none">
 							<option value="default" ></option>
 						</select>
 						&nbsp;
@@ -157,7 +157,11 @@
 							<option value="7">Saturated Buffer (SB)</option>
 							<option value="8">Nutrient Management (NM)</option>
 							<option value="9">Perennial Crops (PC)</option>
-						</select>				
+						</select>
+						&nbsp;				
+					   <label id="showChartData" align="left" class="dblue" onclick="popitup('getLanduseSoilChartData')" style="display:none">HRU/Landuse/Soil Chart</label>
+					   &nbsp;              
+                       <label id="downloadReport" align="left" class="dblue" style="display:none">Download HRU/Landuse/Soil Report</label>
 					</td>
 				</tr>
 				<tr>
@@ -331,8 +335,6 @@
 			</div>
 		</div>
 		
-		<div id="showChartData" align="left" class="dblue" onclick="popitup('getLanduseSoilChartData')">Landuse/Soil Chart</div>
-		
 		<div id="popup">
 		  <div id="options">
 		      <select data-placeholder="Select an option ..." id="lss_select" style="width:10%" onchange="popitup('getLanduseSoilChartData')">
@@ -354,7 +356,11 @@
 		});
 		
 		function popitup(url) {
-	        $.get(url, {option : $("#lss_select").val()},
+	        $.get(url, {
+	        	  option : $("#lss_select").val(),
+	        	  watershed : $("#wstype option:selected").val(), 
+	              subbasin : $("#subbasin_id option:selected").val()
+	        	},
 	            function(data,status){
 	                var result = new Array();
 	                var list = data.split(" ")

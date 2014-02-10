@@ -65,6 +65,8 @@
 			map.destroy("map");
 		}
 		
+		$("#downloadReport").show();
+		
 		//initialize sequence id for hru layers
 		hrulayer_id = 0;
 		
@@ -205,6 +207,8 @@
 	function displayHruIDs(){
 		var hru_url;
 		var i;
+		
+		$("#showChartData").show();
 		
 		//just make sure to clear the temp list hruIDs
 		document.getElementById("hruIDs_temp").options.length = 0;
