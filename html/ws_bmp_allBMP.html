@@ -109,6 +109,10 @@
             font-family: sans-serif;
             color: #666;
         }
+        .header {
+            font-family: sans-serif;
+            color: #666;
+        }
 		</style>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<script type="text/javascript">
@@ -119,7 +123,7 @@
 	<body onload="loadData()">
 		<!-- <div style="background: url(http://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Illinois_River,_seen_from_Starved_Rock.jpg/256px-Illinois_River,_seen_from_Starved_Rock.jpg) no-repeat;height:400px;background-size:100%;"> -->
 		<div>
-			<h2 align="center" >Decision Support System for BMP Evaluation</h2>
+			<h2 align="center" class="header">Decision Support System for BMP Evaluation</h2>
 		</div>
 	
 		<div style="display:none" id="info_label" class="notification"></div> 
@@ -245,13 +249,9 @@
 						<div style="display:none" id="hru_info_temp">
 						</div>
 						<div> <p> </p> </div>
-						<div align="center" id="hru_selection_for_bmp">
-							Select all HRUs for BMP<input type="checkbox" id="allHRU" onclick="selectAllHRU()">
-							<button type="button" onclick="selectHRU()">Select HRUs (%)</button>
-							<input type="text" id="hru_perc" size="5" maxlength="3" onkeypress="return isNumberKey(event)"><br></br>
-							<button type="button" onclick="assignBMP()">Assign BMP for HRU</button>
-							<button type="button" onclick="clearBMP()">Clear BMPs</button>
-							<button type="button" onclick="addSubbasinForBMP()">Submit</button>
+						<div id="hru_selection_for_bmp">
+						    <label class="label">HRU %</label>
+						    <input type="text" class="text" id="hru_percent" onkeypress="return isNumberKey(event)"/>
 						</div>
 					</td>
 				</tr>
@@ -259,11 +259,6 @@
 				</tr>
 				<tr>
 					<td>
-						<label id="selected_subbasins_label">Selected Subbasins for BMP</label>
-						<select id="selected_subbasins" style="display:none">
-						</select>
-						<button type="button" onclick="removeSubbasinForBMP()">Remove BMP</button>
-						
 						<!-- TODO: Refacotring : folowing code needs to be removed. necessary updates to javascript have to be made -->
 						<label style="display:none" style="display:none">Cost per acre for BMP (USD) </label>
 						<select id="selected_bmps" onchange="displayCost()" style="display:none" style="display:none">
@@ -288,11 +283,6 @@
 						<select id="selected_subbasin_bmp" style="display:none"></select>
 						<select id="hruIDs_temp" style="display:none"></select>
 						<select id="hruIDs_area_temp" style="display:none"></select>
-					</td>
-				</tr>
-				<tr>
-					<td align="center">
-						<button type="button" id="evaluate">Evaluate</button>
 					</td>
 				</tr>
 				<tr>

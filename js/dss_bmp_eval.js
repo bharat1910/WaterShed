@@ -68,9 +68,6 @@
 		//initialize sequence id for hru layers
 		hrulayer_id = 0;
 		
-		//unselect the select all hru checkbox
-		document.getElementById("allHRU").checked = false;
-		
 		single_simu_bmp = "0";
 		//empty these arrays
 		single_simu_result.length = 0;
@@ -89,7 +86,7 @@
 		document.getElementById("hruIDs_temp").options.length = 0;
 		document.getElementById("hruIDs_area_temp").options.length = 0;
 		document.getElementById("selected_subbasin_bmp").options.length = 0;
-		document.getElementById("selected_subbasins").options.length = 0;
+		//document.getElementById("selected_subbasins").options.length = 0;
 		document.getElementById("selected_subbasin_temp").options.length = 0;
 		
 		//set the cost for BMPs to zero
@@ -212,9 +209,6 @@
 		//just make sure to clear the temp list hruIDs
 		document.getElementById("hruIDs_temp").options.length = 0;
 		document.getElementById("hruIDs_area_temp").options.length = 0;
-		
-		//unselect the select all hru checkbox
-		document.getElementById("allHRU").checked = false;
 		
 		//remove the hru_info div element
 		var hru_info_div = document.getElementById("hru_info");
@@ -501,9 +495,6 @@
 					document.getElementById(hru_id).checked = false;
 			}
 		}
-		
-		//uncheck the select all HRU checkbox
-		document.getElementById("allHRU").checked = false;
 	}
 	
 	function verifyBMPParams(bmpType){
@@ -718,7 +709,7 @@
 																						"PC-"+Math.floor(parseFloat(fraction_bmp[9]))+"%";
 			optn_1.value = hrulayer_id; //save map layer id for this set of HRUs
 			//also create the hru_layer and save the map layer id in the value attribute
-			document.getElementById("selected_subbasins").options.add(optn_1);
+			//document.getElementById("selected_subbasins").options.add(optn_1);
 			//ends here
 			
 			//the subbasin id is also added to the temp list which is hidden in the html
@@ -738,9 +729,6 @@
 			document.getElementById("hruIDs_area_temp").options.length = 0;
 			
 			alert("Assigned BMPs for Subbasin "+document.getElementById("subbasin_id").value+" have been added");
-			
-			//uncheck the select all HRU checkbox
-			document.getElementById("allHRU").checked = false;
 		}
 	}
 	
@@ -1758,15 +1746,6 @@
 		while( div_ele.hasChildNodes() ){
 			div_ele.removeChild(div_ele.lastChild);
 		}
-	}
-	
-	function selectAllHRU(){
-		var hru_child = document.getElementById("hru_info").children;
-		for(var i=0; i<hru_child.length; i++) {
-			if(hru_child[i].type == "checkbox" && ! hru_child[i].disabled){
-				hru_child[i].checked = document.getElementById("allHRU").checked;
-			}
-		}		
 	}
 	
 	//check on keypress if is a digit
