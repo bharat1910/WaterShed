@@ -87,10 +87,24 @@
 			font-style:italic;
 			background-color:#b0c4de;
 			padding-left:50px;
-		}.dblue {
+		}
+		.dblue {
 		  color:#0000FF;
 		  text-decoration:underline; 
 		}
+		.text {
+            margin: 1px 0;
+            padding: 5px;
+			height: 15px;
+			outline: 0;
+			background: transparent !important;
+			box-shadow: none;
+			color: #666;
+			font-size: 100%;
+			font-family: sans-serif;
+			line-height: normal;
+			border: 1px solid #aaa;
+        }
 		</style>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<script type="text/javascript">
@@ -150,7 +164,7 @@
 								<option value="5">Crimson Clover</option>
 							</select>
 							<label>Cost per acre (USD)</label>
-							<input type="text" id="bmp_params_cc_cost" onkeypress="return isNumberKey(event)"/>
+							<input type="text" class="text" id="bmp_params_cc_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_pc" style="display:none">
 							<br>
@@ -161,62 +175,62 @@
 								<option value="2">Eastern Gamagrass</option>
 							</select>
 							<label>Cost per acre (USD)</label>
-							<input type="text" id="bmp_params_pc_cost" onkeypress="return isNumberKey(event)"/>
+							<input class="text" type="text" id="bmp_params_pc_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_nm" style="display:none">
 							<br>
 							<!-- Nutrient Management Parameters-->
 							<label style="display:none">Elemental Nitrogen Cost per ton (USD)</label>
-							<input type="text" id="bmp_params_nm_cost1" onkeypress="return isNumberKey(event)" style="display:none"/>
+							<input type="text" class="text" id="bmp_params_nm_cost1" onkeypress="return isNumberKey(event)" style="display:none"/>
 							<label>Anhydrous Ammonia Cost per ton (USD)</label>
-							<input type="text" id="bmp_params_nm_cost2" onkeypress="return isNumberKey(event)" onchange="computeEleN2(this)"/>
+							<input type="text" class="text" id="bmp_params_nm_cost2" onkeypress="return isNumberKey(event)" onchange="computeEleN2(this)"/>
 							<label>Urea-Ammonium Nitrate Cost per ton (USD)</label>
-							<input type="text" id="bmp_params_nm_cost3" onkeypress="return isNumberKey(event)"/>
+							<input type="text" class="text" id="bmp_params_nm_cost3" onkeypress="return isNumberKey(event)"/>
 							<label>Di-Ammonium Phosphate Cost per ton (USD)</label>
-							<input type="text" id="bmp_params_nm_cost4" onkeypress="return isNumberKey(event)"/>
+							<input type="text" class="text" id="bmp_params_nm_cost4" onkeypress="return isNumberKey(event)"/>
 							<br><br>
 							<label>Fertilizer Application Rate (lb/ha)</label>
-							<input type="text" id="bmp_params_nm_rate" maxlength="3" onkeypress="return isNumberKey(event)" onchange="validateFertRate(this)"/>
+							<input type="text" class="text" id="bmp_params_nm_rate" maxlength="3" onkeypress="return isNumberKey(event)" onchange="validateFertRate(this)"/>
 							<label>Before Planting Ratio</label>
-							<input type="text" id="bmp_params_nm_ratio1" onkeypress="return isFloatValue(event,this)" onchange="validateRatio(this)"/>
+							<input type="text" class="text"  id="bmp_params_nm_ratio1" onkeypress="return isFloatValue(event,this)" onchange="validateRatio(this)"/>
 							<label>After Planting ratio</label>
-							<input type="text" id="bmp_params_nm_ratio2" onkeypress="return isFloatValue(event,this)" onchange="validateRatio(this)"/>
+							<input type="text" class="text" id="bmp_params_nm_ratio2" onkeypress="return isFloatValue(event,this)" onchange="validateRatio(this)"/>
 						</div>
 						<div id="bmp_params_fs" style="display:none">
 							<br>
 							<!-- Filter Strip Parameters-->
 							<label>Cost per acre (USD)</label>
-							<input type="text" id="bmp_params_fs_cost" onkeypress="return isNumberKey(event)"/>
+							<input class="text" type="text" id="bmp_params_fs_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_gw" style="display:none">
 							<br>
 							<!-- Grassed Waterway Parameters-->
 							<label>Cost per acre (USD)</label>
-							<input type="text" id="bmp_params_gw_cost" onkeypress="return isNumberKey(event)"/>
+							<input type="text" class="text" id="bmp_params_gw_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_cw" style="display:none">
 							<br>
 							<!-- Constructed Wetland Parameters-->
 							<label>Cost per acre (USD)</label>
-							<input type="text" id="bmp_params_cw_cost" onkeypress="return isNumberKey(event)"/>
+							<input type="text" class="text" id="bmp_params_cw_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_br" style="display:none">
 							<br>
 							<!-- Bio Reactors Parameters-->
 							<label>Cost per acre (USD)</label>
-							<input type="text" id="bmp_params_br_cost" onkeypress="return isNumberKey(event)"/>
+							<input type="text" class="text" id="bmp_params_br_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_dm" style="display:none">
 							<br>
 							<!-- DM Parameters-->
 							<label>Cost per acre (USD)</label>
-							<input type="text" id="bmp_params_dm_cost" onkeypress="return isNumberKey(event)"/>
+							<input type="text" class="text" id="bmp_params_dm_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_sb" style="display:none">
 							<br>
 							<!-- Saturated Buffer Parameters-->
 							<label>Cost per acre (USD)</label>
-							<input type="text" id="bmp_params_sb_cost" onkeypress="return isNumberKey(event)"/>
+							<input type="text" class="text" id="bmp_params_sb_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 					</td>
 				</tr>
@@ -259,7 +273,7 @@
 							<option value="100">Nutrient Management (NM)</option>
 							<option value="100">Perennial Crops (PC)</option>
 						</select>
-						<input type="text" id="bmp_cost" style="display:none"/>
+						<input type="text" class="text" id="bmp_cost" style="display:none"/>
 						<button type="button" onclick="assignBMPCost()" style="display:none">Assign Cost</button>
 						<!--  TODO: Refacotring ends  -->	
 						
