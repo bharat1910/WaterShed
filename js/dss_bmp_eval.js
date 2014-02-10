@@ -257,7 +257,7 @@
 						hru_info_div.removeChild(hru_info_div.lastChild);
 					}
 					
-					hru_info_div_temp$.append("<select id='hru_info_temp_select' data-placeholder='Select HRUs ...'  multiple style='width:30%; height:1%'></select>");
+					hru_info_div_temp$.append("<select id='hru_info_temp_select' data-placeholder='Select HRUs ...'  multiple style='width:30%; height:1%' onchange='hruSelectionChange()'></select>");
 					
 					for (i=0; i < objectIds.features.length;i++){
 						var featureAttributes = objectIds.features[i].attributes;
@@ -281,7 +281,7 @@
 						hru_info_div.appendChild(label);
 						//add the HRU as a checkbox ends here
 						
-						$(hru_info_div_temp$.find('select')[0]).append("<option value='" + featureAttributes["HRU_ID"] + "'>" +
+						$(hru_info_div_temp$.find('select')[0]).append("<option value='" + featureAttributes["HRU_ID"] + "' percent='" + Math.floor(featureAttributes["HRU_FR"] * 100  * 100) / 100 +"'>" + 
 												  "HRU "+ featureAttributes["HRU_ID"].toString() +
 								 				  "("+ Math.floor(featureAttributes["HRU_FR"] * 100  * 100) / 100 + "%)" + "</option>");
 						
@@ -300,6 +300,7 @@
 					
 					$("#hru_info_temp").show();
 					$("#select_all_hru").show();
+					$("#hru_selection_for_bmp").show();
 					
 					showInfoLabelForHRUs();
 					setTimeout(hideInfoLabel, 5000);
@@ -311,6 +312,16 @@
 			}
 		);
 
+	}
+	
+	function hruSelectionChange()
+	{
+		var percent = 0;
+		$("#hru_info_temp_select option:selected").each( function() {
+			percent += parseFloat($(this).attr('percent'));
+		});
+		
+		$("#hru_percent").val(percent);
 	}
 	
 	function showInfoLabelForHRUs()
