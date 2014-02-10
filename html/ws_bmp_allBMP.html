@@ -105,6 +105,10 @@
 			line-height: normal;
 			border: 1px solid #aaa;
         }
+        .label {
+            font-family: sans-serif;
+            color: #666;
+        }
 		</style>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<script type="text/javascript">
@@ -155,7 +159,7 @@
 						<div id="bmp_params_cc" style="display:none">
 							<br>
 							<!-- Cover Crops Parameters-->
-							<label>Cover Crop Category</label>
+							<label class="label">Cover Crop Category</label>
 							<select id="bmp_params_cc_type">
 								<option value="1">Cereal Rye</option>
 								<option value="2">Annual Ryegrass</option>
@@ -163,75 +167,76 @@
 								<option value="4">Winter Peas</option>
 								<option value="5">Crimson Clover</option>
 							</select>
-							<label>Cost per acre (USD)</label>
+							<label class="label">Cost per acre (USD)</label>
 							<input type="text" class="text" id="bmp_params_cc_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_pc" style="display:none">
 							<br>
 							<!-- Perennial Crops Parameters-->
-							<label>Perennial Crop Category</label>
+							<label class="label">Perennial Crop Category</label>
 							<select id="bmp_params_pc_type">
 								<option value="1">Alfalfa</option>
 								<option value="2">Eastern Gamagrass</option>
 							</select>
-							<label>Cost per acre (USD)</label>
+							<label class="label">Cost per acre (USD)</label>
 							<input class="text" type="text" id="bmp_params_pc_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_nm" style="display:none">
 							<br>
 							<!-- Nutrient Management Parameters-->
-							<label style="display:none">Elemental Nitrogen Cost per ton (USD)</label>
+							<label class="label" style="display:none">Elemental Nitrogen Cost per ton (USD)</label>
 							<input type="text" class="text" id="bmp_params_nm_cost1" onkeypress="return isNumberKey(event)" style="display:none"/>
-							<label>Anhydrous Ammonia Cost per ton (USD)</label>
+							<label class="label">Anhydrous Ammonia Cost per ton (USD)</label>
 							<input type="text" class="text" id="bmp_params_nm_cost2" onkeypress="return isNumberKey(event)" onchange="computeEleN2(this)"/>
-							<label>Urea-Ammonium Nitrate Cost per ton (USD)</label>
+							<label class="label">Urea-Ammonium Nitrate Cost per ton (USD)</label>
 							<input type="text" class="text" id="bmp_params_nm_cost3" onkeypress="return isNumberKey(event)"/>
-							<label>Di-Ammonium Phosphate Cost per ton (USD)</label>
+							<label class="label">Di-Ammonium Phosphate Cost per ton (USD)</label>
 							<input type="text" class="text" id="bmp_params_nm_cost4" onkeypress="return isNumberKey(event)"/>
 							<br><br>
-							<label>Fertilizer Application Rate (lb/ha)</label>
+							<label class="label">Fertilizer Application Rate (lb/ha)</label>
 							<input type="text" class="text" id="bmp_params_nm_rate" maxlength="3" onkeypress="return isNumberKey(event)" onchange="validateFertRate(this)"/>
-							<label>Before Planting Ratio</label>
+							<label class="label">Before Planting Ratio</label>
 							<input type="text" class="text"  id="bmp_params_nm_ratio1" onkeypress="return isFloatValue(event,this)" onchange="validateRatio(this)"/>
-							<label>After Planting ratio</label>
+							<label class="label">After Planting ratio</label>
 							<input type="text" class="text" id="bmp_params_nm_ratio2" onkeypress="return isFloatValue(event,this)" onchange="validateRatio(this)"/>
 						</div>
 						<div id="bmp_params_fs" style="display:none">
 							<br>
 							<!-- Filter Strip Parameters-->
-							<label>Cost per acre (USD)</label>
+							<label class="label">Cost per acre (USD)</label>
 							<input class="text" type="text" id="bmp_params_fs_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_gw" style="display:none">
 							<br>
 							<!-- Grassed Waterway Parameters-->
-							<label>Cost per acre (USD)</label>
+							<label class="label">Cost per acre (USD)</label>
 							<input type="text" class="text" id="bmp_params_gw_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_cw" style="display:none">
 							<br>
 							<!-- Constructed Wetland Parameters-->
-							<label>Cost per acre (USD)</label>
+							<label class="label">Cost per acre (USD)</label>
 							<input type="text" class="text" id="bmp_params_cw_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_br" style="display:none">
 							<br>
 							<!-- Bio Reactors Parameters-->
-							<label>Cost per acre (USD)</label>
+							<label class="label">Cost per acre (USD)</label>
 							<input type="text" class="text" id="bmp_params_br_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_dm" style="display:none">
 							<br>
 							<!-- DM Parameters-->
-							<label>Cost per acre (USD)</label>
+							<label class="label">Cost per acre (USD)</label>
 							<input type="text" class="text" id="bmp_params_dm_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
 						<div id="bmp_params_sb" style="display:none">
 							<br>
 							<!-- Saturated Buffer Parameters-->
-							<label>Cost per acre (USD)</label>
+							<label class="label">Cost per acre (USD)</label>
 							<input type="text" class="text" id="bmp_params_sb_cost" onkeypress="return isNumberKey(event)"/>
 						</div>
+						&nbsp;
 					</td>
 				</tr>
 				<tr>
