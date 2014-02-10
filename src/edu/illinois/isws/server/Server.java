@@ -2,10 +2,19 @@ package edu.illinois.isws.server;
 
 import static spark.Spark.*;
 import spark.*;
+
 import org.apache.commons.io.FileUtils;
+import org.eclipse.jetty.util.ajax.JSON;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /*
  * Server that handles following
@@ -85,6 +94,84 @@ public class Server {
 					output =  name + ".csv";
 				}
 				return output;
+			}
+		});
+		
+		/* 
+		 * Download HRU Soils LandUse report
+		 */
+		get(new Route("/getLanduseSoilChartData") {
+			@Override
+			public Object handle(Request request, Response response) {
+				response.type("text/html");
+				
+				try {
+					Integer option = Integer.parseInt(request.queryParams("option"));
+					
+					List<List<Percent>> list = parseFile("HRULandUseSoilsReport/bigDitch_HRULandUseSoilsReport.txt", option);
+					String s = "";
+					
+					for (Percent p : list.get(0)) {
+						s += p.text + "," + p.number + " ";
+					}
+					
+					return s.trim();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
+			
+			class Percent {
+				String text;
+				float number;
+			}
+			
+			public List<Percent> populateStructure(BufferedReader br) throws IOException
+			{
+				String s;
+				List<Percent> result = new ArrayList<>();
+				while (!((s = br.readLine()).equals("") || s.contains("______"))) {
+					
+					s = s.trim().replaceAll(" +", " ");
+					Percent p = new Percent();
+					p.text = s.split(" ")[0];
+					p.number = Float.parseFloat(s.split(" ")[s.split(" ").length - 1]);
+					result.add(p);
+				}
+				
+				return result;
+			}
+			
+			public List<List<Percent>> parseFile(String fileName, int option) throws IOException
+			{
+				BufferedReader br = new BufferedReader(new FileReader(fileName));
+				String s;
+				
+				List<List<Percent>> landuseTotal = new ArrayList<>(), soilsTotal = new ArrayList<>(), slopeTotal = new ArrayList<>();
+				float totalHa, totalAcres;
+				
+				while (!(s = br.readLine()).contains("SUBBASIN")) {
+					s = s.trim().replaceAll(" +", " ");
+					if (s.contains("Watershed")) {
+						totalHa = Float.parseFloat(s.split(" ")[1]);
+						totalAcres = Float.parseFloat(s.split(" ")[2]);
+					} else if (s.contains("LANDUSE")) {
+						landuseTotal.add(populateStructure(br));
+					} else if (s.contains("SOILS")) {
+						soilsTotal.add(populateStructure(br));
+					} else if (s.contains("SLOPE")){
+						slopeTotal.add(populateStructure(br));
+					}
+				}
+			
+				if (option == 1) {
+					return landuseTotal;
+				} else if (option == 2) {
+					return soilsTotal;
+				} else {
+					return slopeTotal;
+				}
 			}
 		});
 		

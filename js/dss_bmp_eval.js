@@ -263,7 +263,7 @@
 						hru_info_div.removeChild(hru_info_div.lastChild);
 					}
 					
-					hru_info_div_temp$.append("<select id='hru_info_temp_select' multiple style='width:30%; height:1%'></select>");
+					hru_info_div_temp$.append("<select id='hru_info_temp_select' data-placeholder='Select HRUs ...'  multiple style='width:30%; height:1%'></select>");
 					
 					for (i=0; i < objectIds.features.length;i++){
 						var featureAttributes = objectIds.features[i].attributes;
@@ -1842,7 +1842,7 @@
 	function downloadReport(){
 		var ws = document.getElementById("wstype").value;
 		var type = document.getElementById("reportFileType").value;
-		url = "http://swsbear:4567/downloadReport?wshIndex="+ws+"&"+"fileType="+type;
+		url = "http://swscypress3:4567/downloadReport?wshIndex="+ws+"&"+"fileType="+type;
 		
 		$.get("/downloadReport",
 				{

@@ -24,6 +24,10 @@
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 		
+        <!-- Load HighCharts -->
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+		
 		<!-- For select boxes-->
 		<script type="text/javascript" src="chosen.jquery.min.js"></script>
 		<script type="text/javascript" src="chosen.proto.min.js"></script>
@@ -83,6 +87,9 @@
 			font-style:italic;
 			background-color:#b0c4de;
 			padding-left:50px;
+		}.dblue {
+		  color:#0000FF;
+		  text-decoration:underline; 
 		}
 		</style>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -215,8 +222,7 @@
 				</tr>
 				<tr>
 					<td>
-						<div id="hru_info"> </div>
-						<label style="display:none" id="select_all_hru">Select All</label>
+						<div style="display:none" id="hru_info"> </div>
 						<div style="display:none" id="hru_info_temp">
 						</div>
 						<div> <p> </p> </div>
@@ -275,8 +281,8 @@
 						<table border="0">
 							<tr>
 								<td>							
-									<!-- <a id="bd_report" href="http://swsbear:4567/downloadReport?wshIndex=bd">Download Big Ditch HRU/Landuse/Soil Report</a>
-									<a id="blc_report" href="http://swsbear:4567/downloadReport?wshIndex=blc">Download Big/Long Creek HRU/Landuse/Soil Report</a> -->								
+									<!-- <a id="bd_report" href="http://swscypress3:4567/downloadReport?wshIndex=bd">Download Big Ditch HRU/Landuse/Soil Report</a>
+									<a id="blc_report" href="http://swscypress3:4567/downloadReport?wshIndex=blc">Download Big/Long Creek HRU/Landuse/Soil Report</a> -->								
 									<button id="bd_report" type="button" onclick="downloadReport()" style="display:none">Download HRU/Landuse/Soil Report</button>
 									<button id="blc_report" type="button" onclick="downloadReport()" style="display:none">Download HRU/Landuse/Soil Report</button>
 								</td>
@@ -292,13 +298,15 @@
 				</tr>
 			</table>
 		</div>
-		<table width="100%">
-			<tr>
-				<td align="center">
-					<button id="restart" type="button" onclick="startAgain()" style="display:none">Start Again</button>
-				</td>
-			</tr>
-		</table>
+		<div>
+          <table width="100%">
+            <tr>
+                <td align="center">
+                    <button id="restart" type="button" onclick="startAgain()" style="display:none">Start Again</button>
+                </td>
+            </tr>
+          </table>		
+		</div>
 		<div style="height:700px;width:1600px">
 			<div id="map" style="height:700px;width:800px;float:left;">
 			</div>
@@ -312,10 +320,70 @@
 			</div>
 		</div>
 		
+		<div id="showChartData" align="left" class="dblue" onclick="popitup('getLanduseSoilChartData')">Landuse/Soil Chart</div>
+		
+		<div id="popup">
+		  <div id="options">
+		      <select data-placeholder="Select an option ..." id="lss_select" style="width:10%" onchange="popitup('getLanduseSoilChartData')">
+                <option value="1">Landuse</option>
+                <option value="2">Soil</option>
+                <option value="3">Slope</option>
+              </select>
+		  </div>
+		  &nbsp;
+		  &nbsp;
+		  <div id="highcharts"></div>
+		</div>
+				
 		<script type="text/javascript">
 		$(document).ready(function() {
 		    $("#wstype").chosen();
+		    $("#lss_select").chosen();
+		    $("#popup").dialog({ autoOpen: false, height: 600, width: 1200}); // Initialize dialog plugin
 		});
+		
+		function popitup(url) {
+	        $.get(url, {option : $("#lss_select").val()},
+	            function(data,status){
+	                var result = new Array();
+	                var list = data.split(" ")
+	                for (var i=0; i < list.length; i++) {
+	                	var temp = new Array();
+	                	temp.push(list[i].split(",")[0]);
+	                	temp.push(parseFloat(list[i].split(",")[1]));
+	                	result.push(temp);
+	                }
+	                
+                    $("#popup").dialog("open");
+	                
+	                $('#highcharts').highcharts({
+	                    title: {
+	                        text: $("#lss_select option:selected").text()
+	                    },
+	                    tooltip: {
+	                        pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+	                    },
+	                    plotOptions: {
+	                        pie: {
+	                            allowPointSelect: true,
+	                            cursor: 'pointer',
+	                            dataLabels: {
+	                                enabled: true,
+	                                color: '#000000',
+	                                connectorColor: '#000000',
+	                                format: '<b>{point.name}</b>: {point.percentage:.2f} %'
+	                            }
+	                        }
+	                    },
+	                    series: [{
+	                        type: 'pie',
+	                        name: $("#lss_select option:selected").text(),
+	                        data: result
+	                    }]
+	                });
+	            }
+	        );
+		}
 		</script>
 	</body>
 </html>
