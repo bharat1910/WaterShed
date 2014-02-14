@@ -1867,9 +1867,10 @@
 		if(parseFloat(perc) == 0) return;
 
 		$("#hru_info_temp_select > option").each(function() {
+			$(this).attr('selected', false);
 			if(parseFloat(perc_temp) <  parseFloat(perc)) {
 				perc_temp = parseFloat(perc_temp) + parseFloat($(this).attr('percent'));
-				$(this).attr('selected', 'selected');
+				$(this).attr('selected', true);
 			}
 		});
 		
