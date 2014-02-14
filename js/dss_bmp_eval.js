@@ -1860,34 +1860,20 @@
 	 * select HRUs to match user entered percentage
 	 */
 	function selectHRU(){
-		var perc = document.getElementById("hru_perc").value;
+		var perc = $("#hru_percent").val();
 		var perc_temp = 0;
 		
 		if(perc == "") return;
 		if(parseFloat(perc) == 0) return;
-		
-		if(document.getElementById("hru_info") == null) return;
-		
-		var hru_child = document.getElementById("hru_info").children;
-		if(hru_child){
-			
-			//first uncheck all enabled checkboxes
-			for(var i=0; i<hru_child.length; i++) {
-				if(hru_child[i].type == "checkbox" && ! hru_child[i].disabled){
-					hru_child[i].checked = false;
-				}
+
+		$("#hru_info_temp_select > option").each(function() {
+			if(parseFloat(perc_temp) <  parseFloat(perc)) {
+				perc_temp = parseFloat(perc_temp) + parseFloat($(this).attr('percent'));
+				$(this).attr('selected', 'selected');
 			}
-			
-			//select HRUs based on perc
-			for(var i=0; i<hru_child.length; i++) {
-				if(hru_child[i].type == "checkbox" && ! hru_child[i].disabled){
-					if(parseFloat(perc_temp) <  parseFloat(perc)){
-						perc_temp = parseFloat(perc_temp) + parseFloat(hru_child[i].value);
-						hru_child[i].checked = true;
-					}
-				}
-			}
-		}
+		});
+		
+		$("#hru_info_temp_select").trigger("chosen:updated");
 	}
 	
 	/* BMPs 4-BR,7-SB,6-DM does not give any phosphorous reduction.
