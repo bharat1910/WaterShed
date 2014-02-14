@@ -99,9 +99,9 @@
 		
 		//remove the hru_info div element
 		var hru_info_div = document.getElementById("hru_info");
-		while( hru_info_div.hasChildNodes() ){
-			hru_info_div.removeChild(hru_info_div.lastChild);
-		}
+//		while( hru_info_div.hasChildNodes() ){
+//			hru_info_div.removeChild(hru_info_div.lastChild);
+//		}
 		
 		if(document.getElementById("wstype").value == "default"){
 			hideReportLinks();
@@ -215,10 +215,10 @@
 		document.getElementById("hruIDs_area_temp").options.length = 0;
 		
 		//remove the hru_info div element
-		var hru_info_div = document.getElementById("hru_info");
-		while( hru_info_div.hasChildNodes() ){
-			hru_info_div.removeChild(hru_info_div.lastChild);
-		}
+		//var hru_info_div = document.getElementById("hru_info");
+//		while( hru_info_div.hasChildNodes() ){
+//			hru_info_div.removeChild(hru_info_div.lastChild);
+//		}
 		
 		if(document.getElementById("subbasin_id").value == "default"){			
 			return;
@@ -255,13 +255,13 @@
 				queryTask.execute(query,function(objectIds) {
 					var i;
 					//hru_ids = "";
-					var hru_info_div = document.getElementById("hru_info");
-					var hru_info_div_temp$ = $("#hru_info_temp");
-					while( hru_info_div.hasChildNodes() ){
-						hru_info_div.removeChild(hru_info_div.lastChild);
-					}
+					//var hru_info_div = document.getElementById("hru_info");
+					var hru_info_temp_select$ = $("#hru_info_temp_select");
+					//while( hru_info_div.hasChildNodes() ){
+//						hru_info_div.removeChild(hru_info_div.lastChild);
+//					}
 					
-					hru_info_div_temp$.append("<select id='hru_info_temp_select' data-placeholder='Select HRUs ...'  multiple style='width:30%; height:1%' onchange='hruSelectionChange()'></select>");
+					//hru_info_div_temp$.append("<select id='hru_info_temp_select' data-placeholder='Select HRUs ...'  multiple style='width:30%; height:1%' onchange='hruSelectionChange()'></select>");
 					
 					for (i=0; i < objectIds.features.length;i++){
 						var featureAttributes = objectIds.features[i].attributes;
@@ -271,46 +271,46 @@
 							hru_ids = hru_ids + featureAttributes["HRU_ID"].toString();
 						}*/
 						//add the HRU as a checkbox						
-						var checkbox = document.createElement("input"); 
-						checkbox.setAttribute("type", "checkbox");
-						checkbox.setAttribute("name", ""); //name is used to store the BMP assigned later for this HRU
-						checkbox.setAttribute("id", featureAttributes["HRU_ID"]); // stores the hru id
-						checkbox.setAttribute("value", Math.floor(featureAttributes["HRU_FR"]*100*100)/100); // stores the fraction of subbasin area
-						hru_info_div.appendChild(checkbox);
+//						var checkbox = document.createElement("input"); 
+//						checkbox.setAttribute("type", "checkbox");
+//						checkbox.setAttribute("name", ""); //name is used to store the BMP assigned later for this HRU
+//						checkbox.setAttribute("id", featureAttributes["HRU_ID"]); // stores the hru id
+//						checkbox.setAttribute("value", Math.floor(featureAttributes["HRU_FR"]*100*100)/100); // stores the fraction of subbasin area
+//						hru_info_div.appendChild(checkbox);
 						
-						//create labels for the HRU IDs
-						var label = document.createElement('label')
-						label.htmlFor = featureAttributes["HRU_ID"];
-						label.appendChild(document.createTextNode("HRU "+featureAttributes["HRU_ID"].toString()+"("+Math.floor(featureAttributes["HRU_FR"]*100*100)/100+"%)"));
-						hru_info_div.appendChild(label);
+//						//create labels for the HRU IDs
+//						var label = document.createElement('label')
+//						label.htmlFor = featureAttributes["HRU_ID"];
+//						label.appendChild(document.createTextNode("HRU "+featureAttributes["HRU_ID"].toString()+"("+Math.floor(featureAttributes["HRU_FR"]*100*100)/100+"%)"));
+//						hru_info_div.appendChild(label);
 						//add the HRU as a checkbox ends here
 						
-						$(hru_info_div_temp$.find('select')[0]).append("<option value='" + featureAttributes["HRU_ID"] + "' percent='" + Math.floor(featureAttributes["HRU_FR"] * 100  * 100) / 100 +"'>" + 
+						hru_info_temp_select$.append("<option value='" + featureAttributes["HRU_ID"] + "' percent='" + Math.floor(featureAttributes["HRU_FR"] * 100  * 100) / 100 +"'>" + 
 												  "HRU "+ featureAttributes["HRU_ID"].toString() +
 								 				  "("+ Math.floor(featureAttributes["HRU_FR"] * 100  * 100) / 100 + "%)" + "</option>");
 						
-						//add the HRU IDs to a temp list
-						var optn_temp = document.createElement("OPTION");
-						optn_temp.text = featureAttributes["HRU_ID"];
-						optn_temp.value = featureAttributes["HRU_ID"];
-						document.getElementById("hruIDs_temp").options.add(optn_temp);
+//						//add the HRU IDs to a temp list
+//						var optn_temp = document.createElement("OPTION");
+//						optn_temp.text = featureAttributes["HRU_ID"];
+//						optn_temp.value = featureAttributes["HRU_ID"];
+//						document.getElementById("hruIDs_temp").options.add(optn_temp);
 						
 						//add the area fraction of HRU IDs to a temp list
-						var optn_area = document.createElement("OPTION");
-						optn_area.text = Math.floor(featureAttributes["HRU_FR"]*100*100)/100;
-						optn_area.value = Math.floor(featureAttributes["HRU_FR"]*100*100)/100;
-						document.getElementById("hruIDs_area_temp").options.add(optn_area);
+//						var optn_area = document.createElement("OPTION");
+//						optn_area.text = Math.floor(featureAttributes["HRU_FR"]*100*100)/100;
+//						optn_area.value = Math.floor(featureAttributes["HRU_FR"]*100*100)/100;
+//						document.getElementById("hruIDs_area_temp").options.add(optn_area);
 					}
 					
-					$("#hru_info_temp").show();
+					hru_info_temp_select$.show();
 					$("#select_all_hru").show();
-					$("#hru_selection_for_bmp").show();
+					$("#hru_percent").show();
 					$("#assign_bmp_button").show();
 					
 					showInfoLabelForHRUs();
 					setTimeout(hideInfoLabel, 5000);
 					
-					$(hru_info_div_temp$.find('select')[0]).chosen();
+					hru_info_temp_select$.chosen({width: "30%"});
 				}, function(errorMsg){
 					alert("Error while fetching HRU IDs:"+errorMsg);
 				});		
