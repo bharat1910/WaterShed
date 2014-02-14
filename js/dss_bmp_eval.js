@@ -449,12 +449,14 @@
 	function assignBMP(){
 		var i;
 		
-		if(document.getElementById("hruIDs_temp").options.length == 0){
-			alert("No HRUS selected for BMP");
+		if($("#hru_info_temp_select option:selected").length == 0){
+			$("#info_label").empty().append("No HRUS selected for BMP!").show(1000);
+			setTimeout(hideInfoLabel, 5000);
 			return;
 		}
-		if(document.getElementById("bmp").value == "default"){
-			alert("Select a BMP");
+		if($("#bmp option:selected").val() == "default"){
+			$("#info_label").empty().append("Select a BMP!").show(1000);
+			setTimeout(hideInfoLabel, 5000);
 			return;
 		}
 		
