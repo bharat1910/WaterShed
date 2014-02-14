@@ -345,8 +345,8 @@
 	 * Refer to dss_hru_bmp_constraint.js
 	 */
 	function checkHRUBMPConstraints(){
-		var bmp = document.getElementById("bmp").value;
-		var ws =  document.getElementById("wstype").value;
+		var bmp = $("#bmp").val();
+		var ws =  $("#wstype").val();
 		var constraintArray;
 		var restrictedHRUs = "";
 		/*if(bmp == "1" &&  ||
@@ -429,19 +429,18 @@
 		
 		//check if the HRUs are in the constraint array
 		//collect the restricted HRUs
-		for(i=0 ; i < document.getElementById("hruIDs_temp").options.length ; i++){
-			var hru_id = document.getElementById("hruIDs_temp").options[i].value;			
-			if( !document.getElementById(hru_id).disabled && document.getElementById(hru_id).checked){
-				var id = document.getElementById(hru_id).id;
-				for(j=0; j<constraintArray.length; j++){
-					if(parseInt(id) == parseInt(constraintArray[j])){
-						document.getElementById(hru_id).checked = false;
-						restrictedHRUs = restrictedHRUs + "," + id;
-						break;
-					}						
-				}
+		$("#hru_info_temp_select option:selected").each(function() {
+			var id = $(this).val();
+			for(j=0; j<constraintArray.length; j++){
+				if(parseInt(id) == parseInt(constraintArray[j])){
+					$(this).attr('selected', false);
+					restrictedHRUs = restrictedHRUs + "," + id;
+					break;
+				}						
 			}
-		}
+		});
+		
+		$("#hru_info_temp_select").trigger("chosen:updated");		
 		
 		return restrictedHRUs;
 	}
@@ -464,37 +463,24 @@
 		
 		var restrictHRU = checkHRUBMPConstraints();
 		if(restrictHRU != ""){
-			alert(document.getElementById("bmp").options[document.getElementById("bmp").selectedIndex].text + " cannot be applied in the HRUs: "+ restrictHRU + " .So, they have been unselected.");
+			$("#info_label").empty().append($("#bmp option:selected").text() + " cannot be applied in the HRUs: "+ restrictHRU + " .So, they have been unselected.").show(1000);
 			if(! confirm("Do you want to assign BMPs for the remaining selected HRUs ?")){
 				return;
 			}
 		}
 		
 		area_fraction = 0;
-		area_fraction_temp = 0;
-		for(i=0 ; i < document.getElementById("hruIDs_temp").options.length ; i++){
-			var hru_id = document.getElementById("hruIDs_temp").options[i].value;			
-			if( !document.getElementById(hru_id).disabled && document.getElementById(hru_id).checked){
-				//alert(document.getElementById(hru_id).name);
-				document.getElementById(hru_id).setAttribute("name",document.getElementById("bmp").value);
-				document.getElementById(hru_id).disabled = true;
-				//alert(document.getElementById(hru_id).name);
-				console.log(document.getElementById(hru_id).value);
-				area_fraction = parseFloat(area_fraction) + parseFloat(document.getElementById(hru_id).value);
-				//alert(document.getElementById(hru_id).value);
-			}
-		}
-		
 		$("#hru_info_temp_select option:selected").each(function() {
-		    area_fraction_temp = parseFloat(area_fraction_temp) + parseFloat(document.getElementById($(this).val()).value);
+			area_fraction = parseFloat(area_fraction) + parseFloat($(this).attr('percent'));
 		});
 		
 		if(area_fraction == 0){
-			alert("Select HRUs for BMP");
-			return;
+			$("#info_label").empty().append("Select HRUs for BMP").show(1000);
+			setTimeout(hideInfoLabel, 5000);
 		}
-		else{			
-			alert( Math.floor(parseFloat(area_fraction)*100)/100 + " % of Subbasin has been assigned "+document.getElementById("bmp").options[document.getElementById("bmp").selectedIndex].text);
+		else{
+			$("#info_label").empty().append(Math.floor(parseFloat(area_fraction)*100)/100 + " % of Subbasin has been assigned "+ $("#bmp option:selected").text()).show(1000);
+			setTimeout(hideInfoLabel, 5000);
 		}		
 	}
 	
