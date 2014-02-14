@@ -305,6 +305,7 @@
 					$("#hru_info_temp").show();
 					$("#select_all_hru").show();
 					$("#hru_selection_for_bmp").show();
+					$("#assign_bmp_button").show();
 					
 					showInfoLabelForHRUs();
 					setTimeout(hideInfoLabel, 5000);
