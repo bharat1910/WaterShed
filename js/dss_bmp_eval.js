@@ -308,6 +308,7 @@
 					$("#hru_percent").show();
 					$("#assign_bmp_button").show();
 					$("#submit_bmp_button").show();
+					$("#reset_bmp_button").show();
 					
 					showMessage("Non agricultural HRU's are not eligible for a BMP!");
 					

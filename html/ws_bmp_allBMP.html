@@ -284,6 +284,8 @@
 				        <button type="button" class="button" id="assign_bmp_button" onclick="assignBMP()" style="display:none">Assign BMP for HRU</button>
 				        &nbsp;
 				        <button type="button" class="button" id="submit_bmp_button" onclick="addSubbasinForBMP()" style="display:none">Submit</button>
+				        &nbsp;
+                        <button type="button" class="button" id="reset_bmp_button" onclick="resetSelection()" style="display:none">Reset</button>
 				    </td>
 				</tr>
 				<tr style="display:none">
@@ -407,6 +409,17 @@
 		$("#hru_percent").bind('click', function() {
 			$("#hru_percent").val("");
 		});
+		
+		function resetSelection()
+		{
+			$("#hru_info_temp_select_duplicate").empty();
+		    
+			$("#hru_info_temp_select option:selected").each(function() {
+				$(this).attr('selected', false);
+		    });
+		    $("#hru_info_temp_select").trigger("chosen:updated");
+		    $("#hru_percent").val("");
+		}
 		</script>
 	</body>
 </html>
