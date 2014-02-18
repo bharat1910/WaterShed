@@ -308,8 +308,7 @@
 					$("#assign_bmp_button").show();
 					$("#submit_bmp_button").show();
 					
-					showInfoLabelForHRUs();
-					setTimeout(hideInfoLabel, 5000);
+					showMessage("Non agricultural HRU's are not eligible for a BMP!");
 					
 					hru_info_temp_select$.chosen({width: "30%"});
 				}, function(errorMsg){
@@ -328,16 +327,6 @@
 		});
 		
 		$("#hru_percent").val(percent);
-	}
-	
-	function showInfoLabelForHRUs()
-	{
-		$("#info_label").empty().append("Non agricultural HRU's are not eligible for a BMP!").show(1000);
-	}
-	
-	function hideInfoLabel()
-	{
-		$("#info_label").hide(1000);
 	}
 	
 	/*
@@ -450,13 +439,11 @@
 		var i;
 		
 		if($("#hru_info_temp_select option:selected").length == 0){
-			$("#info_label").empty().append("No HRUS selected for BMP!").show(1000);
-			setTimeout(hideInfoLabel, 5000);
+			showMessage("No HRUS selected for BMP!");
 			return;
 		}
 		if($("#bmp option:selected").val() == "default"){
-			$("#info_label").empty().append("Select a BMP!").show(1000);
-			setTimeout(hideInfoLabel, 5000);
+			showMessage("Select a BMP!");
 			return;
 		}
 		
@@ -476,12 +463,10 @@
 		});
 		
 		if(area_fraction == 0){
-			$("#info_label").empty().append("Select HRUs for BMP").show(1000);
-			setTimeout(hideInfoLabel, 5000);
+			showMessage("Select HRUs for BMP");
 		}
 		else{
-			$("#info_label").empty().append(Math.floor(parseFloat(area_fraction)*100)/100 + " % of Subbasin has been assigned "+ $("#bmp option:selected").text()).show(1000);
-			setTimeout(hideInfoLabel, 5000);
+			showMessage(Math.floor(parseFloat(area_fraction)*100)/100 + " % of Subbasin has been assigned "+ $("#bmp option:selected").text());
 		}		
 	}
 	
@@ -674,9 +659,8 @@
 		});
 
 		//alert(hru_IDs);
-		if(bmp_subbasin == ""){
-			$("#info_label").empty().append("No BMPs are assigned for the subbasin!").show(1000);
-			setTimeout(hideInfoLabel, 5000);
+		if(bmp_subbasin == "") {
+			showMessage("No BMPs are assigned for the subbasin!");
 		}
 		else{		
 			//select the hru_url based on watershed type
@@ -732,9 +716,19 @@
 			});
 			$("#hru_info_temp_select").trigger("chosen:updated");
 			
-			$("#info_label").empty().append("Assigned BMPs for Subbasin " + $("#subbasin_id").val() + " have been added").show(1000);
-			setTimeout(hideInfoLabel, 5000);
+			showMessage("Assigned BMPs for Subbasin " + $("#subbasin_id").val() + " have been added");
 		}
+	}
+	
+	function hideInfoLabel()
+	{
+		$("#info_label").hide();
+	}
+	
+	function showMessage(msg)
+	{
+		$("#info_label").empty().append(msg).show(1000);
+		setTimeout(hideInfoLabel, 5000);
 	}
 	
 	function removeSubbasinForBMP(){
@@ -1686,16 +1680,10 @@
 		chart.draw(data, options);
 	}
 	
-	function showInfoLabelForMultipleBMPs()
-	{
-		$("#info_label").empty().append("Warning: If multiple BMPs are selected for evaluation, then optimal data will not be displayed in the evaluation results!").show(1000);
-	}
-	
 	//Just a warning message that pareto optimal data will not be shown for multiple BMP selection
 	function paretoWarning(){
 		if(document.getElementById("bmp").value != "default"){
-			showInfoLabelForMultipleBMPs();
-			setTimeout(hideInfoLabel, 5000);
+			showMessage("Warning: If multiple BMPs are selected for evaluation, then optimal data will not be displayed in the evaluation results!");
 		}
 		
 		bmpParamDisplayOff();
