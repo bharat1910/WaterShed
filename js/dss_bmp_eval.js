@@ -306,6 +306,7 @@
 					$("#select_all_hru").show();
 					$("#hru_percent").show();
 					$("#assign_bmp_button").show();
+					$("#submit_bmp_button").show();
 					
 					showInfoLabelForHRUs();
 					setTimeout(hideInfoLabel, 5000);
@@ -607,7 +608,7 @@
 	function addSubbasinForBMP(){
 		
 		//verify if all parameters are entered for the BMP
-		if(! verifyBMPParams(document.getElementById("bmp").options[document.getElementById("bmp").selectedIndex].value)) return;
+		if(! verifyBMPParams($("#bmp").val())) return;
 		
 		var i;
 		var bmp_subbasin;
@@ -627,10 +628,11 @@
 		fraction_bmp[9] = 0;
 				
 		bmp_subbasin = "";
-		for(i=0 ; i < document.getElementById("hruIDs_temp").options.length ; i++){
-			var hru_id = document.getElementById("hruIDs_temp").options[i].value;
-			var bmp = document.getElementById(hru_id).name;
-			var hru_fr = document.getElementById(hru_id).value;
+		$("#hru_info_temp_select > option").each(function() {
+			var hru_id = $(this).val();
+			var bmp = $("#bmp").val();
+			var hru_fr = $(this).attr('percent')
+
 			if(bmp != ""){
 				if(bmp_subbasin == ""){
 					bmp_subbasin = hru_id + "," + bmp;
@@ -669,17 +671,19 @@
 						break;
 				}
 			}			
-		}
+		});
+
 		//alert(hru_IDs);
 		if(bmp_subbasin == ""){
-			alert("No BMPs are assigned for the subbasin!");
+			$("#info_label").empty().append("No BMPs are assigned for the subbasin!").show(1000);
+			setTimeout(hideInfoLabel, 5000);
 		}
 		else{		
 			//select the hru_url based on watershed type
-			if(document.getElementById("wstype").value == "blc"){
+			if($("#wstype").val() == "blc"){
 				hru_url = "http://gismaps.sws.uiuc.edu/ArcGIS/rest/services/UpperSangBMP/MapServer/3";
 			}
-			else if(document.getElementById("wstype").value == "bd"){
+			else if($("#wstype").val() == "bd"){
 				hru_url = "http://gismaps.sws.uiuc.edu/ArcGIS/rest/services/UpperSangBMP/MapServer/7";
 			}
 		
@@ -723,16 +727,13 @@
 			document.getElementById("selected_subbasin_temp").options.add(optn_2);
 			
 			//delete the hru_info div element
-			var hru_info_div = document.getElementById("hru_info");
-			while( hru_info_div.hasChildNodes() ){
-				hru_info_div.removeChild(hru_info_div.lastChild);
-			}
+			$("#hru_info_temp_select > option").each(function() {
+				$(this).attr('selected', false);				
+			});
+			$("#hru_info_temp_select").trigger("chosen:updated");
 			
-			//reset the hruIDs_temp list as well
-			document.getElementById("hruIDs_temp").options.length = 0;
-			document.getElementById("hruIDs_area_temp").options.length = 0;
-			
-			alert("Assigned BMPs for Subbasin "+document.getElementById("subbasin_id").value+" have been added");
+			$("#info_label").empty().append("Assigned BMPs for Subbasin " + $("#subbasin_id").val() + " have been added").show(1000);
+			setTimeout(hideInfoLabel, 5000);
 		}
 	}
 	
