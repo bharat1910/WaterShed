@@ -208,12 +208,6 @@
 		var hru_url;
 		var i;
 		
-		if (window.selectChosen != undefined) {
-			return;
-		} else {
-			window.selectChosen = true;
-		}
-		
 		$("#showChartData").show();
 		
 		//just make sure to clear the temp list hruIDs
