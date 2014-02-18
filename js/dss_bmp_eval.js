@@ -257,6 +257,7 @@
 					//hru_ids = "";
 					//var hru_info_div = document.getElementById("hru_info");
 					var hru_info_temp_select$ = $("#hru_info_temp_select");
+					hru_info_temp_select$.empty();
 					//while( hru_info_div.hasChildNodes() ){
 //						hru_info_div.removeChild(hru_info_div.lastChild);
 //					}
@@ -310,7 +311,13 @@
 					
 					showMessage("Non agricultural HRU's are not eligible for a BMP!");
 					
-					hru_info_temp_select$.chosen({width: "30%"});
+					if (window.onSelectChosen == true) {
+						hru_info_temp_select$.trigger("chosen:updated");
+						hru_info_temp_select$.hide();
+					} else {
+						hru_info_temp_select$.chosen({width: "30%"});
+						window.onSelectChosen = true;
+					}
 				}, function(errorMsg){
 					alert("Error while fetching HRU IDs:"+errorMsg);
 				});		
