@@ -459,8 +459,15 @@
 		
 		area_fraction = 0;
 		$("#hru_info_temp_select option:selected").each(function() {
+			$(this).attr('bmp', $("#bmp").val());
+			$("#hru_info_temp_select_duplicate").append($(this))
 			area_fraction = parseFloat(area_fraction) + parseFloat($(this).attr('percent'));
 		});
+		
+		$("#hru_info_temp_select option:selected").each(function() {
+			$(this).attr('selected', false);
+		});
+		$("#hru_info_temp_select").trigger("chosen:updated");
 		
 		if(area_fraction == 0){
 			showMessage("Select HRUs for BMP");
@@ -613,10 +620,10 @@
 		fraction_bmp[9] = 0;
 				
 		bmp_subbasin = "";
-		$("#hru_info_temp_select > option").each(function() {
+		$("#hru_info_temp_select_duplicate > option").each(function() {
 			var hru_id = $(this).val();
-			var bmp = $("#bmp").val();
-			var hru_fr = $(this).attr('percent')
+			var bmp = $(this).attr('bmp');
+			var hru_fr = $(this).attr('percent');
 
 			if(bmp != ""){
 				if(bmp_subbasin == ""){
