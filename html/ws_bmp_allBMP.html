@@ -19,7 +19,7 @@
 		<title>Best Management Practice - Estimation</title>
 		<link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/esri/css/esri.css">
 		
-		<!--For Progress Bar-->
+		<!--For Progress Bar-->   
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
@@ -36,6 +36,13 @@
 		<!-- For multiselect boxes -->
 		<script type="text/javascript" src="jquery.multi-select.js"></script>
 		<link href="multi-select.css" rel="stylesheet" type="text/css"></link>
+		
+		<!-- For SlickGrid -->
+		<script type="text/javascript" src="jquery.event.drag-2.2.js"></script>
+        <script type="text/javascript" src="slick.grid.js"></script>
+        <script type="text/javascript" src="slick.core.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+        <link href="slick.grid.css" rel="stylesheet" type="text/css"></link>
 
 		<style>
 		body {
@@ -118,6 +125,13 @@
             color: #666;
             margin: 1px 0;
             padding: 5px;
+        }
+        .popup-table {
+            border-collapse:collapse;
+            border:1px solid black;
+        }
+        .popup-tr {
+            border:1px solid black;
         }
 		</style>
 		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -286,8 +300,43 @@
 				        <button type="button" class="button" id="submit_bmp_button" onclick="addSubbasinForBMP()" style="display:none">Submit</button>
 				        &nbsp;
                         <button type="button" class="button" id="reset_bmp_button" onclick="resetSelection()" style="display:none">Reset</button>
+                        &nbsp;
+                        <label id="checkSelection" align="left" class="dblue" style="display:none" onclick="popUpSelection()">Check Selection</label>
 				    </td>
 				</tr>
+				<tr style="display:none">
+                    <td>
+                        Selected Subbasins for BMP
+                        <select id="selected_subbasins">
+                        </select>
+                        <button type="button" onclick="removeSubbasinForBMP()">Remove BMP</button>
+                        
+                        <!-- TODO: Refacotring : folowing code needs to be removed. necessary updates to javascript have to be made -->
+                        <label style="display:none">Cost per acre for BMP (USD) </label>
+                        <select id="selected_bmps" onchange="displayCost()" style="display:none">
+                            <option value="default">----</option>
+                            <option value="100">Filter Strip (FS)</option>
+                            <option value="100">Grassed Waterways (GW)</option>
+                            <option value="100">Constructed Wetland (CW)</option>
+                            <option value="100">Bioreactors (BR)</option>
+                            <option value="100">Crop Cover (CC)</option>
+                            <option value="100">Drainage Water Management (DM)</option>
+                            <option value="100">Saturated Buffer (SB)</option>
+                            <option value="100">Nutrient Management (NM)</option>
+                            <option value="100">Perennial Crops (PC)</option>
+                        </select>
+                        <input type="text" id="bmp_cost" style="display:none"/>
+                        <button type="button" onclick="assignBMPCost()" style="display:none">Assign Cost</button>
+                        <!--  TODO: Refacotring ends  -->   
+                        
+                        <select id="selected_subbasin_temp" style="display:none"></select>
+                        <!---<select id="selected_subbasin_hruIDs"></select>
+                        <select id="selected_subbasin_hruID_bmp"></select>-->
+                        <select id="selected_subbasin_bmp" style="display:none"></select>
+                        <select id="hruIDs_temp" style="display:none"></select>
+                        <select id="hruIDs_area_temp" style="display:none"></select>
+                    </td>
+                </tr>
 				<tr style="display:none">
 					<td align="center">
 						<table border="0">
@@ -344,12 +393,31 @@
 		  &nbsp;
 		  <div id="highcharts"></div>
 		</div>
-				
+		
+		      
+        <div id="selection_popup">
+            <table style="width:100%" class="popup-table">
+                <tr>
+                    <th align="left" class="popup-tr">Subbasin Id</th>
+                    <th align="left" class="popup-tr">FS</th>
+                    <th align="left" class="popup-tr">GW</th>
+                    <th align="left" class="popup-tr">CW</th>
+                    <th align="left" class="popup-tr">BR</th>
+                    <th align="left" class="popup-tr">CC</th>
+                    <th align="left" class="popup-tr">DM</th>
+                    <th align="left" class="popup-tr">SB</th>
+                    <th align="left" class="popup-tr">NM</th>
+                    <th align="left" class="popup-tr">PC</th>
+                </tr>
+            </table>
+        </div>
+        
 		<script type="text/javascript">
 		$(document).ready(function() {
 		    $("#wstype").chosen();
 		    $("#lss_select").chosen();
 		    $("#popup").dialog({ autoOpen: false, height: 600, width: 1200}); // Initialize dialog plugin
+		    $("#selection_popup").dialog({ autoOpen: false, height: 600, width: 900});
 		});
 		
 		function popitup(url) {
@@ -419,6 +487,11 @@
 		    });
 		    $("#hru_info_temp_select").trigger("chosen:updated");
 		    $("#hru_percent").val("");
+		}
+		
+		function popUpSelection()
+		{
+	            $("#selection_popup").dialog("open");
 		}
 		</script>
 	</body>

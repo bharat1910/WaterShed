@@ -309,6 +309,7 @@
 					$("#assign_bmp_button").show();
 					$("#submit_bmp_button").show();
 					$("#reset_bmp_button").show();
+					$("#checkSelection").show();
 					
 					showMessage("Non agricultural HRU's are not eligible for a BMP!");
 					
@@ -716,8 +717,19 @@
 																						"PC-"+Math.floor(parseFloat(fraction_bmp[9]))+"%";
 			optn_1.value = hrulayer_id; //save map layer id for this set of HRUs
 			//also create the hru_layer and save the map layer id in the value attribute
-			//document.getElementById("selected_subbasins").options.add(optn_1);
+			document.getElementById("selected_subbasins").options.add(optn_1);
 			//ends here
+			
+			$("#selection_popup table").append("<tr><td class='popup-tr'>"+document.getElementById("subbasin_id").value+"</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[1]))+"%</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[2]))+"%</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[3]))+"%</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[4]))+"%</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[5]))+"%</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[6]))+"%</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[7]))+"%</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[8]))+"%</td>"+
+					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[9]))+"%</td></tr>");
 			
 			//the subbasin id is also added to the temp list which is hidden in the html
 			var optn_2 = document.createElement("OPTION");

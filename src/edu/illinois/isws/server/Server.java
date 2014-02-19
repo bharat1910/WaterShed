@@ -190,7 +190,14 @@ public class Server {
 						|| js_file_name.equals("chosen.jquery.min.js")
 						|| js_file_name.equals("chosen.proto.min.js")
 						|| js_file_name.equals("jquery.multi-select.js")
-						|| js_file_name.equals("multi-select.css")) {
+						|| js_file_name.equals("multi-select.css")
+						|| js_file_name.equals("slick.grid.css")
+						|| js_file_name.equals("slick.grid.js")
+						|| js_file_name.equals("slick.core.js")
+						|| js_file_name.equals("jquery.event.drag-2.2.js")
+						|| js_file_name.equals("jquery-migrate-1.2.1.js")
+						|| js_file_name.equals("jquery-1.7.min.js")) {
+//						|| js_file_name.equals("examples.css")) {
 					response.type("script");
 					try {
 						result = FileUtils
