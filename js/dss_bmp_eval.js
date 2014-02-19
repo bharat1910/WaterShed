@@ -752,6 +752,8 @@
 			$("#hru_info_temp_select").trigger("chosen:updated");
 			
 			showMessage("Assigned BMPs for Subbasin " + $("#subbasin_id").val() + " have been added");
+			
+			$("#hru_info_temp_select_duplicate").empty();
 		}
 	}
 	
