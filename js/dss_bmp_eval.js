@@ -56,6 +56,17 @@
 	var bmp_param_pc_cost = "100";
 	var bmp_param_pc_type = "1";
 	
+	var bmp_map = new Object();
+	bmp_map[1] = "Filter Strip (FS)";
+	bmp_map[2] = "Grassed Waterways (GW)";
+	bmp_map[3] = "Constructed Wetland (CW)";
+	bmp_map[4] = "Bioreactors (BR)";
+	bmp_map[5] = "Crop Cover (CC)";
+	bmp_map[6] = "Drainage Water Management (DM)";
+	bmp_map[7] = "Saturated Buffer (SB)";
+	bmp_map[8] = "Nutrient Management (NM)";
+	bmp_map[9] = "Perennial Crops (PC)";
+		
 	//This is a first step when a user wants to do an evaluation
 	//Display the map in the user interface based on the water shed selected
 	function displayMap(){
@@ -720,16 +731,13 @@
 			document.getElementById("selected_subbasins").options.add(optn_1);
 			//ends here
 			
-			$("#selection_popup table").append("<tr><td class='popup-tr'>"+document.getElementById("subbasin_id").value+"</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[1]))+"%</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[2]))+"%</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[3]))+"%</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[4]))+"%</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[5]))+"%</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[6]))+"%</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[7]))+"%</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[8]))+"%</td>"+
-					"<td class='popup-tr'>"+Math.floor(parseFloat(fraction_bmp[9]))+"%</td></tr>");
+			for (var i=1; i<=9; i++) {
+				if (fraction_bmp[i] != 0) {
+					$("#selection_popup table").append("<tr><td class='popup-tr'>"+document.getElementById("subbasin_id").value+"</td>"+
+							"<td class='popup-tr'>" + bmp_map[i] + "</td>"+
+							"<td class='popup-tr'>" + Math.floor(parseFloat(fraction_bmp[i])) + "%</td></tr>");
+				}
+			}
 			
 			//the subbasin id is also added to the temp list which is hidden in the html
 			var optn_2 = document.createElement("OPTION");
