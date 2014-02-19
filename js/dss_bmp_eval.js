@@ -99,7 +99,7 @@
 		document.getElementById("hruIDs_temp").options.length = 0;
 		document.getElementById("hruIDs_area_temp").options.length = 0;
 		document.getElementById("selected_subbasin_bmp").options.length = 0;
-		//document.getElementById("selected_subbasins").options.length = 0;
+		document.getElementById("selected_subbasins").options.length = 0;
 		document.getElementById("selected_subbasin_temp").options.length = 0;
 		
 		//set the cost for BMPs to zero
@@ -320,6 +320,7 @@
 					$("#assign_bmp_button").show();
 					$("#submit_bmp_button").show();
 					$("#reset_bmp_button").show();
+					$("#evaluate").show();
 					$("#checkSelection").show();
 					
 					showMessage("Non agricultural HRU's are not eligible for a BMP!");
@@ -1045,7 +1046,7 @@
 						var i,k;
 						
 						//select watershed
-						switch(document.getElementById("wstype").value){
+						switch($("#wstype").val()){
 							case "bd":
 								ws = "1";
 								break;
