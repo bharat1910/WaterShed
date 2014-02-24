@@ -77,6 +77,7 @@
 		}
 		
 		$("#downloadReport").show();
+		$("#reportFileType").show();
 		
 		//initialize sequence id for hru layers
 		hrulayer_id = 0;
@@ -120,13 +121,11 @@
 		}
 		else if(document.getElementById("wstype").value == "bd"){
 			hideReportLinks();
-			document.getElementById("bd_report").style.display="block";			
-			document.getElementById("reportFileType").style.display="block";
+			document.getElementById("bd_report").style.display="block";
 		}
 		else if(document.getElementById("wstype").value == "blc"){
 			hideReportLinks();
 			document.getElementById("blc_report").style.display="block";
-			document.getElementById("reportFileType").style.display="block";
 		}
 		
 		bmpParamDisplayOff();
@@ -1851,8 +1850,8 @@
 	 * Download reports in txt/csv formats
 	 */
 	function downloadReport(){
-		var ws = document.getElementById("wstype").value;
-		var type = document.getElementById("reportFileType").value;
+		var ws = $("#wstype").val();
+		var type = $("#reportFileType").val();
 		url = "http://swscypress3:4567/downloadReport?wshIndex="+ws+"&"+"fileType="+type;
 		
 		$.get("/downloadReport",
@@ -1870,7 +1869,6 @@
 	function hideReportLinks(){
 		document.getElementById("bd_report").style.display="none";
 		document.getElementById("blc_report").style.display="none";
-		document.getElementById("reportFileType").style.display="none";
 	}
 	
 	/*

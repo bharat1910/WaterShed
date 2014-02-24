@@ -178,6 +178,11 @@
 					   <label id="showChartData" align="left" class="dblue" onclick="popitup('getLanduseSoilChartData')" style="display:none">HRU/Landuse/Soil Chart</label>
 					   &nbsp;              
                        <label id="downloadReport" align="left" class="dblue" style="display:none">Download HRU/Landuse/Soil Report</label>
+                       &nbsp;
+                       <select id="reportFileType" style="display:none">
+                            <option value="txt">txt</option>
+                            <option value="csv">csv</option>
+                       </select>
 					</td>
 				</tr>
 				<tr>
@@ -347,12 +352,6 @@
 									<button id="bd_report" type="button" onclick="downloadReport()" style="display:none">Download HRU/Landuse/Soil Report</button>
 									<button id="blc_report" type="button" onclick="downloadReport()" style="display:none">Download HRU/Landuse/Soil Report</button>
 								</td>
-								<td>
-									<select id="reportFileType" style="display:none">							
-											<option value="txt">txt</option>
-											<option value="csv">csv</option>
-									</select>
-								</td>
 							</tr>
 						</table>						
 					</td>
@@ -480,6 +479,10 @@
 		{
 	            $("#selection_popup").dialog("open");
 		}
+		
+		$("#downloadReport").bind('click', function() {
+			  downloadReport();  
+		});
 		</script>
 	</body>
 </html>
