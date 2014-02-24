@@ -408,7 +408,7 @@
 		$(document).ready(function() {
 		    $("#wstype").chosen();
 		    $("#lss_select").chosen();
-		    $("#popup").dialog({ autoOpen: false, height: 600, width: 1200}); // Initialize dialog plugin
+		    $("#popup").dialog({ autoOpen: false, height: 1000, width: 1200}); // Initialize dialog plugin
 		    $("#selection_popup").dialog({ autoOpen: false, height: 600, width: 900});
 		});
 		
@@ -431,11 +431,19 @@
                     $("#popup").dialog("open");
 	                
 	                $('#highcharts').highcharts({
+	                	chart: {
+	                		width: 1000,
+	                        height: 800
+	                	},
 	                    title: {
-	                        text: $("#lss_select option:selected").text()
+	                        text: $("#lss_select option:selected").text(),
+	                        style: {
+	                            fontFamily: 'serif',
+	                            fontSize: '30px'
+	                        }
 	                    },
 	                    tooltip: {
-	                        pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+	                        enabled : false
 	                    },
 	                    plotOptions: {
 	                        pie: {
@@ -445,7 +453,11 @@
 	                                enabled: true,
 	                                color: '#000000',
 	                                connectorColor: '#000000',
-	                                format: '<b>{point.name}</b>: {point.percentage:.2f} %'
+	                                format: '<b>{point.name}</b>: {point.percentage:.2f} %',
+	                                style: {
+	                                    fontFamily: 'serif',
+	                                    fontSize: '20px'	   
+	                                }
 	                            }
 	                        }
 	                    },
