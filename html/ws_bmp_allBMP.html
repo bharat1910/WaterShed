@@ -473,13 +473,7 @@
 		
 		function resetSelection()
 		{
-			$("#hru_info_temp_select_duplicate").empty();
-		    
-			$("#hru_info_temp_select option:selected").each(function() {
-				$(this).attr('selected', false);
-		    });
-		    $("#hru_info_temp_select").trigger("chosen:updated");
-		    $("#hru_percent").val("");
+			location.reload();
 		}
 		
 		function popUpSelection()
