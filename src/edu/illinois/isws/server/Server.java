@@ -140,7 +140,7 @@ public class Server {
 			{
 				String s;
 				List<Percent> result = new ArrayList<>();
-				while (!((s = br.readLine()).equals("") || s.contains("______"))) {
+				while (!((s = br.readLine()).equals("") || s.contains("______") || s.toLowerCase().contains("hrus"))) {
 					
 					s = s.trim().replaceAll(" +", " ");
 					Percent p = new Percent();
@@ -160,17 +160,30 @@ public class Server {
 				List<List<Percent>> landuseTotal = new ArrayList<>(), soilsTotal = new ArrayList<>(), slopeTotal = new ArrayList<>();
 				float totalHa, totalAcres;
 				
-				while (!(s = br.readLine()).contains("SUBBASIN")) {
+				while ((s = br.readLine()) != null) {
 					s = s.trim().replaceAll(" +", " ");
-					if (s.contains("Watershed")) {
-						totalHa = Float.parseFloat(s.split(" ")[1]);
-						totalAcres = Float.parseFloat(s.split(" ")[2]);
-					} else if (s.contains("LANDUSE")) {
-						landuseTotal.add(populateStructure(br));
-					} else if (s.contains("SOILS")) {
-						soilsTotal.add(populateStructure(br));
-					} else if (s.contains("SLOPE")){
-						slopeTotal.add(populateStructure(br));
+					if (s.contains("SUBBASIN") && s.split(" ")[2].equals(subbasin + "")) {
+						totalHa = Float.parseFloat(s.split(" ")[3]);
+						totalAcres = Float.parseFloat(s.split(" ")[4]);
+					
+						boolean flag1 = true, flag2 = true, flag3 = true;
+						
+						while ((flag1 || flag2 || flag3) && (s = br.readLine()) != null) {
+							if (s.contains("LANDUSE")) {
+								landuseTotal.add(populateStructure(br));
+								flag1 = false;
+							}
+							if (s.contains("SOILS")) {
+								soilsTotal.add(populateStructure(br));
+								flag2  = false;
+							}
+							if (s.contains("SLOPE")){
+								slopeTotal.add(populateStructure(br));
+								flag3 = false;
+							}
+						}
+						
+						break;
 					}
 				}
 			
