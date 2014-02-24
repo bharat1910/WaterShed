@@ -106,9 +106,18 @@ public class Server {
 				response.type("text/html");
 				
 				try {
+					String watershed = request.queryParams("watershed");
+					Integer subbasin = Integer.parseInt(request.queryParams("subbasin"));
 					Integer option = Integer.parseInt(request.queryParams("option"));
 					
-					List<List<Percent>> list = parseFile("HRULandUseSoilsReport/bigDitch_HRULandUseSoilsReport.txt", option);
+					String file = null;
+					if (watershed.equals("bd")) {
+						file = "HRULandUseSoilsReport/bigDitch_HRULandUseSoilsReport.txt";
+					} else {
+						file = "HRULandUseSoilsReport/bigLongCreek_HRULandUseSoilsReport.txt";
+					}
+					
+					List<List<Percent>> list = parseFile(file, option, subbasin);
 					String s = "";
 					
 					for (Percent p : list.get(0)) {
@@ -143,7 +152,7 @@ public class Server {
 				return result;
 			}
 			
-			public List<List<Percent>> parseFile(String fileName, int option) throws IOException
+			public List<List<Percent>> parseFile(String fileName, int option, int subbasin) throws IOException
 			{
 				BufferedReader br = new BufferedReader(new FileReader(fileName));
 				String s;
