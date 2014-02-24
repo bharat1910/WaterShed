@@ -318,7 +318,6 @@
 					$("#select_all_hru").show();
 					$("#hru_percent").show();
 					$("#assign_bmp_button").show();
-					$("#submit_bmp_button").show();
 					$("#reset_bmp_button").show();
 					$("#evaluate").show();
 					$("#checkSelection").show();
@@ -495,7 +494,9 @@
 		}
 		else{
 			showMessage(Math.floor(parseFloat(area_fraction)*100)/100 + " % of Subbasin has been assigned "+ $("#bmp option:selected").text());
-		}		
+		}
+		
+		addSubbasinForBMP();
 	}
 	
 	function clearBMP(){
