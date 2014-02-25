@@ -1113,7 +1113,7 @@
 						}
 						final_bmp = final_bmp + hru_bmp_list[hru_bmp_list.length-1];
 												
-						alert("Evaluation Started. Please wait!!!");
+						showMessage("Evaluation Started. Please wait!!!");
 						addProgressBar();// show progress bar for user
 						//get single simulation data
 						document.getElementById("restart").disabled = true;
@@ -1511,6 +1511,8 @@
 		var element=document.getElementById("bmp_table");
 		element.appendChild(para0);
 		element.appendChild(tab);
+		
+		$("#checkBMPTable").show();
 	}
 	
 	//draw table to show sub basin level evaluation results

@@ -309,6 +309,8 @@
                         <button type="button" class="button" id="evaluate" style="display:none">Evaluate</button>
                         &nbsp;
                         <label id="checkSelection" class="dblue" style="display:none" onclick="popUpSelection()">Check Selection</label>
+                        &nbsp;
+                        <label id="checkBMPTable" class="dblue" style="display:none" onclick="popUpBMPTable()">Check BMP table</label>
 				    </td>
 				</tr>
 				<tr style="display:none">
@@ -373,7 +375,6 @@
 			<div id="map" style="height:700px;width:800px;float:left;">
 			</div>
 			<div id="bmp_display" style="height:850px;width:800px;float:left;">
-				<div id="bmp_table" style="height:250px;width:800px;overflow-y:auto;" align="center"></div>
 				<div id="bmp_progress" style="height:50px;width:800px;" align="center"></div>
 				<div id="bmp_chart" style="height:550px;">
 					<div id="bmp_chart_nit" style="height:550px;width:800px;float:left;"></div>
@@ -406,12 +407,17 @@
             </table>
         </div>
         
+        <div id="bmp_table_popup">
+            <div id="bmp_table" style="height:350px;width:800px;overflow-y:auto;" align="center"></div>
+        </div>
+        
 		<script type="text/javascript">
 		$(document).ready(function() {
 		    $("#wstype").chosen();
 		    $("#lss_select").chosen();
 		    $("#popup").dialog({ autoOpen: false, height: 1000, width: 1200}); // Initialize dialog plugin
 		    $("#selection_popup").dialog({ autoOpen: false, height: 600, width: 900});
+		    $("#bmp_table_popup").dialog({ autoOpen: false, height: 500, width: 900});
 		});
 		
 		function popitup(url) {
@@ -487,6 +493,11 @@
 		function resetSelection()
 		{
 			location.reload();
+		}
+		
+		function popUpBMPTable()
+		{
+			$("#bmp_table_popup").dialog("open");
 		}
 		
 		function popUpSelection()
