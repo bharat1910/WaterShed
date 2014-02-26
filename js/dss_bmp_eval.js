@@ -1762,23 +1762,47 @@
 	}
 	
 	function addProgressBar(){
-		var para0=document.createElement("p");
-		var node0=document.createTextNode("Evaluation Inprogress..........");
-		para0.appendChild(node0);
-		para0.className="progress";
+		$("#bmp_progress").css('margin-left', '200px');
+		$("#bmp_progress").css('margin-top', '200px');
 		
-		document.getElementById("bmp_table").appendChild(para0);
+//		$( "#bmp_progress" ).progressbar({
+//	        value: false
+//	    });
+		
+		window.percentProgressBar = 0;
+		incrementProgressCount();
+	}
 	
-		$("#bmp_progress").progressbar({value: false});
-		$("#bmp_progress").progressbar( "option", "value", false );
+	function incrementProgressCount()
+	{
+		if (window.percentProgressBar == 100) {
+			$( "#bmp_progress").progressbar({
+		        value: 100
+		    });
+			removeProgressBarDivAssociatedData();
+			return;
+		}
+		
+		$( "#bmp_progress" ).progressbar({
+	        value: window.percentProgressBar
+	    });
+		
+		if (window.percentProgressBar < 99) {
+			window.percentProgressBar = window.percentProgressBar + 1;
+			setTimeout(incrementProgressCount, 1200);
+		}
 	}
 	
 	function removeProgressBar(){
+		window.percentProgressBar = 100;
+		incrementProgressCount();
+	}
+	
+	function removeProgressBarDivAssociatedData()
+	{
 		$("#bmp_progress").progressbar("destroy");
-		var div_ele = document.getElementById("bmp_table");
-		while( div_ele.hasChildNodes() ){
-			div_ele.removeChild(div_ele.lastChild);
-		}
+		$("#bmp_progress").css('margin-left', '0px');
+		$("#bmp_progress").css('margin-top', '0px');
 	}
 	
 	//check on keypress if is a digit
