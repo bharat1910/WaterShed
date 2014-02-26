@@ -1747,19 +1747,33 @@
 	                zoomType: 'xy'
 	            },
 	            title: {
-	                text: "BMP Evaluation Chart - " + nutrientType + " Reduction"
+	                text: "BMP Evaluation Chart - " + nutrientType + " Reduction",
+	                style: {
+	                	fontSize : '25px'
+	                }
 	            },
 	            xAxis: {
 	                title: {
 	                    enabled: true,
-	                    text: nutrientType +' Reduction (%)'
+	                    text: nutrientType +' Reduction (%)',
+	                    style: {
+	                    	fontSize : '20px'
+	                    }
 	                },
 	                gridLineWidth: 1
 	            },
 	            yAxis: {
 	                title: {
-	                    text: 'BMP Cost (USD)'
+	                    text: 'BMP Cost (USD)',
+	                    style: {
+	                    	fontSize : '20px'
+	                    }
 	                }
+	            },
+	            legend: {
+	            	style: {
+	            		fontSize : '20px'
+	            	}
 	            },
 	            plotOptions: {
 	                scatter: {
@@ -1792,7 +1806,7 @@
 	    
 	            }, {
 	                name: 'Evaluation',
-	                color: 'rgba(255 , 0, 0, 0.9)',
+	                color: 'rgba(255 , 140, 0, 1)',
 	                data: dataHEvaluation
 	            }]
 	        });
