@@ -1716,8 +1716,87 @@
 		
 		//Use Google's ScatterChart
 		var chart = new google.visualization.ScatterChart(document.getElementById(divID));//global variable for chart
-		google.visualization.events.addListener(chart, 'select', selectHandler);		
+		google.visualization.events.addListener(chart, 'select', selectHandler);
 		chart.draw(data, options);
+		
+		var dataHOptimal = [];
+		var dataHEvaluation = [];
+		window.dataG = data;
+		for (var i=0; i<window.dataG['Bd'].length - 1; i++) {
+			var temp = [];
+			temp.push(parseFloat(window.dataG['Bd'][i][0]['Ue']));
+			temp.push(parseFloat(window.dataG['Bd'][i][1]['Ue']));
+			dataHOptimal.push(temp);
+		}
+		
+		var temp = [];
+		temp.push(parseFloat(window.dataG['Bd'][window.dataG['Bd'].length - 1][0]['Ue']));
+		temp.push(parseFloat(window.dataG['Bd'][window.dataG['Bd'].length - 1][3]['Ue']));
+		dataHEvaluation.push(temp);
+		
+		console.log(nutrientType);
+		plotHighChart(dataHOptimal, dataHEvaluation, nutrientType);
+	}
+	
+	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType)
+	{
+		$(function () {
+	        $('#bmp_chart_temp').highcharts({
+	            chart: {
+	                type: 'scatter',
+	                zoomType: 'xy'
+	            },
+	            title: {
+	                text: "BMP Evaluation Chart - " + nutrientType + " Reduction"
+	            },
+	            xAxis: {
+	                title: {
+	                    enabled: true,
+	                    text: nutrientType +' Reduction (%)'
+	                },
+	                gridLineWidth: 1
+	            },
+	            yAxis: {
+	                title: {
+	                    text: 'BMP Cost (USD)'
+	                }
+	            },
+	            plotOptions: {
+	                scatter: {
+	                    marker: {
+	                        radius: 5,
+	                        states: {
+	                            hover: {
+	                                enabled: true,
+	                                lineColor: 'rgb(100,100,100)'
+	                            }
+	                        }
+	                    },
+	                    states: {
+	                        hover: {
+	                            marker: {
+	                                enabled: false
+	                            }
+	                        }
+	                    },
+	                    tooltip: {
+	                        headerFormat: '<b>{series.name}</b><br>',
+	                        pointFormat: nutrientType +' Reduction : {point.x} %, Cost : {point.y} USD'
+	                    }
+	                }
+	            },
+	            series: [{
+	                name: 'Optimal',
+	                color: 'rgba(0 , 0, 255, 0.9)',
+	                data: dataHOptimal
+	    
+	            }, {
+	                name: 'Evaluation',
+	                color: 'rgba(255 , 0, 0, 0.9)',
+	                data: dataHEvaluation
+	            }]
+	        });
+	    });
 	}
 	
 	//Just a warning message that pareto optimal data will not be shown for multiple BMP selection
