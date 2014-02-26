@@ -1722,7 +1722,7 @@
 		var dataHOptimal = [];
 		var dataHEvaluation = [];
 		window.dataG = data;
-		for (var i=0; i<window.dataG['Bd'].length - 1; i++) {
+		for (var i=0; i<window.dataG['Bd'].length - 2; i++) {
 			var temp = [];
 			temp.push(parseFloat(window.dataG['Bd'][i][0]['Ue']));
 			temp.push(parseFloat(window.dataG['Bd'][i][1]['Ue']));
@@ -1734,7 +1734,6 @@
 		temp.push(parseFloat(window.dataG['Bd'][window.dataG['Bd'].length - 1][3]['Ue']));
 		dataHEvaluation.push(temp);
 		
-		console.log(nutrientType);
 		plotHighChart(dataHOptimal, dataHEvaluation, nutrientType);
 	}
 	
