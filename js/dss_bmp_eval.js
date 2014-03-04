@@ -1685,12 +1685,8 @@
 		// The select handler. Call the chart's getSelection() method
 		// call back method for the user selection of points in the chart
 		// need to dsplay the HRUs in the map which correspond to the value selected in the graph
-		function selectHandler() {
-			var selectedItem = chart.getSelection()[0];
+		selectHandler = function(selectedItem) {
 			if (selectedItem) {
-				var value = data.getValue(selectedItem.row, selectedItem.column);
-				//alert('Row:' + selectedItem.row + " Value:" + value);
-				
 				//from here on, we will have only one HRU Feature layer on the map
 				//this layer will be tagged with ID "1"
 				//remove the already existing layer created in function for "evaluate" button click
@@ -1705,10 +1701,10 @@
 				}	
 				var hru_layer = new esri.layers.FeatureLayer(hru_url,{id:"1"});
 				if(nutrientType == "Nitrate"){
-					hru_layer.setDefinitionExpression("HRU_ID IN ("+chart_hru_id_nit[selectedItem.row]+")");
+					hru_layer.setDefinitionExpression("HRU_ID IN ("+chart_hru_id_nit[selectedItem]+")");
 				}
 				else if(nutrientType == "Phosphorous"){
-					hru_layer.setDefinitionExpression("HRU_ID IN ("+chart_hru_id_pho[selectedItem.row]+")");
+					hru_layer.setDefinitionExpression("HRU_ID IN ("+chart_hru_id_pho[selectedItem]+")");
 				}
 				map.addLayer(hru_layer);
 			}
@@ -1737,8 +1733,16 @@
 		plotHighChart(dataHOptimal, dataHEvaluation, nutrientType);
 	}
 	
+	function prepare(dataArray) {
+	    return dataArray.map(function (item, index) {
+	        return {x: item[0], y: item[1], myIndex: index};
+	    });
+	};
+	
 	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType)
 	{
+		dataHOptimal = prepare(dataHOptimal);
+		
 		$(function () {
 	        $('#bmp_chart_temp').highcharts({
 	            chart: {
@@ -1796,7 +1800,17 @@
 	                        headerFormat: '<b>{series.name}</b><br>',
 	                        pointFormat: nutrientType +' Reduction : {point.x} %, Cost : {point.y} USD'
 	                    }
-	                }
+	                },
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function() {
+                                	selectHandler(this.myIndex);
+                                }
+                            }
+                        }
+                    }
 	            },
 	            series: [{
 	                name: 'Optimal',
