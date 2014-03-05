@@ -1761,7 +1761,7 @@
 	
 	function prepare(dataArray) {
 	    return dataArray.map(function (item, index) {
-	        return {x: item[0], y: item[1], myIndex: index, nutrientPercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
+	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
 	    });
 	};
 	
@@ -1834,6 +1834,14 @@
                                 click: function() {
                                 	console.log(this);
                                 	selectHandler(this.myIndex);
+                                	$('#supplementary_information').show();
+                                	$('#supplementary_information tr:last').remove();
+                                	$('#supplementary_information tr:last').after('<tr><td align="center">' + this.bmpScenarioId + '</td>' +
+                                			'<td align="center">' + this.bmpTreatmentArea + '</td>' +
+                                			'<td align="center">' + this.nitratePercentage + '</td>' +
+                                			'<td align="center">' + this.tp + '</td>' +
+                                			'<td align="center">' + this.sed + '</td>' +
+                                			'<td align="center">' + this.equalAnnualCost + '</td></tr>');
                                 }
                             }
                         }
