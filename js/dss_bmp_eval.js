@@ -1756,7 +1756,7 @@
 		temp.push(parseFloat(single_simu_cost));
 		dataHEvaluation.push(temp);
 		
-		plotHighChart(dataHOptimal, dataHEvaluation, nutrientType);
+		plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost);
 	}
 	
 	function prepare(dataArray) {
@@ -1765,9 +1765,16 @@
 	    });
 	};
 	
-	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType)
+	function prepareUserNormalizedOptimal(dataArray, user_cost) {
+	    return dataArray.map(function (item, index) {
+	        return {x: item[0], y: (item[1] * user_cost / 66.7), myIndex: index, nitratePercentage: item[0], equalAnnualCost: (item[1] * user_cost / 66.7), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
+	    });
+	};
+	
+	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost)
 	{
-		dataHOptimal = prepare(dataHOptimal);
+		dataHOptimalUnmodified = prepare(dataHOptimal);
+		dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost);
 		
 		$(function () {
 	        $('#bmp_chart_temp').highcharts({
@@ -1832,7 +1839,6 @@
                         point: {
                             events: {
                                 click: function() {
-                                	console.log(this);
                                 	selectHandler(this.myIndex);
                                 	$('#supplementary_information').show();
                                 	$('#supplementary_information tr:last').remove();
@@ -1850,7 +1856,12 @@
 	            series: [{
 	                name: 'Optimal',
 	                color: 'rgba(0 , 0, 255, 0.9)',
-	                data: dataHOptimal
+	                data: dataHOptimalUnmodified
+	    
+	            }, {
+	                name: 'Optimal normalized by user value',
+	                color: 'rgba(0 , 0, 0, 0.9)',
+	                data: dataHOptimalNormalized
 	    
 	            }, {
 	                name: 'Evaluation',
