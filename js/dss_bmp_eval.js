@@ -1302,19 +1302,27 @@
 												break;
 										}
 									}
-									for(i=0 ;i<optimal_data_nit.length ; i++){
+									for(i=1 ;i<optimal_data_nit.length ; i++){
+										if (optimal_data_nit[i].replace(/ /g,"") == "") {
+											continue;
+										}
+										
 										var temp0 = optimal_data_nit[i].replace(/ /g,",");
 										var temp = temp0.split(",");
 										var temp1 = temp.filter(function(e){if(e != "")return true});
-										optimal_pol_red_nit[i] = temp1[temp1.length-2];optimal_cost_nit[i] = temp1[temp1.length-1];
+										optimal_pol_red_nit.push(temp1[368]);optimal_cost_nit.push(temp1[369]);
 									}
-									for(i=0 ;i<optimal_data_pho.length ; i++){
+									for(i=1 ;i<optimal_data_pho.length ; i++){
+										if (optimal_data_pho[i].replace(/ /g,"") == "") {
+											continue;
+										}
+										
 										var temp0 = optimal_data_pho[i].replace(/ /g,",");
 										var temp = temp0.split(",");
 										var temp1 = temp.filter(function(e){if(e != "")return true});
-										optimal_pol_red_pho[i] = temp1[temp1.length-2];optimal_cost_pho[i] = temp1[temp1.length-1];
+										optimal_pol_red_pho.push(temp1[368]);optimal_cost_pho.push(temp1[369]);
 									}
-									
+
 									//when we come here, we know that it is a single bmp evaluation. So, single_simu_bmp contains the bmp code (1 or 2 or 3)
 									//get the cost for the selected BMP and send it to drawChart for scaling the pareto optimal cost
 									var temp_cost;
@@ -1604,7 +1612,7 @@
 	//single_simu_cost : cost - single simulation
 	//user_cost : the cost entered by user for the BMP. This will be used to scale the unit cost used for the pareto optimal data
 	function drawChart(pol_red,cost,single_simu_red,single_simu_cost,user_cost,nutrientType,single_simu_bmp){
-		
+
 		//var cost = new Array(); //array for costs
 		//var pol_red = new Array(); //array for pollutant reduction
 		var hru_ids = new Array(); //array for hru_ids for a corresponding cost/pol_red value
@@ -1717,17 +1725,16 @@
 		
 		var dataHOptimal = [];
 		var dataHEvaluation = [];
-		window.dataG = data;
-		for (var i=0; i<window.dataG['Bd'].length - 2; i++) {
+		for (var i=0; i<pol_red.length; i++) {
 			var temp = [];
-			temp.push(parseFloat(window.dataG['Bd'][i][0]['Ue']));
-			temp.push(parseFloat(window.dataG['Bd'][i][1]['Ue']));
+			temp.push(parseFloat(pol_red[i]));
+			temp.push(parseFloat(cost[i])/80.7);
 			dataHOptimal.push(temp);
 		}
 		
 		var temp = [];
-		temp.push(parseFloat(window.dataG['Bd'][window.dataG['Bd'].length - 1][0]['Ue']));
-		temp.push(parseFloat(window.dataG['Bd'][window.dataG['Bd'].length - 1][3]['Ue']));
+		temp.push(parseFloat(single_simu_red));
+		temp.push(parseFloat(single_simu_cost));
 		dataHEvaluation.push(temp);
 		
 		plotHighChart(dataHOptimal, dataHEvaluation, nutrientType);
