@@ -1743,7 +1743,7 @@
 		for (var i=0; i<pol_red.length; i++) {
 			var temp = [];
 			temp.push(parseFloat(pol_red[i]));
-			temp.push(parseFloat(cost[i])/80.7);
+			temp.push(parseFloat(cost[i]));
 			temp.push(supplementaryData[i][0]);
 			temp.push(supplementaryData[i][1]);
 			temp.push(supplementaryData[i][2]);
