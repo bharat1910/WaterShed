@@ -1184,6 +1184,7 @@
 									var optimal_pol_red_pho = new Array();//pollutant(phosphorous) reduction in the optimal data
 									var optimal_cost_nit = new Array();//optimal cost for nitrate
 									var optimal_cost_pho = new Array();//optimal cost for phosphorous
+									var supplementaryData = new Array();
 									if(document.getElementById("wstype").value == "blc"){
 										//this implementation considers only nitrate nutrient for displaying pareto optimal data
 										switch(single_simu_bmp){
@@ -1310,7 +1311,14 @@
 										var temp0 = optimal_data_nit[i].replace(/ /g,",");
 										var temp = temp0.split(",");
 										var temp1 = temp.filter(function(e){if(e != "")return true});
+										var temp2 = new Array();
 										optimal_pol_red_nit.push(temp1[368]);optimal_cost_nit.push(temp1[369]);
+										
+										temp2.push(temp1[370]);
+										temp2.push(temp1[371]);
+										temp2.push(temp1[372]);
+										temp2.push(temp1[373]);
+										supplementaryData.push(temp2);
 									}
 									for(i=1 ;i<optimal_data_pho.length ; i++){
 										if (optimal_data_pho[i].replace(/ /g,"") == "") {
@@ -1320,7 +1328,14 @@
 										var temp0 = optimal_data_pho[i].replace(/ /g,",");
 										var temp = temp0.split(",");
 										var temp1 = temp.filter(function(e){if(e != "")return true});
+										var temp2 = new Array();
 										optimal_pol_red_pho.push(temp1[368]);optimal_cost_pho.push(temp1[369]);
+										
+										temp2.push(temp1[370]);
+										temp2.push(temp1[371]);
+										temp2.push(temp1[372]);
+										temp2.push(temp1[373]);
+										supplementaryData.push(temp2);
 									}
 
 									//when we come here, we know that it is a single bmp evaluation. So, single_simu_bmp contains the bmp code (1 or 2 or 3)
@@ -1361,7 +1376,7 @@
 									drawTable(single_simu_bmp);
 									
 									//draw the chart for nitrate
-									drawChart(optimal_pol_red_nit,optimal_cost_nit,single_simu_result[3],single_simu_result[8],temp_cost,"Nitrate",single_simu_bmp);
+									drawChart(optimal_pol_red_nit,optimal_cost_nit,single_simu_result[3],single_simu_result[8],temp_cost,"Nitrate",single_simu_bmp,supplementaryData);
 									
 									/************************Initially, it was decided to show phosphorous graph plot. After development,it was decided not to show it***********************/
 									/*draw the chart for phosphorous
@@ -1422,7 +1437,7 @@
 			var temp = temp0.split(",");
 			var temp1 = temp.filter(function(e){if(e != "")return true});//remove all empty elements
 			hru_id= "";
-			for(j=0 ;j<(temp1.length-2) ; j++){ //last 2 elements in temp1 are pollu_red and cost which we do not want
+			for(j=0 ;j<368 ; j++){ //last 2 elements in temp1 are pollu_red and cost which we do not want
 				if(temp1[j] != "0"){ //value "0" means that the HRU_ID was not selected for BMP,so ignore it
 					if(hru_id == "") hru_id = hru_id_list[j];
 					else hru_id = hru_id + "," + hru_id_list[j];
@@ -1611,7 +1626,7 @@
 	//single_simu_red : pollutant reduction - single simulation
 	//single_simu_cost : cost - single simulation
 	//user_cost : the cost entered by user for the BMP. This will be used to scale the unit cost used for the pareto optimal data
-	function drawChart(pol_red,cost,single_simu_red,single_simu_cost,user_cost,nutrientType,single_simu_bmp){
+	function drawChart(pol_red,cost,single_simu_red,single_simu_cost,user_cost,nutrientType,single_simu_bmp,supplementaryData){
 
 		//var cost = new Array(); //array for costs
 		//var pol_red = new Array(); //array for pollutant reduction
@@ -1729,6 +1744,10 @@
 			var temp = [];
 			temp.push(parseFloat(pol_red[i]));
 			temp.push(parseFloat(cost[i])/80.7);
+			temp.push(supplementaryData[i][0]);
+			temp.push(supplementaryData[i][1]);
+			temp.push(supplementaryData[i][2]);
+			temp.push(supplementaryData[i][3]);
 			dataHOptimal.push(temp);
 		}
 		
@@ -1742,7 +1761,7 @@
 	
 	function prepare(dataArray) {
 	    return dataArray.map(function (item, index) {
-	        return {x: item[0], y: item[1], myIndex: index};
+	        return {x: item[0], y: item[1], myIndex: index, nutrientPercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
 	    });
 	};
 	
@@ -1813,6 +1832,7 @@
                         point: {
                             events: {
                                 click: function() {
+                                	console.log(this);
                                 	selectHandler(this.myIndex);
                                 }
                             }
