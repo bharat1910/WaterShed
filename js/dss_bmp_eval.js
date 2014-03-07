@@ -1463,6 +1463,15 @@
 	
 	//Display single simulation results in a table
 	function drawTable(bmp_id){
+		
+		$('#supplementary_information tr:last').after('<tr><td align="center">' + '' + '</td>' +
+    			'<td align="center">' + '' + '</td>' +
+    			'<td align="center">' + single_simu_result[3] + '</td>' +
+    			'<td align="center">' + single_simu_result[5] + '</td>' +
+    			'<td align="center">' + single_simu_result[1] + '</td>' +
+    			'<td align="center">' +	single_simu_result[8] + '</td></tr>');
+		$('#supplementary_information').show();
+		
 		var para0=document.createElement("p");
 		var node0=document.createTextNode("Watershed level BMP Evaluation Result - Cost : "+single_simu_result[8]+" USD");
 		para0.appendChild(node0);
@@ -1851,15 +1860,17 @@
                             events: {
                                 click: function() {
                                 	selectHandler(this.myIndex);
-                                	$('#supplementary_information').show();
-                                	$('#supplementary_information tr:last').remove();
-                                	$('#supplementary_information tr:last').after('<tr><td align="center">' + this.bmpScenarioId + '</td>' +
+                                	if ($("#supplementary_information tr").length == 4) {
+                                    	$('#supplementary_information tr:last').remove();
+                                	} 
+                                	$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
                                 			'<td align="center">' + this.bmpTreatmentArea + '</td>' +
                                 			'<td align="center">' + this.nitratePercentage + '</td>' +
                                 			'<td align="center">' + this.tp + '</td>' +
                                 			'<td align="center">' + this.sed + '</td>' +
                                 			'<td align="center">' + this.equalAnnualCost + '</td></tr>');
-                                	$("#supplementary_information").parent().show();
+                                	
+                                	setTimeout(removeColorFromRow, 5000);
                                 }
                             }
                         }
@@ -1886,6 +1897,11 @@
 	            }]
 	        });
 	    });
+	}
+	
+	function removeColorFromRow()
+	{
+		$("#supplementary_information tr:last").attr('bgcolor', '#FFFFFF');
 	}
 	
 	//Just a warning message that pareto optimal data will not be shown for multiple BMP selection
