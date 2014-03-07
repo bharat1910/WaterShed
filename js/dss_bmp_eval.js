@@ -76,6 +76,7 @@
 			map.destroy("map");
 		}
 		
+		$("#map").show();
 		$("#downloadReport").show();
 		$("#reportFileType").show();
 		
@@ -1786,7 +1787,10 @@
 	        $('#bmp_chart_temp').highcharts({
 	            chart: {
 	                type: 'scatter',
-	                zoomType: 'xy'
+	                zoomType: 'xy',
+	                borderColor: '#dddddd',
+	            	borderWidth: 2,
+	            	borderRadius: 25
 	            },
 	            title: {
 	                text: "BMP Evaluation Chart - " + nutrientType + " Reduction",
@@ -1854,6 +1858,7 @@
                                 			'<td align="center">' + this.tp + '</td>' +
                                 			'<td align="center">' + this.sed + '</td>' +
                                 			'<td align="center">' + this.equalAnnualCost + '</td></tr>');
+                                	$("#supplementary_information").parent().show();
                                 }
                             }
                         }
