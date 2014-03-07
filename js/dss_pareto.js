@@ -81,11 +81,11 @@
 		
 		switch(waterShed){
 			case "bigDitch":
-				fileName = "bd_pareto";
+				fileName = "bd";
 				paretoArrayName = "bd_pareto";
 				break;
 			case "bigLongCreek":
-				fileName = "blc_pareto";
+				fileName = "blc";
 				paretoArrayName = "blc_pareto";
 				break;
 		}
@@ -99,49 +99,52 @@
 				paretoArrayName = paretoArrayName + "_pho";
 				break;
 		}
+		
+		fileName = fileName + "_pareto"
+		
 		switch(bmpIndex){
 			case 1:
-				fileName = fileName + "_fs.txt";
+				fileName = fileName + "_FS.txt";
 				paretoArrayName = paretoArrayName + "_fs";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 2:
-				fileName = fileName + "_gw.txt";
+				fileName = fileName + "_GW.txt";
 				paretoArrayName = paretoArrayName + "_gw";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 3:
-				fileName = fileName + "_cw.txt";
+				fileName = fileName + "_CW.txt";
 				paretoArrayName = paretoArrayName + "_cw";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 4:
-				fileName = fileName + "_br.txt";
+				fileName = fileName + "_BR.txt";
 				paretoArrayName = paretoArrayName + "_br";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 5:
-				fileName = fileName + "_cc.txt";
+				fileName = fileName + "_CC.txt";
 				paretoArrayName = paretoArrayName + "_cc";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 6:
-				fileName = fileName + "_dm.txt";
+				fileName = fileName + "_DM.txt";
 				paretoArrayName = paretoArrayName + "_dm";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 7:
-				fileName = fileName + "_sb.txt";
+				fileName = fileName + "_SB.txt";
 				paretoArrayName = paretoArrayName + "_sb";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 8:
-				fileName = fileName + "_nm.txt";
+				fileName = fileName + "_NM.txt";
 				paretoArrayName = paretoArrayName + "_nm";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 9:
-				fileName = fileName + "_pc.txt";
+				fileName = fileName + "_PC.txt";
 				paretoArrayName = paretoArrayName + "_pc";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;

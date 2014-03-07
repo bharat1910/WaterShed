@@ -438,7 +438,7 @@ public class Server {
 					return FileUtils.readFileToString(new File(
 							PARETO_DIR + pareto_file_name));
 				}catch (Exception e){
-					e.printStackTrace();
+					//e.printStackTrace();
 					return "";
 				}
 			}				

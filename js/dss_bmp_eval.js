@@ -1304,12 +1304,13 @@
 												break;
 										}
 									}
+
 									for(i=1 ;i<optimal_data_nit.length ; i++){
 										if (optimal_data_nit[i].replace(/ /g,"") == "") {
 											continue;
 										}
 										
-										var temp0 = optimal_data_nit[i].replace(/ /g,",");
+										var temp0 = optimal_data_nit[i].replace(/\t/g,",");
 										var temp = temp0.split(",");
 										var temp1 = temp.filter(function(e){if(e != "")return true});
 										var temp2 = new Array();
