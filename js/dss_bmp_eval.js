@@ -1773,8 +1773,14 @@
 	
 	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost)
 	{
-		dataHOptimalUnmodified = prepare(dataHOptimal);
-		dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost);
+		var dataHOptimalUnmodified = prepare(dataHOptimal);
+		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost);
+		
+		var dataHEvaluationNormalized = new Array();
+		var temp = new Array();
+		temp.push(dataHEvaluation[0][0]);
+		temp.push(dataHEvaluation[0][1] * 66.7 / user_cost);
+		dataHEvaluationNormalized.push(temp);
 		
 		$(function () {
 	        $('#bmp_chart_temp').highcharts({
@@ -1860,13 +1866,17 @@
 	    
 	            }, {
 	                name: 'Optimal normalized by user value',
-	                color: 'rgba(0 , 0, 0, 0.9)',
+	                color: 'rgba(0 , 255, 255, 0.9)',
 	                data: dataHOptimalNormalized
 	    
 	            }, {
 	                name: 'Evaluation',
-	                color: 'rgba(255 , 140, 0, 1)',
+	                color: 'rgba(210, 105, 30, 0.9)',
 	                data: dataHEvaluation
+	            }, {
+	                name: 'Evaluation based on user value',
+	                color: 'rgba(255, 140, 0 0.5)',
+	                data: dataHEvaluationNormalized
 	            }]
 	        });
 	    });
