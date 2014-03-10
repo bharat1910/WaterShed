@@ -100,6 +100,34 @@ public class Server {
 		/* 
 		 * Download HRU Soils LandUse report
 		 */
+		get(new Route("/getComputationConstants") {
+			@Override
+			public Object handle(Request request, Response response) {
+				String result = "";
+
+				// set the response type
+				response.type("text");
+				
+				try {
+					BufferedReader br = new BufferedReader(new FileReader("EAC_BL_2.txt"));
+					String s ;
+					
+					while ((s = br.readLine()) != null) {
+						result += s + "\n";
+					}
+					
+					br.close();	
+				} catch (Exception e) {
+					
+				}
+				
+				return result;
+			}
+		});
+		
+		/* 
+		 * Download HRU Soils LandUse report
+		 */
 		get(new Route("/getLanduseSoilChartData") {
 			@Override
 			public Object handle(Request request, Response response) {

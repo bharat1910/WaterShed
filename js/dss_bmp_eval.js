@@ -22,6 +22,10 @@
 	//7 implies SB (Saturated Buffer),8 implies NM (Nutrient Management (4Rs – Right source, rate, time, place)),9 implies PC (Perennial Crops)
 	var single_simu_bmp;
 	
+	var reader = new XMLHttpRequest() || new ActiveXObject('MSXML2.XMLHTTP');
+	var waterShedComputationConstants = new Array();
+	var bmpComputationConstants = {};
+
 	/*
 	 * BMP Parameters. Each BMP has some parameters like cost that needs to be collected from user
 	 * the default values are assigned at random. There are no rules for them.
@@ -2184,4 +2188,40 @@
 			obj.value = "";
 			obj.focus();
 		}
+	}
+
+	function loadFile() {
+	    reader.open('get', 'getComputationConstants', true); 
+	    reader.onreadystatechange = parseAndLoadContents;
+	    reader.send(null);
+	}
+
+	function parseAndLoadContents() {
+		if(reader.readyState==4) {
+	        var constantsList = reader.responseText.split("\n");
+	        
+	        for (var i=1; i<3; i++) {
+	        	var temp = constantsList[i].replace(/( |\t)+/g, ' ').split(" ");
+	        	
+	        	var map = {};
+	        	map['avg-flow'] = parseFloat(temp[1]);
+	        	map['sed-load'] = parseFloat(temp[2]);
+	        	map['nit-ld'] = parseFloat(temp[3]);
+	        	map['phos-ld'] = parseFloat(temp[4]);
+	        	map['area'] = parseFloat(temp[5]);
+	        	
+	        	waterShedComputationConstants.push(map);
+	        }
+	        
+	        for (var i=5; i<14; i++) {
+	        	var temp = constantsList[i].replace(/( |\t)+/g, ' ').split(" ");
+	        	
+	        	var map = {};
+	        	map['cest_org'] = parseFloat(temp[1]);
+	        	map['cm'] = parseFloat(temp[2]);
+	        	
+	        	var str = temp[0].toLowerCase();
+	        	bmpComputationConstants[str] = map;
+	        }
+	    }
 	}
