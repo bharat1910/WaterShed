@@ -1468,6 +1468,17 @@
 		}
 	}
 	
+	function computeUserSelectedCost()
+	{
+		if (subbasin == "cr" || subbasin == "rg" || subbasin == "cc" || subbasin == "aa" || subbasin == "fs") {
+			return item * user_cost / bmpComputationConstants[subbasin]['cest_org'];
+		} else {
+			var var1 = (item / (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20))) - 0.5 * bmpComputationConstants[subbasin]['cm'] * area) * user_cost / bmpComputationConstants[subbasin]['cest_org'];
+			var var2 = 0.5 * bmpComputationConstants[subbasin]['cm'] * area;
+			return var1 + var2;
+		}
+	}
+	
 	//Display single simulation results in a table
 	function drawTable(bmp_id){
 		
@@ -1490,7 +1501,7 @@
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[5]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[1]) / waterShedComputationConstants[watershedIndex]['sed-load'] * 100).toFixed(4) + '</td>' +
-    			'<td align="center">' +	single_simu_result[8] + '</td></tr>');
+    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8]) + '</td></tr>');
 		$('#supplementary_information').show();
 		
 		var para0=document.createElement("p");
@@ -1800,22 +1811,38 @@
 	    });
 	};
 	
-	function prepareUserNormalizedOptimal(dataArray, user_cost) {
-		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
-		var subbasin = list[list.length - 2].toLowerCase();
-		
+	function computeParetoCost(item, subbasin, user_cost, area)
+	{
+		if (subbasin == "cr" || subbasin == "rg" || subbasin == "cc" || subbasin == "aa" || subbasin == "fs") {
+			return item * user_cost / bmpComputationConstants[subbasin]['cest_org'];
+		} else {
+			var var1 = (item / (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20))) - 0.5 * bmpComputationConstants[subbasin]['cm'] * area) * user_cost / bmpComputationConstants[subbasin]['cest_org'];
+			var var2 = 0.5 * bmpComputationConstants[subbasin]['cm'] * area;
+			return var1 + var2;
+		}
+	}
+	
+	function prepareUserNormalizedOptimal(dataArray, user_cost, subbasin, area) {
 		return dataArray.map(function (item, index) {
-	        return {x: item[0], y: (item[1] * user_cost / bmpComputationConstants[subbasin]['cest_org']), myIndex: index, nitratePercentage: item[0], equalAnnualCost: (item[1] * user_cost / 66.7), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
+			return {x: item[0], y: computeParetoCost(item[1], subbasin, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], subbasin, user_cost, area), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
 	    });
 	};
 	
 	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost)
 	{
-		var dataHOptimalUnmodified = prepare(dataHOptimal);
-		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost);
-		
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
 		var subbasin = list[list.length - 2].toLowerCase();
+		
+		var watershedIndex;
+		if ($("#wstype").val() == "bd") {
+			watershedIndex = 0;
+		} else {
+			watershedIndex = 1;
+		}
+		var area = waterShedComputationConstants[watershedIndex]['area'];
+		
+		var dataHOptimalUnmodified = prepare(dataHOptimal);
+		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost, subbasin, area);
 		
 		var dataHEvaluationNormalized = new Array();
 		var temp = new Array();
@@ -1890,7 +1917,7 @@
                             events: {
                                 click: function() {
                                 	selectHandler(this.myIndex);
-                                	if ($("#supplementary_information tr").length == 4) {
+                                	if ($("#supplementary_information tr").length == 5) {
                                     	$('#supplementary_information tr:last').remove();
                                 	} 
                                 	$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
