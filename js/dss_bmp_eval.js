@@ -34,30 +34,30 @@
 	 * So, decided to assign some random values.
 	 */
 	//FS
-	var bmp_param_fs_cost = "100";
+	var bmp_param_fs_cost = "1";
 	//GW
-	var bmp_param_gw_cost = "100";
+	var bmp_param_gw_cost = "2509";
 	//CW
-	var bmp_param_cw_cost = "100";
+	var bmp_param_cw_cost = "2700";
 	//BR
-	var bmp_param_br_cost = "100";
+	var bmp_param_br_cost = "133";
 	//CC
-	var bmp_param_cc_cost = "100";
+	var bmp_param_cc_cost = "1";
 	var bmp_param_cc_type = "1";
 	//DM
-	var bmp_param_dm_cost = "100";
+	var bmp_param_dm_cost = "1";
 	//SB
-	var bmp_param_sb_cost = "100";
+	var bmp_param_sb_cost = "125";
 	//NM
-	var bmp_param_nm_cost1 = "100";
-	var bmp_param_nm_cost2 = "100";
-	var bmp_param_nm_cost3 = "100";
-	var bmp_param_nm_cost4 = "100";
-	var bmp_param_nm_rate = "160";
-	var bmp_param_nm_ratio1 = "0.1";
+	var bmp_param_nm_cost1 = "802";
+	var bmp_param_nm_cost2 = "657";
+	var bmp_param_nm_cost3 = "314";
+	var bmp_param_nm_cost4 = "498";
+	var bmp_param_nm_rate = "155";
+	var bmp_param_nm_ratio1 = "0.2";
 	var bmp_param_nm_ratio2 = "0.5";	
 	//PC
-	var bmp_param_pc_cost = "100";
+	var bmp_param_pc_cost = "1";
 	var bmp_param_pc_type = "1";
 	
 	var bmp_map = new Object();
