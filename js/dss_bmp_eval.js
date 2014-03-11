@@ -1494,11 +1494,11 @@
 		$('#supplementary_information tr:last').after('<tr><td align="center">' + '' + '</td>' +
     			'<td align="center">' + '' + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[3]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(2) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(2) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[5]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(2) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(2) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[1]) / waterShedComputationConstants[watershedIndex]['sed-load'] * 100).toFixed(2) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['sed-load'] * 100).toFixed(2) + '</td>' +
     			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], subbasin, watershedIndex).toFixed(2) + '</td></tr>');
 		$('#supplementary_information').show();
 		
