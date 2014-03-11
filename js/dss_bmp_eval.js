@@ -1309,23 +1309,26 @@
 										}
 									}
 
+									var length = optimal_data_nit[0].replace(/( |\t)/g,",").split(",").length;
+									
 									for(i=1 ;i<optimal_data_nit.length ; i++){
-										if (optimal_data_nit[i].replace(/ /g,"") == "") {
+										if (optimal_data_nit[i].replace(/( |\t)/g,"") == "") {
 											continue;
 										}
 										
-										var temp0 = optimal_data_nit[i].replace(/\t/g,",");
+										var temp0 = optimal_data_nit[i].replace(/( |\t)/g,",");
 										var temp = temp0.split(",");
 										var temp1 = temp.filter(function(e){if(e != "")return true});
 										var temp2 = new Array();
-										optimal_pol_red_nit.push(temp1[368]);optimal_cost_nit.push(temp1[369]);
+										optimal_pol_red_nit.push(temp1[length - 6]);optimal_cost_nit.push(temp1[length - 5]);
 										
-										temp2.push(temp1[370]);
-										temp2.push(temp1[371]);
-										temp2.push(temp1[372]);
-										temp2.push(temp1[373]);
+										temp2.push(temp1[length - 4]);
+										temp2.push(temp1[length - 3]);
+										temp2.push(temp1[length - 2]);
+										temp2.push(temp1[length - 1]);
 										supplementaryData.push(temp2);
 									}
+									
 									for(i=1 ;i<optimal_data_pho.length ; i++){
 										if (optimal_data_pho[i].replace(/ /g,"") == "") {
 											continue;
@@ -1335,12 +1338,12 @@
 										var temp = temp0.split(",");
 										var temp1 = temp.filter(function(e){if(e != "")return true});
 										var temp2 = new Array();
-										optimal_pol_red_pho.push(temp1[368]);optimal_cost_pho.push(temp1[369]);
+										optimal_pol_red_pho.push(temp1[length - 6]);optimal_cost_pho.push(temp1[length - 5]);
 										
-										temp2.push(temp1[370]);
-										temp2.push(temp1[371]);
-										temp2.push(temp1[372]);
-										temp2.push(temp1[373]);
+										temp2.push(temp1[length - 4]);
+										temp2.push(temp1[length - 3]);
+										temp2.push(temp1[length - 2]);
+										temp2.push(temp1[length - 1]);
 										supplementaryData.push(temp2);
 									}
 
