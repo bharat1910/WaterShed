@@ -1499,7 +1499,7 @@
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[5]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(2) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[1]) / waterShedComputationConstants[watershedIndex]['sed-load'] * 100).toFixed(2) + '</td>' +
-    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], subbasin, watershedIndex) + '</td></tr>');
+    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], subbasin, watershedIndex).toFixed(2) + '</td></tr>');
 		$('#supplementary_information').show();
 		
 		var para0=document.createElement("p");
@@ -1919,14 +1919,14 @@
                                     	$('#supplementary_information tr:last').remove();
                                 	} 
                                 	$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
-                                			'<td align="center">' + this.bmpTreatmentArea + '</td>' +
+                                			'<td align="center">' + parseFloat(this.bmpTreatmentArea).toFixed(2) + '</td>' +
                                 			'<td align="center">' + '' + '</td>' +
-                                			'<td align="center">' + this.nitratePercentage + '</td>' +
+                                			'<td align="center">' + parseFloat(this.nitratePercentage).toFixed(2) + '</td>' +
                                 			'<td align="center">' + '' + '</td>' +
-                                			'<td align="center">' + this.tp + '</td>' +
+                                			'<td align="center">' + parseFloat(this.tp).toFixed(2) + '</td>' +
                                 			'<td align="center">' + '' + '</td>' +
-                                			'<td align="center">' + this.sed + '</td>' +
-                                			'<td align="center">' + this.equalAnnualCost + '</td></tr>');
+                                			'<td align="center">' + parseFloat(this.sed).toFixed(2) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.equalAnnualCost).toFixed(2) + '</td></tr>');
                                 	
                                 	setTimeout(removeColorFromRow, 5000);
                                 }
