@@ -1471,11 +1471,24 @@
 	//Display single simulation results in a table
 	function drawTable(bmp_id){
 		
+		var watershedIndex;
+		if ($("#wstype").val() == "bd") {
+			watershedIndex = 0;
+		} else {
+			watershedIndex = 1;
+		}
+		
+		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
+		var subbasin = list[list.length - 2].toLowerCase();
+		
 		$('#supplementary_information tr:last').after('<tr><td align="center">' + '' + '</td>' +
     			'<td align="center">' + '' + '</td>' +
-    			'<td align="center">' + single_simu_result[3] + '</td>' +
-    			'<td align="center">' + single_simu_result[5] + '</td>' +
-    			'<td align="center">' + single_simu_result[1] + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[3]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['area'] * 365) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[5]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[1]) / waterShedComputationConstants[watershedIndex]['sed-load'] * 100) + '</td>' +
     			'<td align="center">' +	single_simu_result[8] + '</td></tr>');
 		$('#supplementary_information').show();
 		
@@ -1778,14 +1791,20 @@
 	}
 	
 	function prepare(dataArray) {
+		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
+		var subbasin = list[list.length - 2].toLowerCase();
+		
 	    return dataArray.map(function (item, index) {
 	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
 	    });
 	};
 	
 	function prepareUserNormalizedOptimal(dataArray, user_cost) {
-	    return dataArray.map(function (item, index) {
-	        return {x: item[0], y: (item[1] * user_cost / 66.7), myIndex: index, nitratePercentage: item[0], equalAnnualCost: (item[1] * user_cost / 66.7), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
+		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
+		var subbasin = list[list.length - 2].toLowerCase();
+		
+		return dataArray.map(function (item, index) {
+	        return {x: item[0], y: (item[1] * user_cost / bmpComputationConstants[subbasin]['cest_org']), myIndex: index, nitratePercentage: item[0], equalAnnualCost: (item[1] * user_cost / 66.7), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
 	    });
 	};
 	
@@ -1794,10 +1813,13 @@
 		var dataHOptimalUnmodified = prepare(dataHOptimal);
 		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost);
 		
+		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
+		var subbasin = list[list.length - 2].toLowerCase();
+		
 		var dataHEvaluationNormalized = new Array();
 		var temp = new Array();
 		temp.push(dataHEvaluation[0][0]);
-		temp.push(dataHEvaluation[0][1] * 66.7 / user_cost);
+		temp.push(dataHEvaluation[0][1] * bmpComputationConstants[subbasin]['cest_org'] / user_cost);
 		dataHEvaluationNormalized.push(temp);
 		
 		$(function () {
@@ -2226,5 +2248,5 @@
 	        	var str = temp[0].toLowerCase();
 	        	bmpComputationConstants[str] = map;
 	        }
-	    }
+		}
 	}
