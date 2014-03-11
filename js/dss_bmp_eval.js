@@ -1481,14 +1481,15 @@
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
 		var subbasin = list[list.length - 2].toLowerCase();
 		
+		console.log(single_simu_result);
 		$('#supplementary_information tr:last').after('<tr><td align="center">' + '' + '</td>' +
     			'<td align="center">' + '' + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[3]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['area'] * 365) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[5]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[1]) / waterShedComputationConstants[watershedIndex]['sed-load'] * 100) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[3]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[5]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[1]) / waterShedComputationConstants[watershedIndex]['sed-load'] * 100).toFixed(4) + '</td>' +
     			'<td align="center">' +	single_simu_result[8] + '</td></tr>');
 		$('#supplementary_information').show();
 		
@@ -1894,8 +1895,11 @@
                                 	} 
                                 	$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
                                 			'<td align="center">' + this.bmpTreatmentArea + '</td>' +
+                                			'<td align="center">' + '' + '</td>' +
                                 			'<td align="center">' + this.nitratePercentage + '</td>' +
+                                			'<td align="center">' + '' + '</td>' +
                                 			'<td align="center">' + this.tp + '</td>' +
+                                			'<td align="center">' + '' + '</td>' +
                                 			'<td align="center">' + this.sed + '</td>' +
                                 			'<td align="center">' + this.equalAnnualCost + '</td></tr>');
                                 	
