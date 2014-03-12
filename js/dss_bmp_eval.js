@@ -197,11 +197,20 @@
 				document.getElementById("subbasin_id").options.selectedIndex=0;
 				
 				$("#subbasin_label").show();
-				$("#subbasin_id").show();
 				$("#bmp_label").show();
-				$("#bmp").show();
-				$("#subbasin_id").chosen();
-				$("#bmp").chosen();
+
+				if (window.onSelectWatershed == true) {
+					$("#subbasin_id").trigger("chosen:updated");
+					$("#subbasin_id").hide()
+					$("#bmp").trigger("chosen:updated");
+					$("#bmp").hide()
+				} else {
+					window.onSelectWatershed = true;
+					$("#subbasin_id").show();
+					$("#subbasin_id").chosen();
+					$("#bmp").show();
+					$("#bmp").chosen();
+				}
 			}, function(errorMsg){
 				alert("Error while fetching Subbasin IDs:"+errorMsg);
 			});
