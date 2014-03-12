@@ -1482,7 +1482,7 @@
 		if (subbasin == "cr" || subbasin == "rg" || subbasin == "cc" || subbasin == "aa" || subbasin == "fs") {
 			return output * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
 		} else {
-			return (output * 0.5 + 0.5 * waterShedComputationConstants[subbasin]['cm'] * waterShedComputationConstants[watershedIndex]['area']) * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
+			return (output * 0.5 + 0.5 * waterShedComputationConstants[watershedIndex]['cm'] * waterShedComputationConstants[watershedIndex]['area']) * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
 		}
 	}
 	
@@ -1506,8 +1506,8 @@
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(2) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-load'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['sed-load'] * 100).toFixed(2) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['sed-ld'] * 100).toFixed(2) + '</td>' +
     			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], subbasin, watershedIndex).toFixed(2) + '</td></tr>');
 		$('#supplementary_information').show();
 		
@@ -1809,14 +1809,21 @@
 		plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost);
 	}
 	
-	function prepare(dataArray) {
+	function prepare(dataArray, watershedIndex) {
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
 		var subbasin = list[list.length - 2].toLowerCase();
 		
 	    return dataArray.map(function (item, index) {
-	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
+	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5],
+	        	nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex)};
 	    });
 	};
+	
+	function computeValFromPercent(str, percent, watershedIndex)
+	{
+		var x = waterShedComputationConstants[watershedIndex][str] - percent * waterShedComputationConstants[watershedIndex][str] / 100;
+		return ((waterShedComputationConstants[watershedIndex][str] - x) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2);
+	}
 	
 	function computeParetoCost(item, subbasin, user_cost, area)
 	{
@@ -1829,9 +1836,10 @@
 		}
 	}
 	
-	function prepareUserNormalizedOptimal(dataArray, user_cost, subbasin, area) {
+	function prepareUserNormalizedOptimal(dataArray, user_cost, subbasin, area, watershedIndex) {
 		return dataArray.map(function (item, index) {
-			return {x: item[0], y: computeParetoCost(item[1], subbasin, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], subbasin, user_cost, area), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5]};
+			return {x: item[0], y: computeParetoCost(item[1], subbasin, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], subbasin, user_cost, area), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5],
+																										  nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex)};
 	    });
 	};
 	
@@ -1848,8 +1856,8 @@
 		}
 		var area = waterShedComputationConstants[watershedIndex]['area'];
 		
-		var dataHOptimalUnmodified = prepare(dataHOptimal);
-		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost, subbasin, area);
+		var dataHOptimalUnmodified = prepare(dataHOptimal, watershedIndex);
+		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost, subbasin, area, watershedIndex);
 		
 		var dataHEvaluationNormalized = new Array();
 		var temp = new Array();
@@ -1929,11 +1937,11 @@
                                 	} 
                                 	$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
                                 			'<td align="center">' + parseFloat(this.bmpTreatmentArea).toFixed(2) + '</td>' +
-                                			'<td align="center">' + '' + '</td>' +
+                                			'<td align="center">' + parseFloat(this.nitrateVal).toFixed(2) + '</td>' +
                                 			'<td align="center">' + parseFloat(this.nitratePercentage).toFixed(2) + '</td>' +
-                                			'<td align="center">' + '' + '</td>' +
+                                			'<td align="center">' + parseFloat(this.tpVal).toFixed(2) + '</td>' +
                                 			'<td align="center">' + parseFloat(this.tp).toFixed(2) + '</td>' +
-                                			'<td align="center">' + '' + '</td>' +
+                                			'<td align="center">' + parseFloat(this.sedVal).toFixed(2) + '</td>' +
                                 			'<td align="center">' + parseFloat(this.sed).toFixed(2) + '</td>' +
                                 			'<td align="center">' + parseFloat(this.equalAnnualCost).toFixed(2) + '</td></tr>');
                                 	
@@ -2268,7 +2276,7 @@
 	        	
 	        	var map = {};
 	        	map['avg-flow'] = parseFloat(temp[1]);
-	        	map['sed-load'] = parseFloat(temp[2]);
+	        	map['sed-ld'] = parseFloat(temp[2]);
 	        	map['nit-ld'] = parseFloat(temp[3]);
 	        	map['phos-ld'] = parseFloat(temp[4]);
 	        	map['area'] = parseFloat(temp[5]);
