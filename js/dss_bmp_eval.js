@@ -72,20 +72,30 @@
 	bmp_map[9] = "Perennial Crops (PC)";
 	
 	var subbasinAreaData = {};
+	var areaBd = 0;
+	var areaBlc = 0;
 	
 	function getSubbasinArea()
 	{
 		$.get("/getSubbasinArea", {watershed : "bd"},
 		    function(data,status) {
 				subbasinAreaData['bd'] = eval(data);
+				for (var a in subbasinAreaData['bd']) {
+					areaBd += parseFloat(subbasinAreaData['bd'][a][1])
+				};
 		    }
 		);
 		
 		$.get("/getSubbasinArea", {watershed : "blc"},
 			function(data,status) {
 				subbasinAreaData['blc'] = eval(data);
+				for (var a in subbasinAreaData['blc']) {
+					areaBlc += parseFloat(subbasinAreaData['blc'][a][1])
+				};
 			}
 		);
+		
+		
 	}
 	
 	//This is a first step when a user wants to do an evaluation
@@ -1544,10 +1554,14 @@
     		}
     	}
 
-    	console.log(areaSimulated);
+    	if ($("#wstype").val() == "bd") {
+    		areaSimulated = areaSimulated / areaBd * 100;
+    	} else {
+    		areaSimulated = areaSimulated / areaBlc * 100;
+    	}
     	
 		$('#supplementary_information tr:last').after('<tr><td align="center">' + 'Scenario Simulated' + '</td>' +
-    			'<td align="center">' + '' + '</td>' +
+    			'<td align="center">' + areaSimulated.toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
