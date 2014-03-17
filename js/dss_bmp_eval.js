@@ -1502,6 +1502,10 @@
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
 		var subbasin = list[list.length - 2].toLowerCase();
 		
+    	if ($("#supplementary_information tr").length == 4) {
+        	$('#supplementary_information tr:last').remove();
+    	} 
+		
 		console.log(single_simu_result);
 		$('#supplementary_information tr:last').after('<tr><td align="center">' + '' + '</td>' +
     			'<td align="center">' + '' + '</td>' +
