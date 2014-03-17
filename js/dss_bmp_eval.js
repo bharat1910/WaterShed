@@ -1016,6 +1016,9 @@
 	$(document).ready(function(){
 	  $("#evaluate").click(function(){		
 	  
+		$("#supplementary_information").hide();
+		$("#bmp_chart_temp").hide();
+		
 		//check if any bmp is added
 		if(document.getElementById("selected_subbasins").options.length == 0){
 			alert("No BMPs added for evaluation");
@@ -1865,6 +1868,8 @@
 		temp.push(dataHEvaluation[0][1] * bmpComputationConstants[subbasin]['cest_org'] / user_cost);
 		dataHEvaluationNormalized.push(temp);
 		
+		$('#bmp_chart_temp').show();
+		
 		$(function () {
 	        $('#bmp_chart_temp').highcharts({
 	            chart: {
@@ -2048,7 +2053,7 @@
 		
 		if (window.percentProgressBar < 99) {
 			window.percentProgressBar = window.percentProgressBar + 1;
-			setTimeout(incrementProgressCount, 1200);
+			setTimeout(incrementProgressCount, 600);
 		}
 	}
 	
