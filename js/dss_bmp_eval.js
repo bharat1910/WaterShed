@@ -1507,7 +1507,7 @@
     	} 
 		
 		console.log(single_simu_result);
-		$('#supplementary_information tr:last').after('<tr><td align="center">' + '' + '</td>' +
+		$('#supplementary_information tr:last').after('<tr><td align="center">' + 'Scenario Simulated' + '</td>' +
     			'<td align="center">' + '' + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(4) + '</td>' +
