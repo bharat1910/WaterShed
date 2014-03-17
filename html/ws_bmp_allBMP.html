@@ -150,21 +150,21 @@
 
 		<div style="display:none" id="info_label" class="notification"></div> 
 
-		<div>
+		<div style="min-width: 2500px;">
 			<table style='width:100%;border-spacing:0.3em;'>
 				<tr>
 					<td>
-						<select data-placeholder="Select WaterShed ..." id="wstype" onchange="displayMap()" style="width:15%">
+						<select data-placeholder="Select WaterShed ..." id="wstype" onchange="displayMap()" style="width:20%">
 							  <option value="default"></option>
 							  <option value="bd">Big Ditch</option>
 							  <option value="blc">Big-Long Creek</option>
 						</select>
 						&nbsp;			
-						<select data-placeholder="Select Subbasin ..." id="subbasin_id" onchange="displayHruIDs()" style="width:15%;display:none">
+						<select data-placeholder="Select Subbasin ..." id="subbasin_id" onchange="displayHruIDs()" style="width:20%;display:none">
 							<option value="default" ></option>
 						</select>
 						&nbsp;
-						<select data-placeholder="Select BMP ..." id="bmp" onchange="paretoWarning()" style="display:none">
+						<select data-placeholder="Select BMP ..." id="bmp" onchange="paretoWarning()" style="width:20%;display:none">
 							<option value="default"></option>
 							<option value="1">Filter Strip (FS)</option>
 							<option value="2">Grassed Waterways (GW)</option>
@@ -177,11 +177,11 @@
 							<option value="9">Perennial Crops (PC)</option>
 						</select>
 						&nbsp;				
-					   <label id="showChartData" align="left" class="dblue" onclick="popitup('getLanduseSoilChartData')" style="display:none">HRU/Landuse/Soil Chart</label>
+					   <label id="showChartData" align="left" class="dblue" onclick="popitup('getLanduseSoilChartData')" style="width:15%;display:none">HRU/Landuse/Soil Chart</label>
 					   &nbsp;              
-                       <label id="downloadReport" align="left" class="dblue" style="display:none">Download HRU/Landuse/Soil Report</label>
+                       <label id="downloadReport" align="left" class="dblue" style="width:20%;display:none">Download HRU/Landuse/Soil Report</label>
                        &nbsp;
-                       <select id="reportFileType" style="display:none">
+                       <select id="reportFileType" style="width:5%;display:none">
                             <option value="txt">txt</option>
                             <option value="csv">csv</option>
                        </select>
@@ -222,7 +222,6 @@
 							<input type="text" class="text" id="bmp_params_nm_cost3" onkeypress="return isNumberKey(event)"/>
 							<label class="label">Di-Ammonium Phosphate Cost per ton (USD)</label>
 							<input type="text" class="text" id="bmp_params_nm_cost4" onkeypress="return isNumberKey(event)"/>
-							<br><br>
 							<label class="label">Fertilizer Application Rate (lb/ha)</label>
 							<input type="text" class="text" id="bmp_params_nm_rate" maxlength="3" onkeypress="return isNumberKey(event)" onchange="validateFertRate(this)"/>
 							<label class="label">Before Planting Ratio</label>

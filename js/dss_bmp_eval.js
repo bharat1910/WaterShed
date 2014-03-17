@@ -341,7 +341,7 @@
 						hru_info_temp_select$.trigger("chosen:updated");
 						hru_info_temp_select$.hide();
 					} else {
-						hru_info_temp_select$.chosen({width: "30%"});
+						hru_info_temp_select$.chosen({width: "70%"});
 						window.onSelectChosen = true;
 					}
 				}, function(errorMsg){
