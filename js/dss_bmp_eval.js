@@ -1163,15 +1163,15 @@
 								  var n = m.split(",");
 								  var p = n.filter(function(e){if(e != "")return true});
 								  
-								  single_simu_result[0] = parseFloat(p[0]).toFixed(2); //sed absolute value
-								  single_simu_result[1] = (((parseFloat(p[1]) - parseFloat(p[0]))/parseFloat(p[1])) * 100).toFixed(2); //p[1] is sed base value ("base" means "with no BMP". Then, calculate sed % red
-								  single_simu_result[2] = parseFloat(p[2]).toFixed(2); //this is nitrate reduction's absolute value
-								  single_simu_result[3] = (((parseFloat(p[3]) - parseFloat(p[2]))/parseFloat(p[3])) * 100).toFixed(2); // nit % redsingle_simu_result[4] = p[4]; // ph abs value
-								  single_simu_result[4] = parseFloat(p[4]).toFixed(2); // ph abs value
-								  single_simu_result[5] = (((parseFloat(p[5]) - parseFloat(p[4]))/parseFloat(p[5])) * 100).toFixed(2); //ph % red
-								  single_simu_result[6] = parseFloat(p[6]).toFixed(2); // avg abs value
-								  single_simu_result[7] = (((parseFloat(p[7]) - parseFloat(p[6]))/parseFloat(p[7])) * 100).toFixed(2); // avg % red
-								  single_simu_result[8] = parseFloat(p[8]).toFixed(2); //this is unit cost in usd
+								  single_simu_result[0] = parseFloat(p[0]).toFixed(4); //sed absolute value
+								  single_simu_result[1] = (((parseFloat(p[1]) - parseFloat(p[0]))/parseFloat(p[1])) * 100).toFixed(4); //p[1] is sed base value ("base" means "with no BMP". Then, calculate sed % red
+								  single_simu_result[2] = parseFloat(p[2]).toFixed(4); //this is nitrate reduction's absolute value
+								  single_simu_result[3] = (((parseFloat(p[3]) - parseFloat(p[2]))/parseFloat(p[3])) * 100).toFixed(4); // nit % redsingle_simu_result[4] = p[4]; // ph abs value
+								  single_simu_result[4] = parseFloat(p[4]).toFixed(4); // ph abs value
+								  single_simu_result[5] = (((parseFloat(p[5]) - parseFloat(p[4]))/parseFloat(p[5])) * 100).toFixed(4); //ph % red
+								  single_simu_result[6] = parseFloat(p[6]).toFixed(4); // avg abs value
+								  single_simu_result[7] = (((parseFloat(p[7]) - parseFloat(p[6]))/parseFloat(p[7])) * 100).toFixed(4); // avg % red
+								  single_simu_result[8] = parseFloat(p[8]).toFixed(4); //this is unit cost in usd
 								  
 								//});//http post ends here*/
 								
@@ -1509,13 +1509,13 @@
 		console.log(single_simu_result);
 		$('#supplementary_information tr:last').after('<tr><td align="center">' + '' + '</td>' +
     			'<td align="center">' + '' + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2) + '</td>' +
-    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['sed-ld'] * 100).toFixed(2) + '</td>' +
-    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], subbasin, watershedIndex).toFixed(2) + '</td></tr>');
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['sed-ld'] * 100).toFixed(4) + '</td>' +
+    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], subbasin, watershedIndex).toFixed(4) + '</td></tr>');
 		$('#supplementary_information').show();
 		
 		var para0=document.createElement("p");
@@ -1730,11 +1730,11 @@
 			 */
 			if(single_simu_bmp == "8"){
 				data.setCell(i,1,(parseFloat(cost[i])*user_cost)/840);
-				data.setCell(i,2,nutrientType+" Reduction: "+parseFloat(pol_red[i]).toFixed(2)+" %, Cost: "+((parseFloat(cost[i])*user_cost)/840).toFixed(2)+" USD");
+				data.setCell(i,2,nutrientType+" Reduction: "+parseFloat(pol_red[i]).toFixed(4)+" %, Cost: "+((parseFloat(cost[i])*user_cost)/840).toFixed(4)+" USD");
 			}
 			else{
 				data.setCell(i,1,parseFloat(cost[i])*user_cost); //pareto cost needs to be scaled with the user entered cost
-				data.setCell(i,2,nutrientType+" Reduction: "+parseFloat(pol_red[i]).toFixed(2)+" %, Cost: "+(parseFloat(cost[i])*user_cost).toFixed(2)+" USD");
+				data.setCell(i,2,nutrientType+" Reduction: "+parseFloat(pol_red[i]).toFixed(4)+" %, Cost: "+(parseFloat(cost[i])*user_cost).toFixed(4)+" USD");
 			}
 			//alert(parseInt(cost[i])+":"+pol_red[i]);
 		}		
@@ -1829,7 +1829,7 @@
 	function computeValFromPercent(str, percent, watershedIndex)
 	{
 		var x = waterShedComputationConstants[watershedIndex][str] - percent * waterShedComputationConstants[watershedIndex][str] / 100;
-		return ((waterShedComputationConstants[watershedIndex][str] - x) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(2);
+		return ((waterShedComputationConstants[watershedIndex][str] - x) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4);
 	}
 	
 	function computeParetoCost(item, subbasin, user_cost, area)
@@ -1945,14 +1945,14 @@
                                     	$('#supplementary_information tr:last').remove();
                                 	} 
                                 	$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
-                                			'<td align="center">' + parseFloat(this.bmpTreatmentArea).toFixed(2) + '</td>' +
-                                			'<td align="center">' + parseFloat(this.nitrateVal).toFixed(2) + '</td>' +
-                                			'<td align="center">' + parseFloat(this.nitratePercentage).toFixed(2) + '</td>' +
-                                			'<td align="center">' + parseFloat(this.tpVal).toFixed(2) + '</td>' +
-                                			'<td align="center">' + parseFloat(this.tp).toFixed(2) + '</td>' +
-                                			'<td align="center">' + parseFloat(this.sedVal).toFixed(2) + '</td>' +
-                                			'<td align="center">' + parseFloat(this.sed).toFixed(2) + '</td>' +
-                                			'<td align="center">' + parseFloat(this.equalAnnualCost).toFixed(2) + '</td></tr>');
+                                			'<td align="center">' + parseFloat(this.bmpTreatmentArea).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.nitrateVal).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.nitratePercentage).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.tpVal).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.tp).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.sedVal).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.sed).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.equalAnnualCost).toFixed(4) + '</td></tr>');
                                 	
                                 	setTimeout(removeColorFromRow, 5000);
                                 }
