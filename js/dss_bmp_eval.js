@@ -71,13 +71,13 @@
 	bmp_map[8] = "Nutrient Management (NM)";
 	bmp_map[9] = "Perennial Crops (PC)";
 	
+	var subbasinData = {};
+	
 	function getSubbasinArea()
 	{
-		console.log(12);
-		$.post("/getSubbasinArea", {},
+		$.get("/getSubbasinArea", {watershed : "bd"},
 		    function(data,status){
-				console.log(12);	
-				console.log(data);
+				window.subbasinData = eval(data);
 		    }
 		);
 	}

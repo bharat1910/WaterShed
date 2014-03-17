@@ -148,17 +148,19 @@ public class Server {
 			public Object handle(Request request, Response response) {
 				// set the response type
 				response.type("text");
-				
-				Map<String, List<List<Float>>> result = new HashMap<>();
+				String watershed = request.queryParams("watershed");
 				
 				try {
-					result.put("bd", watershedResult("HRULandUseSoilsReport/bigDitch_HRULandUseSoilsReport.txt"));
-					result.put("blc", watershedResult("HRULandUseSoilsReport/bigLongCreek_HRULandUseSoilsReport.txt"));
+					if (watershed.equals("bd")) {
+						return watershedResult("HRULandUseSoilsReport/bigDitch_HRULandUseSoilsReport.txt");						
+					} else {
+						return watershedResult("HRULandUseSoilsReport/bigLongCreek_HRULandUseSoilsReport.txt");						
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				
-				return result;
+				return null;
 			}
 		});
 		
