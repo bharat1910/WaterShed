@@ -97,9 +97,6 @@ public class Server {
 			}
 		});
 		
-		/* 
-		 * Download HRU Soils LandUse report
-		 */
 		get(new Route("/getComputationConstants") {
 			@Override
 			public Object handle(Request request, Response response) {
@@ -119,6 +116,46 @@ public class Server {
 					br.close();	
 				} catch (Exception e) {
 					
+				}
+				
+				return result;
+			}
+		});
+		
+		get(new Route("/getSubasinArea") {
+			private List<List<Float>> watershedResult(String f) throws IOException
+			{
+				BufferedReader br = new BufferedReader(new FileReader("src/Test.txt"));
+				String s;
+				List<List<Float>> result = new ArrayList<>();
+				
+				while ((s = br.readLine()) != null) {
+					if (s.contains("SUBBASIN")) {
+						String[] list = s.split("\\s+");
+						List<Float> temp = new ArrayList<>();
+						temp.add(Float.parseFloat(list[list.length - 1]));
+						temp.add(Float.parseFloat(list[list.length - 2]));
+						result.add(temp);
+					}
+				}
+				
+				br.close();
+				
+				return result;
+			}
+			
+			@Override
+			public Object handle(Request request, Response response) {
+				// set the response type
+				response.type("text");
+				
+				Map<String, List<List<Float>>> result = new HashMap<>();
+				
+				try {
+					result.put("bd", watershedResult("HRULandUseSoilsReport/bigDitch_HRULandUseSoilsReport.txt"));
+					result.put("blc", watershedResult("HRULandUseSoilsReport/bigLongCreek_HRULandUseSoilsReport.txt"));
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 				
 				return result;
