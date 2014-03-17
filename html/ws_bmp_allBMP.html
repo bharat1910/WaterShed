@@ -309,8 +309,6 @@
                         <button type="button" class="button" id="evaluate" style="display:none">Evaluate</button>
                         &nbsp;
                         <label id="checkSelection" class="dblue" style="display:none" onclick="popUpSelection()">Check Selection</label>
-                        &nbsp;
-                        <label id="checkBMPTable" class="dblue" style="display:none" onclick="popUpBMPTable()">Check BMP table</label>
 				    </td>
 				</tr>
 				<tr style="display:none">
@@ -441,17 +439,12 @@
             </table>
         </div>
         
-        <div id="bmp_table_popup">
-            <div id="bmp_table" style="height:350px;width:800px;overflow-y:auto;" align="center"></div>
-        </div>
-        
 		<script type="text/javascript">
 		$(document).ready(function() {
 		    $("#wstype").chosen();
 		    $("#lss_select").chosen();
 		    $("#popup").dialog({ autoOpen: false, height: 1000, width: 1200}); // Initialize dialog plugin
 		    $("#selection_popup").dialog({ autoOpen: false, height: 600, width: 900});
-		    $("#bmp_table_popup").dialog({ autoOpen: false, height: 500, width: 900});
 		});
 		
 		function popitup(url) {
@@ -527,11 +520,6 @@
 		function resetSelection()
 		{
 			location.reload();
-		}
-		
-		function popUpBMPTable()
-		{
-			$("#bmp_table_popup").dialog("open");
 		}
 		
 		function popUpSelection()
