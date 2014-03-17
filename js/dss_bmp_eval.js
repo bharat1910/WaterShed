@@ -2009,6 +2009,8 @@
 	function addProgressBar(){
 		$("#bmp_progress").css('margin-left', '200px');
 		$("#bmp_progress").css('margin-top', '200px');
+		$("#bmp_progress").css('height', '20px');
+		$("#bmp_progress").css('width', '500px');
 		
 //		$( "#bmp_progress" ).progressbar({
 //	        value: false
@@ -2048,6 +2050,8 @@
 		$("#bmp_progress").progressbar("destroy");
 		$("#bmp_progress").css('margin-left', '0px');
 		$("#bmp_progress").css('margin-top', '0px');
+		$("#bmp_progress").css('height', '0px');
+		$("#bmp_progress").css('width', '0px');
 	}
 	
 	//check on keypress if is a digit
