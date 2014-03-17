@@ -1502,7 +1502,7 @@
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
 		var subbasin = list[list.length - 2].toLowerCase();
 		
-    	if ($("#supplementary_information tr").length == 4) {
+    	while ($("#supplementary_information tr").length >= 4) {
         	$('#supplementary_information tr:last').remove();
     	} 
 		
