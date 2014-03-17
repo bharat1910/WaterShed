@@ -70,7 +70,18 @@
 	bmp_map[7] = "Saturated Buffer (SB)";
 	bmp_map[8] = "Nutrient Management (NM)";
 	bmp_map[9] = "Perennial Crops (PC)";
-		
+	
+	function getSubbasinArea()
+	{
+		console.log(12);
+		$.post("/getSubbasinArea", {},
+		    function(data,status){
+				console.log(12);	
+				console.log(data);
+		    }
+		);
+	}
+	
 	//This is a first step when a user wants to do an evaluation
 	//Display the map in the user interface based on the water shed selected
 	function displayMap(){

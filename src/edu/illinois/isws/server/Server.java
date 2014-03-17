@@ -122,10 +122,10 @@ public class Server {
 			}
 		});
 		
-		get(new Route("/getSubasinArea") {
+		get(new Route("/getSubbasinArea") {
 			private List<List<Float>> watershedResult(String f) throws IOException
 			{
-				BufferedReader br = new BufferedReader(new FileReader("src/Test.txt"));
+				BufferedReader br = new BufferedReader(new FileReader(f));
 				String s;
 				List<List<Float>> result = new ArrayList<>();
 				
