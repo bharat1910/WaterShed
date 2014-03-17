@@ -71,14 +71,20 @@
 	bmp_map[8] = "Nutrient Management (NM)";
 	bmp_map[9] = "Perennial Crops (PC)";
 	
-	var subbasinData = {};
+	var subbasinAreaData = {};
 	
 	function getSubbasinArea()
 	{
 		$.get("/getSubbasinArea", {watershed : "bd"},
-		    function(data,status){
-				window.subbasinData = eval(data);
+		    function(data,status) {
+				subbasinAreaData['bd'] = eval(data);
 		    }
+		);
+		
+		$.get("/getSubbasinArea", {watershed : "blc"},
+			function(data,status) {
+				subbasinAreaData['blc'] = eval(data);
+			}
 		);
 	}
 	
@@ -1517,7 +1523,29 @@
         	$('#supplementary_information tr:last').remove();
     	} 
 		
-		console.log(single_simu_result);
+    	var percentSimulatedArea = 0;
+    	var areaSimulated = 0;
+    	var cumulativeValues = new Array(100);
+    	for (var i=0; i<100; i++) {
+    		cumulativeValues[i] = 0;
+    	}
+
+    	$("#selection_popup tr").not(":first").each(
+    		function() 
+    		{
+    			cumulativeValues[parseInt($($(this).find('td')[0]).text())] = 
+    				cumulativeValues[parseInt($($(this).find('td')[0]).text())] + parseFloat($($(this).find('td')[2]).text().replace('%', ''));
+    		}
+    	);
+    	
+    	for (var i=0; i<100; i++) {
+    		if (cumulativeValues[i] != 0) {
+    			areaSimulated += subbasinAreaData[$("#wstype").val()][i - 1][1] *  cumulativeValues[i] / 100;
+    		}
+    	}
+
+    	console.log(areaSimulated);
+    	
 		$('#supplementary_information tr:last').after('<tr><td align="center">' + 'Scenario Simulated' + '</td>' +
     			'<td align="center">' + '' + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
