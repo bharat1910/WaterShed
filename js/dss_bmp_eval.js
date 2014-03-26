@@ -1804,7 +1804,8 @@
 		
 	    return dataArray.map(function (item, index) {
 	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5],
-	        	nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex)};
+	        	nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex),
+	        	marker : {radius : 3}};
 	    });
 	};
 	
@@ -1828,7 +1829,8 @@
 	function prepareUserNormalizedOptimal(dataArray, user_cost, subbasin, area, watershedIndex) {
 		return dataArray.map(function (item, index) {
 			return {x: item[0], y: computeParetoCost(item[1], subbasin, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], subbasin, user_cost, area), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5],
-																										  nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex)};
+																										  nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex),
+																										  marker : {radius : 3}};
 	    });
 	};
 	
@@ -1849,9 +1851,7 @@
 		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost, subbasin, area, watershedIndex);
 		
 		var dataHEvaluationNormalized = new Array();
-		var temp = new Array();
-		temp.push(dataHEvaluation[0][0]);
-		temp.push(dataHEvaluation[0][1] * bmpComputationConstants[subbasin]['cest_org'] / user_cost);
+		var temp = {x : dataHEvaluation[0][0], y : dataHEvaluation[0][1] * bmpComputationConstants[subbasin]['cest_org'] / user_cost, marker : {radius : 5}};
 		dataHEvaluationNormalized.push(temp);
 		
 		$('#bmp_chart_temp').show();
@@ -1954,7 +1954,7 @@
 	    
 	            }, {
 	                name: 'Evaluation',
-	                color: 'rgba(210, 105, 30, 0.1)',
+	                color: 'rgba(210, 105, 30, 0.9)',
 	                data: dataHEvaluation
 	            }, {
 	                name: 'Evaluation based on user value',
