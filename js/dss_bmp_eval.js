@@ -1949,7 +1949,7 @@
 	    
 	            }, {
 	                name: 'Optimal normalized by user value',
-	                color: 'rgba(0 , 255, 255, 0.9)',
+	                color: 'rgba(255, 140, 0 0.5)',
 	                data: dataHOptimalNormalized
 	    
 	            }, {
@@ -1958,7 +1958,7 @@
 	                data: dataHEvaluation
 	            }, {
 	                name: 'Evaluation based on user value',
-	                color: 'rgba(255, 140, 0 0.5)',
+	                color: 'rgba(0 , 255, 255, 0.9)',
 	                data: dataHEvaluationNormalized
 	            }]
 	        });
