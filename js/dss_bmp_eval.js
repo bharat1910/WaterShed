@@ -1930,8 +1930,20 @@
                                 	selectHandler(this.myIndex);
                                 	if ($("#supplementary_information tr").length == 5) {
                                     	$('#supplementary_information tr:last').remove();
-                                	} 
-                                	$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
+                                	}
+                                	
+                                	if (isNaN(this.tp)) {
+                                		$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
+                                			'<td align="center">' + parseFloat(this.bmpTreatmentArea).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.nitrateVal).toFixed(4) + '</td>' +
+                                			'<td align="center">' + parseFloat(this.nitratePercentage).toFixed(4) + '</td>' +
+                                			'<td align="center">NA</td>' +
+                                			'<td align="center">NA</td>' +
+                                			'<td align="center">NA</td>' +
+                                			'<td align="center">NA</td>' +
+                                			'<td align="center">' + parseFloat(this.equalAnnualCost).toFixed(4) + '</td></tr>');                                	
+                                	} else {
+                                		$('#supplementary_information tr:last').after('<tr bgcolor="#C0C0C0	"><td align="center">' + this.bmpScenarioId + '</td>' +
                                 			'<td align="center">' + parseFloat(this.bmpTreatmentArea).toFixed(4) + '</td>' +
                                 			'<td align="center">' + parseFloat(this.nitrateVal).toFixed(4) + '</td>' +
                                 			'<td align="center">' + parseFloat(this.nitratePercentage).toFixed(4) + '</td>' +
@@ -1940,6 +1952,7 @@
                                 			'<td align="center">' + parseFloat(this.sedVal).toFixed(4) + '</td>' +
                                 			'<td align="center">' + parseFloat(this.sed).toFixed(4) + '</td>' +
                                 			'<td align="center">' + parseFloat(this.equalAnnualCost).toFixed(4) + '</td></tr>');
+                                	}
                                 	
                                 	setTimeout(removeColorFromRow, 5000);
                                 }
