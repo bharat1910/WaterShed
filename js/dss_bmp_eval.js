@@ -1851,8 +1851,12 @@
 		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost, subbasin, area, watershedIndex);
 		
 		var dataHEvaluationNormalized = new Array();
-		var temp = {x : dataHEvaluation[0][0], y : dataHEvaluation[0][1] * bmpComputationConstants[subbasin]['cest_org'] / user_cost, marker : {radius : 5}};
+		var temp = {x : dataHEvaluation[0][0], y : dataHEvaluation[0][1] * bmpComputationConstants[subbasin]['cest_org'] / user_cost, marker : {radius : 6}};
 		dataHEvaluationNormalized.push(temp);
+		
+		var dataHEvaluationUnmodified = new Array();
+		temp = {x : dataHEvaluation[0][0], y : dataHEvaluation[0][1], marker : {radius : 6}};
+		dataHEvaluationUnmodified.push(temp);
 		
 		$('#bmp_chart_temp').show();
 		
@@ -1955,7 +1959,7 @@
 	            }, {
 	                name: 'Evaluation',
 	                color: 'rgba(210, 105, 30, 0.9)',
-	                data: dataHEvaluation
+	                data: dataHEvaluationUnmodified
 	            }, {
 	                name: 'Evaluation based on user value',
 	                color: 'rgba(0 , 255, 255, 0.9)',
