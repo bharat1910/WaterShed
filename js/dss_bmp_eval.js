@@ -1829,7 +1829,7 @@
 	
 	function prepareUserNormalizedOptimal(dataArray, user_cost, subbasin, area, watershedIndex) {
 		return dataArray.map(function (item, index) {
-			return {x: item[0], y: computeParetoCost(item[1], subbasin, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], subbasin, user_cost, area), bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5],
+			return {x: item[0], y: computeParetoCost(item[1], subbasin, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], subbasin, user_cost, area), bmpTreatmentArea : parseFloat(item[2].replace(/[^\d.]/g, '')), bmpScenarioId: item[3], tp : parseFloat(item[4].replace(/[^\d.]/g, '')), sed : parseFloat(item[5].replace(/[^\d.]/g, '')),
 																										  nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex),
 																										  marker : {radius : 3}};
 	    });
