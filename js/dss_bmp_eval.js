@@ -1776,8 +1776,8 @@
 		var dataHEvaluation = [];
 		for (var i=0; i<pol_red.length; i++) {
 			var temp = [];
-			temp.push(parseFloat(pol_red[i]));
-			temp.push(parseFloat(cost[i]));
+			temp.push(pol_red[i]);
+			temp.push(cost[i]);
 			temp.push(supplementaryData[i][0]);
 			temp.push(supplementaryData[i][1]);
 			temp.push(supplementaryData[i][2]);
@@ -1829,6 +1829,7 @@
 	
 	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost)
 	{
+		console.log(dataHOptimal);
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
 		var subbasin = list[list.length - 2].toLowerCase();
 		
