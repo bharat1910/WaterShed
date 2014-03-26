@@ -1512,7 +1512,7 @@
 		if (subbasin == "cr" || subbasin == "rg" || subbasin == "cc" || subbasin == "aa" || subbasin == "fs") {
 			return output * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
 		} else {
-			return (output * 0.5 + 0.5 * waterShedComputationConstants[watershedIndex]['cm'] * waterShedComputationConstants[watershedIndex]['area']) * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
+			return (output * 0.5 + 0.5 * bmpComputationConstants[subbasin]['cm'] * waterShedComputationConstants[watershedIndex]['area']) * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
 		}
 	}
 	
