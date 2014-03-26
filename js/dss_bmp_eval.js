@@ -1949,12 +1949,12 @@
 	    
 	            }, {
 	                name: 'Optimal normalized by user value',
-	                color: 'rgba(255, 140, 0 0.5)',
+	                color: '#8B4513',
 	                data: dataHOptimalNormalized
 	    
 	            }, {
 	                name: 'Evaluation',
-	                color: 'rgba(210, 105, 30, 0.9)',
+	                color: 'rgba(210, 105, 30, 0.1)',
 	                data: dataHEvaluation
 	            }, {
 	                name: 'Evaluation based on user value',
