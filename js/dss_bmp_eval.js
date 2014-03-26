@@ -1803,7 +1803,7 @@
 		var subbasin = list[list.length - 2].toLowerCase();
 		
 	    return dataArray.map(function (item, index) {
-	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: item[2], bmpScenarioId: item[3], tp: item[4], sed:item[5],
+	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: parseFloat(item[2].replace(/[^\d.]/g, '')), bmpScenarioId: item[3], tp : parseFloat(item[4].replace(/[^\d.]/g, '')), sed : parseFloat(item[5].replace(/[^\d.]/g, '')),
 	        	nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex),
 	        	marker : {radius : 3}};
 	    });
@@ -1811,6 +1811,7 @@
 	
 	function computeValFromPercent(str, percent, watershedIndex)
 	{
+		percent = parseFloat((percent + "").replace(/[^\d.]/g, ''));
 		var x = waterShedComputationConstants[watershedIndex][str] - percent * waterShedComputationConstants[watershedIndex][str] / 100;
 		return ((waterShedComputationConstants[watershedIndex][str] - x) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4);
 	}
