@@ -1461,7 +1461,7 @@
 							}//else ends here
 							  
 							//draw table for showing the subbasin level results
-							drawTableSubBasinReduction(data);
+							//drawTableSubBasinReduction(data);
 						});//http post ends here*/				
 						
 					}, function(errorMsg){
@@ -1776,8 +1776,13 @@
 		var dataHEvaluation = [];
 		for (var i=0; i<pol_red.length; i++) {
 			var temp = [];
-			temp.push(pol_red[i]);
-			temp.push(cost[i]);
+			
+			if (pol_red[i] == undefined) {
+				continue;
+			}
+			
+			temp.push(parseFloat(pol_red[i].replace(/[^\d.]/g, '')));
+			temp.push(parseFloat(cost[i].replace(/[^\d.]/g, '')));
 			temp.push(supplementaryData[i][0]);
 			temp.push(supplementaryData[i][1]);
 			temp.push(supplementaryData[i][2]);
@@ -1829,7 +1834,6 @@
 	
 	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost)
 	{
-		console.log(dataHOptimal);
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
 		var subbasin = list[list.length - 2].toLowerCase();
 		
