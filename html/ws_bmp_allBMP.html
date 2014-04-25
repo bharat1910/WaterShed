@@ -451,10 +451,18 @@
         	<table style="border-spacing:15px">
         		<tr>
         			<td>
-						<label class="label">Name</label>
+						<label class="label">First Name</label>
         			</td>
         			<td>
-        				<input type="text" class="text" id="user_name"/>
+        				<input type="text" class="text" id="user_first_name"/>
+        			</td>
+        		</tr>
+         		<tr>
+        			<td>
+						<label class="label">Last Name</label>
+        			</td>
+        			<td>
+        				<input type="text" class="text" id="user_last_name"/>
         			</td>
         		</tr>
         		<tr>
@@ -583,6 +591,18 @@
 		
 		$("#enterUserInfo").bind('click', function() {
 			$("#user_info_popup").dialog("open");
+		});
+		
+		$("#submit_user_info").bind('click', function() {
+			var parameters = {};
+			parameters['firstName'] = $("#user_first_name").val();
+			parameters['lastName'] = $("#user_last_name").val();
+			parameters['profession'] = $("#user_profession").val();
+			parameters['email'] = $("#user_email").val();
+			
+			$.get('updateUserInfo', parameters, function(data) {
+				$("#user_info_popup").dialog("close");
+			});
 		});
 		
 	    loadFile();

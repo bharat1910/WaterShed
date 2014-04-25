@@ -7,9 +7,12 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.jetty.util.ajax.JSON;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -96,6 +99,43 @@ public class Server {
 					output =  name + ".csv";
 				}
 				return output;
+			}
+		});
+		
+		get(new Route("/updateUserInfo") {
+			@Override
+			public Object handle(Request request, Response response) {
+				// set the response type
+				response.type("text");
+				
+				try {
+					boolean isAppend = true;
+					BufferedReader br = new BufferedReader(new FileReader("user_info.txt"));
+					String str;
+					String[] strList;
+					
+					while ((str = br.readLine()) != null) {
+						strList = str.split(" ");
+						if (strList[strList.length - 1].equals(request.queryParams("email"))) {
+							isAppend = false;
+							break;
+						}
+					}
+					
+					br.close();
+					
+					if (isAppend) {
+						PrintWriter bw = new PrintWriter(new BufferedWriter(new FileWriter(
+								"user_info.txt", true)));
+						bw.write(request.queryParams("firstName") + " " + request.queryParams("lastName") + " " +
+								request.queryParams("profession") + " " + request.queryParams("email") + "\n");
+						bw.close();
+					}
+				} catch (Exception e) {
+					
+				}
+				
+				return "";
 			}
 		});
 		
