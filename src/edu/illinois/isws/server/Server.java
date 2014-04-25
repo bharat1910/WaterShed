@@ -24,7 +24,9 @@ import java.util.Map;
  * (iv) send HRU x Landuse x Soils report
  */
 public class Server {
-	static String WORKING_DIRECTORY =  null;
+	static int executableToUse = 0;
+	final static int N0_OF_EXECUTABLES = 2; 
+
 	public static void main(String[] args) {
 		final String NEW_LINE = System.getProperty("line.separator");
 		final String PARETO_DIR = "paretoData/";
@@ -308,12 +310,27 @@ public class Server {
 			@Override
 			public Object handle(Request request, Response response) {
 				
-				if(! parseClientInputs(request)) {
+				String workingDirectory;
+				
+				if (request.queryParams("wshIndex").equals("1")){
+					workingDirectory = "ocm_" + executableToUse + "/BigDitchWs/"; 
+				}
+				else if (request.queryParams("wshIndex").equals("2")){
+					workingDirectory = "ocm_" + executableToUse + "/BigLongCreekWs/";
+				}
+				else {
+					System.out.println("Parsing client input:unknown watershed.");
+					return false;
+				}
+				
+				executableToUse = (executableToUse + 1) % N0_OF_EXECUTABLES;
+				
+				if(! parseClientInputs(request, workingDirectory)) {
 					System.out.println("Error while parsing client inputs.");
 					return "failed";
 				}
 				
-				int result = runOCMExecutable();
+				int result = runOCMExecutable(workingDirectory);
 				
 				if (result == -1){
 					return "in_use";
@@ -321,7 +338,7 @@ public class Server {
 					return "failed";
 				}
 				
-				return getOutputString();
+				return getOutputString(workingDirectory);
 			}
 
 			
@@ -332,33 +349,22 @@ public class Server {
 			 * 						BMP for HRUs ( the list is in ascending order of HRUs )
 			 * "BMP_DB_09_single_simulation.txt" - cost for all BMPs
 			 */
-			private boolean parseClientInputs(Request request) {
+			private boolean parseClientInputs(Request request, String workingDirectory) {
 				String bmps = request.queryParams("listHruBMP");
 				String cost = request.queryParams("cost");
 
 				bmps = bmps.replace(",", NEW_LINE);
 				cost = cost.replace(";", NEW_LINE);
-				
-				if (request.queryParams("wshIndex").equals("1")){
-					WORKING_DIRECTORY = "ocm/BigDitchWs/"; 
-				}
-				else if (request.queryParams("wshIndex").equals("2")){
-					WORKING_DIRECTORY = "ocm/BigLongCreekWs/";
-				}
-				else {
-					System.out.println("Parsing client input:unknown watershed.");
-					return false;
-				}
 
 				try {
 					FileUtils.writeStringToFile(
-							new File(WORKING_DIRECTORY +"Client_Input.txt"),
+							new File(workingDirectory +"Client_Input.txt"),
 							request.queryParams("is_single_simulation")
 									+ NEW_LINE
 									+ request.queryParams("wshIndex")
 									+ NEW_LINE + bmps);
 					FileUtils.writeStringToFile(new File(
-							WORKING_DIRECTORY + "clientInput_BMPCost.txt"), cost);
+							workingDirectory + "clientInput_BMPCost.txt"), cost);
 				} catch (IOException e) {
 					System.out.println("Parsing client input:exception while preparing input files for OCM.");
 					e.printStackTrace();
@@ -370,18 +376,18 @@ public class Server {
 			/*
 			 * Helper method to run the OCM fortran executable.
 			 */
-			private int runOCMExecutable() {
+			private int runOCMExecutable(String workingDirectory) {
 				Process process = null;
 				try {
-					ProcessBuilder builder = new ProcessBuilder(WORKING_DIRECTORY +"OCM_AMGA2_IndBMP_LHS.exe");
-					builder.directory(new File(WORKING_DIRECTORY));
+					ProcessBuilder builder = new ProcessBuilder(workingDirectory +"OCM_AMGA2_IndBMP_LHS.exe");
+					builder.directory(new File(workingDirectory));
 					builder.redirectErrorStream(true);
-					File output = new File(WORKING_DIRECTORY+"spark_ocm_output.txt");
+					File output = new File(workingDirectory + "spark_ocm_output.txt");
 					builder.redirectOutput(output);
 					
 					process = builder.start();
 				} catch (Exception e) {
-					System.out.println("Error: " + WORKING_DIRECTORY +  e.getMessage());
+					System.out.println("Error: " + workingDirectory +  e.getMessage());
 					e.printStackTrace();
 					return -1;
 				}
@@ -391,7 +397,7 @@ public class Server {
 					String result = null;
 					process.waitFor();
 					System.out.println("Execution completed : " + (new Date()).toString());
-					result = FileUtils.readFileToString(new File(WORKING_DIRECTORY + "spark_ocm_output.txt"));
+					result = FileUtils.readFileToString(new File(workingDirectory + "spark_ocm_output.txt"));
 					if (result == null || !result.contains("Execution successfully completed")){
 						System.out.println("***Execution Failed***");
 						return -2;
@@ -414,14 +420,14 @@ public class Server {
 			 * "scenario_simulation.txt" is the output file from OCM single simulation.
 			 * Just send this output to client as a string.
 			 */
-			private Object getOutputString() {
+			private Object getOutputString(String workingDirectory) {
 				String output;
 				//collect single simulation reduction at watershed level
 				try {
 					String withBMP = FileUtils.readFileToString(new File(
-							WORKING_DIRECTORY + "clientRequestOutput.txt"));
+							workingDirectory + "clientRequestOutput.txt"));
 					String noBMP = FileUtils.readFileToString(new File(
-							WORKING_DIRECTORY + "NoBMPLoads.txt"));
+							workingDirectory + "NoBMPLoads.txt"));
 					
 					
 					String[] withBMPValues;
@@ -482,7 +488,7 @@ public class Server {
 				//collect single simulation reduction at subbasin level
 				try{
 					 output = output.concat(FileUtils.readFileToString(new File(
-							WORKING_DIRECTORY + SUBBASIN_REDUCTION)));
+							 workingDirectory + SUBBASIN_REDUCTION)));
 				}catch (Exception e){
 					e.printStackTrace();
 					return output;
