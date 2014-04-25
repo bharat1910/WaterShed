@@ -177,6 +177,8 @@
 							<option value="9">Perennial Crops (PC)</option>
 						</select>
 						&nbsp;				
+					   <label id="enterUserInfo" title="Enter your information by clicking this. This will help us determine the clients and adapt better." align="left" class="dblue" style="width:15%">Enter User Information</label>
+						&nbsp;				
 					   <label id="downloadUserDoc" align="left" class="dblue" style="width:15%">Download User Guide</label>
 						&nbsp;				
 					   <label id="showChartData" align="left" class="dblue" onclick="popitup('getLanduseSoilChartData')" style="width:15%;display:none">HRU/Landuse/Soil Chart</label>
@@ -445,12 +447,49 @@
             </table>
         </div>
         
+        <div id="user_info_popup">
+        	<table style="border-spacing:15px">
+        		<tr>
+        			<td>
+						<label class="label">Name</label>
+        			</td>
+        			<td>
+        				<input type="text" class="text" id="user_name"/>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>
+						<label class="label">Email</label>
+        			</td>
+        			<td>
+        				<input type="text" class="text"/ id="user_email">
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>
+						<label class="label">Profession</label>
+        			</td>
+        			<td>
+        				<input type="text" class="text" id="user_profession"/>
+        			</td>
+        		</tr>
+        		<tr>
+        			<td>
+						<button type="button" class="button" id="submit_user_info">Submit</button>
+        			</td>
+        			<td>
+        			</td>
+        		</tr>
+			</table>
+        </div>
+        
 		<script type="text/javascript">
 		$(document).ready(function() {
 		    $("#wstype").chosen();
 		    $("#lss_select").chosen();
 		    $("#popup").dialog({ autoOpen: false, height: 1000, width: 1200}); // Initialize dialog plugin
 		    $("#selection_popup").dialog({ autoOpen: false, height: 600, width: 900});
+		    $("#user_info_popup").dialog({ autoOpen: false, height: 400, width: 900});
 		    getSubbasinArea();
 		});
 		
@@ -540,6 +579,10 @@
 		
 		$("#downloadUserDoc").bind('click', function() {
 			window.open("https://www.dropbox.com/s/6ymiyxxf8whbs2f/userGuide.pdf");
+		});
+		
+		$("#enterUserInfo").bind('click', function() {
+			$("#user_info_popup").dialog("open");
 		});
 		
 	    loadFile();
