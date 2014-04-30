@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class Server {
 	static int executableToUse = 0;
-	final static int N0_OF_EXECUTABLES = 2; 
+	final static int N0_OF_EXECUTABLES = 10; 
 
 	public static void main(String[] args) {
 		final String NEW_LINE = System.getProperty("line.separator");
