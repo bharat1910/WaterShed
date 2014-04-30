@@ -363,6 +363,8 @@ public class Server {
 					return false;
 				}
 				
+				System.out.println("Executable " + executableToUse + " in use.");
+				
 				executableToUse = (executableToUse + 1) % N0_OF_EXECUTABLES;
 				
 				if(! parseClientInputs(request, workingDirectory)) {
