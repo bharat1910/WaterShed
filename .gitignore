@@ -8,9 +8,7 @@ bin
 constraints
 heapTest
 images
-ocm
-ocm_0
-ocm_1
+ocm*
 paretoData
 src/parsers
 user_info.txt
