@@ -1481,7 +1481,7 @@
 		var j;
 		for(i=0 ;i<optimal_data.length ; i++){
 			var hru_id;
-			var temp0 = optimal_data[i].replace(/ /g,",");//replace all spaces with comma
+			var temp0 = optimal_data[i].replace(/( |\t)+/g,",");//replace all spaces with comma
 			var temp = temp0.split(",");
 			var temp1 = temp.filter(function(e){if(e != "")return true});//remove all empty elements
 			hru_id= "";
