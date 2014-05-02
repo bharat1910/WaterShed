@@ -1793,11 +1793,6 @@
 			}
 		}
 		
-		//Use Google's ScatterChart
-		var chart = new google.visualization.ScatterChart(document.getElementById(divID));//global variable for chart
-		google.visualization.events.addListener(chart, 'select', selectHandler);
-		chart.draw(data, options);
-		
 		var dataHOptimal = [];
 		var dataHEvaluation = [];
 		for (var i=0; i<pol_red.length; i++) {
