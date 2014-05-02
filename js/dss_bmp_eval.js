@@ -1372,7 +1372,11 @@
 												result += hru_id_list[j] + ",";
 											}
 										}
-										temp2.push(result);
+										if (result != "") {
+											temp2.push(result.substring(0, result.length - 1));
+										} else {
+											temp2.push(result);	
+										}
 										
 										supplementaryData.push(temp2);
 									}
@@ -1399,7 +1403,11 @@
 												result += hru_id_list[j] + ",";
 											}
 										}
-										temp2.push(result);
+										if (result != "") {
+											temp2.push(result.substring(0, result.length - 1));
+										} else {
+											temp2.push(result);	
+										}
 										
 										supplementaryData.push(temp2);
 									}
