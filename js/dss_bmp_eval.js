@@ -1365,6 +1365,15 @@
 										temp2.push(temp1[length - 3]);
 										temp2.push(temp1[length - 2]);
 										temp2.push(temp1[length - 1]);
+										
+										result = ""
+										for (var j=0; j<length-6; j++) {
+											if (temp1[j] != "0") {
+												result += hru_id_list[j] + ",";
+											}
+										}
+										temp2.push(result);
+										
 										supplementaryData.push(temp2);
 									}
 									
@@ -1383,6 +1392,15 @@
 										temp2.push(temp1[length - 3]);
 										temp2.push(temp1[length - 2]);
 										temp2.push(temp1[length - 1]);
+										
+										result = ""
+										for (var j=0; j<length-6; j++) {
+											if (temp1[j] != "0") {
+												result += hru_id_list[j] + ",";
+											}
+										}
+										temp2.push(result);
+										
 										supplementaryData.push(temp2);
 									}
 
@@ -1742,8 +1760,8 @@
 		// The select handler. Call the chart's getSelection() method
 		// call back method for the user selection of points in the chart
 		// need to dsplay the HRUs in the map which correspond to the value selected in the graph
-		selectHandler = function(selectedItem) {
-			if (selectedItem) {
+		selectHandler = function(hrus) {
+			if (hrus) {
 				//from here on, we will have only one HRU Feature layer on the map
 				//this layer will be tagged with ID "1"
 				//remove the already existing layer created in function for "evaluate" button click
@@ -1758,10 +1776,10 @@
 				}	
 				var hru_layer = new esri.layers.FeatureLayer(hru_url,{id:"1"});
 				if(nutrientType == "Nitrate"){
-					hru_layer.setDefinitionExpression("HRU_ID IN ("+chart_hru_id_nit[selectedItem]+")");
+					hru_layer.setDefinitionExpression("HRU_ID IN ("+hrus+")");
 				}
 				else if(nutrientType == "Phosphorous"){
-					hru_layer.setDefinitionExpression("HRU_ID IN ("+chart_hru_id_pho[selectedItem]+")");
+					hru_layer.setDefinitionExpression("HRU_ID IN ("+hrus+")");
 				}
 				map.addLayer(hru_layer);
 			}
@@ -1787,6 +1805,7 @@
 			temp.push(supplementaryData[i][1]);
 			temp.push(supplementaryData[i][2]);
 			temp.push(supplementaryData[i][3]);
+			temp.push(supplementaryData[i][4]);
 			dataHOptimal.push(temp);
 		}
 		
@@ -1805,7 +1824,7 @@
 	    return dataArray.map(function (item, index) {
 	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: parseFloat(item[2].replace(/[^\d.]/g, '')), bmpScenarioId: item[3], tp : parseFloat(item[4].replace(/[^\d.]/g, '')), sed : parseFloat(item[5].replace(/[^\d.]/g, '')),
 	        	nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex),
-	        	marker : {radius : 3}};
+	        	marker : {radius : 3}, hrus : item[6]};
 	    });
 	};
 	
@@ -1831,7 +1850,7 @@
 		return dataArray.map(function (item, index) {
 			return {x: item[0], y: computeParetoCost(item[1], subbasin, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], subbasin, user_cost, area), bmpTreatmentArea : parseFloat(item[2].replace(/[^\d.]/g, '')), bmpScenarioId: item[3], tp : parseFloat(item[4].replace(/[^\d.]/g, '')), sed : parseFloat(item[5].replace(/[^\d.]/g, '')),
 																										  nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex),
-																										  marker : {radius : 3}};
+																										  marker : {radius : 3}, hrus : item[6]};
 	    });
 	};
 	
@@ -1927,7 +1946,7 @@
                         point: {
                             events: {
                                 click: function() {
-                                	selectHandler(this.myIndex);
+                                	selectHandler(this.hrus);
                                 	if ($("#supplementary_information tr").length == 5) {
                                     	$('#supplementary_information tr:last').remove();
                                 	}
