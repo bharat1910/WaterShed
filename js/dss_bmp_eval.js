@@ -1557,13 +1557,25 @@
 		}
 	}
 	
-	function computeUserSelectedCost(output, subbasin, watershedIndex)
+	function computeUserSelectedCost(output, bmp, watershedIndex)
 	{
-		if (subbasin == "cr" || subbasin == "rg" || subbasin == "cc" || subbasin == "aa" || subbasin == "fs") {
+		if (bmp == "cr" || bmp == "rg" || bmp == "cc" || bmp == "aa" || bmp == "fs") {
 			return output * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
 		} else {
-			return (output * 0.5 + 0.5 * bmpComputationConstants[subbasin]['cm'] * waterShedComputationConstants[watershedIndex]['area']) * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
+			return (output * 0.5 + 0.5 * bmpComputationConstants[bmp]['cm'] * waterShedComputationConstants[watershedIndex]['area']) * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
 		}
+	}
+	
+	function resolveBMP(bmp)
+	{
+		if (bmp == "cc") {
+			if ($("#bmp_params_cc_type").val() == "1") {
+				bmp = "cr"
+			} else if ($("#bmp_params_cc_type").val() == "2") {
+				bmp = "rg"
+			}
+		}
+		return bmp;
 	}
 	
 	//Display single simulation results in a table
@@ -1577,7 +1589,8 @@
 		}
 		
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
-		var subbasin = list[list.length - 2].toLowerCase();
+		var bmp = resolveBMP(list[list.length - 2].toLowerCase());
+		
 		
     	while ($("#supplementary_information tr").length >= 4) {
         	$('#supplementary_information tr:last').remove();
@@ -1618,7 +1631,7 @@
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['sed-ld'] * 100).toFixed(4) + '</td>' +
-    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], subbasin, watershedIndex).toFixed(4) + '</td></tr>');
+    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], bmp, watershedIndex).toFixed(4) + '</td></tr>');
 		$('#supplementary_information').show();
 	}
 	
@@ -1845,9 +1858,6 @@
 	}
 	
 	function prepare(dataArray, watershedIndex) {
-		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
-		var subbasin = list[list.length - 2].toLowerCase();
-		
 	    return dataArray.map(function (item, index) {
 	        return {x: item[0], y: item[1], myIndex: index, nitratePercentage: item[0], equalAnnualCost: item[1], bmpTreatmentArea: parseFloat(item[2].replace(/[^\d.]/g, '')), bmpScenarioId: item[3], tp : parseFloat(item[4].replace(/[^\d.]/g, '')), sed : parseFloat(item[5].replace(/[^\d.]/g, '')),
 	        	nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex),
@@ -1862,20 +1872,20 @@
 		return ((waterShedComputationConstants[watershedIndex][str] - x) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4);
 	}
 	
-	function computeParetoCost(item, subbasin, user_cost, area)
+	function computeParetoCost(item, bmp, user_cost, area)
 	{
-		if (subbasin == "cr" || subbasin == "rg" || subbasin == "cc" || subbasin == "aa" || subbasin == "fs") {
-			return item * user_cost / bmpComputationConstants[subbasin]['cest_org'];
+		if (bmp == "cr" || bmp == "rg" || bmp == "cc" || bmp == "aa" || bmp == "fs") {
+			return item * user_cost / bmpComputationConstants[bmp]['cest_org'];
 		} else {
-			var var1 = (item / (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20))) - 0.5 * bmpComputationConstants[subbasin]['cm'] * area) * user_cost / bmpComputationConstants[subbasin]['cest_org'];
-			var var2 = 0.5 * bmpComputationConstants[subbasin]['cm'] * area;
+			var var1 = (item / (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20))) - 0.5 * bmpComputationConstants[bmp]['cm'] * area) * user_cost / bmpComputationConstants[bmp]['cest_org'];
+			var var2 = 0.5 * bmpComputationConstants[bmp]['cm'] * area;
 			return var1 + var2;
 		}
 	}
 	
-	function prepareUserNormalizedOptimal(dataArray, user_cost, subbasin, area, watershedIndex) {
+	function prepareUserNormalizedOptimal(dataArray, user_cost, bmp, area, watershedIndex) {
 		return dataArray.map(function (item, index) {
-			return {x: item[0], y: computeParetoCost(item[1], subbasin, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], subbasin, user_cost, area), bmpTreatmentArea : parseFloat(item[2].replace(/[^\d.]/g, '')), bmpScenarioId: item[3], tp : parseFloat(item[4].replace(/[^\d.]/g, '')), sed : parseFloat(item[5].replace(/[^\d.]/g, '')),
+			return {x: item[0], y: computeParetoCost(item[1], bmp, user_cost, area), myIndex: index, nitratePercentage: item[0], equalAnnualCost: computeParetoCost(item[1], bmp, user_cost, area), bmpTreatmentArea : parseFloat(item[2].replace(/[^\d.]/g, '')), bmpScenarioId: item[3], tp : parseFloat(item[4].replace(/[^\d.]/g, '')), sed : parseFloat(item[5].replace(/[^\d.]/g, '')),
 																										  nitrateVal : computeValFromPercent('nit-ld', item[0], watershedIndex), tpVal : computeValFromPercent('phos-ld', item[4], watershedIndex), sedVal : computeValFromPercent('sed-ld', item[5], watershedIndex),
 																										  marker : {radius : 3}, hrus : item[6]};
 	    });
@@ -1884,7 +1894,7 @@
 	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost)
 	{
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
-		var subbasin = list[list.length - 2].toLowerCase();
+		var bmp = resolveBMP(list[list.length - 2].toLowerCase());
 		
 		var watershedIndex;
 		if ($("#wstype").val() == "bd") {
@@ -1895,10 +1905,10 @@
 		var area = waterShedComputationConstants[watershedIndex]['area'];
 		
 		var dataHOptimalUnmodified = prepare(dataHOptimal, watershedIndex);
-		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost, subbasin, area, watershedIndex);
+		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost, bmp, area, watershedIndex);
 		
 		var dataHEvaluationNormalized = new Array();
-		var temp = {x : dataHEvaluation[0][0], y : dataHEvaluation[0][1] * bmpComputationConstants[subbasin]['cest_org'] / user_cost, marker : {radius : 6}};
+		var temp = {x : dataHEvaluation[0][0], y : dataHEvaluation[0][1] * bmpComputationConstants[bmp]['cest_org'] / user_cost, marker : {radius : 6}};
 		dataHEvaluationNormalized.push(temp);
 		
 		var dataHEvaluationUnmodified = new Array();
