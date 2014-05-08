@@ -6,6 +6,8 @@
 	var bd_pareto_nit_cw = new Array();
 	var bd_pareto_nit_br = new Array();
 	var bd_pareto_nit_cc = new Array();
+	var bd_pareto_nit_cr = new Array();
+	var bd_pareto_nit_rg = new Array();
 	var bd_pareto_nit_dm = new Array();
 	var bd_pareto_nit_sb = new Array();
 	var bd_pareto_nit_nm = new Array();
@@ -19,6 +21,8 @@
 	var bd_pareto_pho_cw = new Array();
 	var bd_pareto_pho_br = new Array();
 	var bd_pareto_pho_cc = new Array();
+	var bd_pareto_pho_cr = new Array();
+	var bd_pareto_pho_rg = new Array();
 	var bd_pareto_pho_dm = new Array();
 	var bd_pareto_pho_sb = new Array();
 	var bd_pareto_pho_nm = new Array();
@@ -32,6 +36,8 @@
 	var blc_pareto_nit_cw = new Array();
 	var blc_pareto_nit_br = new Array();
 	var blc_pareto_nit_cc = new Array();
+	var blc_pareto_nit_cr = new Array();
+	var blc_pareto_nit_rg = new Array();
 	var blc_pareto_nit_dm = new Array();
 	var blc_pareto_nit_sb = new Array();
 	var blc_pareto_nit_nm = new Array();
@@ -45,6 +51,8 @@
 	var blc_pareto_pho_cw = new Array();
 	var blc_pareto_pho_br = new Array();
 	var blc_pareto_pho_cc = new Array();
+	var blc_pareto_pho_cr = new Array();
+	var blc_pareto_pho_rg = new Array();
 	var blc_pareto_pho_dm = new Array();
 	var blc_pareto_pho_sb = new Array();
 	var blc_pareto_pho_nm = new Array();
@@ -124,9 +132,17 @@
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 5:
-				fileName = fileName + "_CC.txt";
-				paretoArrayName = paretoArrayName + "_cc";
-				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
+				fileName_temp = fileName + "_CC.txt";
+				paretoArrayName_temp = paretoArrayName + "_cc";
+				getParetoData(waterShed,nutrient,fileName_temp,paretoArrayName_temp);
+				
+				fileName_temp = fileName + "_CR.txt";
+				paretoArrayName_temp = paretoArrayName + "_cr";
+				getParetoData(waterShed,nutrient,fileName_temp,paretoArrayName_temp);
+				
+				fileName_temp = fileName + "_RG.txt";
+				paretoArrayName_temp = paretoArrayName + "_rg";
+				getParetoData(waterShed,nutrient,fileName_temp,paretoArrayName_temp);
 				break;
 			case 6:
 				fileName = fileName + "_DM.txt";
@@ -162,6 +178,12 @@
 			case "bd_pareto_nit_cw":
 				bd_pareto_nit_cw[arrayIndex] = paretoValue;
 				break;
+			case "bd_pareto_nit_cr":
+				bd_pareto_nit_cr[arrayIndex] = paretoValue;
+				break;
+			case "bd_pareto_nit_rg":
+				bd_pareto_nit_rg[arrayIndex] = paretoValue;
+				break;
 			case "bd_pareto_nit_br":
 				bd_pareto_nit_br[arrayIndex] = paretoValue;
 				break;
@@ -188,6 +210,12 @@
 				break;
 			case "bd_pareto_pho_cw":
 				bd_pareto_pho_cw[arrayIndex] = paretoValue;
+				break;
+			case "bd_pareto_pho_cr":
+				bd_pareto_pho_cr[arrayIndex] = paretoValue;
+				break;
+			case "bd_pareto_pho_rg":
+				bd_pareto_pho_rg[arrayIndex] = paretoValue;
 				break;
 			case "bd_pareto_pho_br":
 				bd_pareto_pho_br[arrayIndex] = paretoValue;
@@ -216,6 +244,12 @@
 			case "blc_pareto_nit_cw":
 				blc_pareto_nit_cw[arrayIndex] = paretoValue;
 				break;
+			case "blc_pareto_nit_cr":
+				blc_pareto_nit_cr[arrayIndex] = paretoValue;
+				break;
+			case "blc_pareto_nit_rg":
+				blc_pareto_nit_rg[arrayIndex] = paretoValue;
+				break;
 			case "blc_pareto_nit_br":
 				blc_pareto_nit_br[arrayIndex] = paretoValue;
 				break;
@@ -242,6 +276,12 @@
 				break;
 			case "blc_pareto_pho_cw":
 				blc_pareto_pho_cw[arrayIndex] = paretoValue;
+				break;
+			case "blc_pareto_nit_cr":
+				blc_pareto_nit_cr[arrayIndex] = paretoValue;
+				break;
+			case "blc_pareto_nit_rg":
+				blc_pareto_nit_rg[arrayIndex] = paretoValue;
 				break;
 			case "blc_pareto_pho_br":
 				blc_pareto_pho_br[arrayIndex] = paretoValue;

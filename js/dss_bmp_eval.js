@@ -1257,10 +1257,22 @@
 												optimal_data_pho = blc_pareto_pho_br;
 												break;
 											case "5":
-												//nitrate : use pareto optimal data for CC
-												optimal_data_nit = blc_pareto_nit_cc;
-												//pho : use pareto optimal data for CC
-												optimal_data_pho = blc_pareto_pho_cc;
+												if ($("#bmp_params_cc_type").val() == "1") {
+													//nitrate : use pareto optimal data for CC
+													optimal_data_nit = blc_pareto_nit_cr;
+													//pho : use pareto optimal data for CC
+													optimal_data_pho = blc_pareto_pho_cr;
+												} else if ($("#bmp_params_cc_type").val() == "2") {
+													//nitrate : use pareto optimal data for CC
+													optimal_data_nit = blc_pareto_nit_rg;
+													//pho : use pareto optimal data for CC
+													optimal_data_pho = blc_pareto_pho_rg;
+												} else {
+													//nitrate : use pareto optimal data for CC
+													optimal_data_nit = blc_pareto_nit_cc;
+													//pho : use pareto optimal data for CC
+													optimal_data_pho = blc_pareto_pho_cc;
+												}
 												break;
 											case "6":
 												//nitrate : use pareto optimal data for DM
@@ -1316,10 +1328,22 @@
 												optimal_data_pho = bd_pareto_pho_br;
 												break;
 											case "5":
-												//nitrate : use pareto optimal data for CC
-												optimal_data_nit = bd_pareto_nit_cc;
-												//pho : use pareto optimal data for CC
-												optimal_data_pho = bd_pareto_pho_cc;
+												if ($("#bmp_params_cc_type").val() == "1") {
+													//nitrate : use pareto optimal data for CC
+													optimal_data_nit = bd_pareto_nit_cr;
+													//pho : use pareto optimal data for CC
+													optimal_data_pho = bd_pareto_pho_cr;
+												} else if ($("#bmp_params_cc_type").val() == "2") {
+													//nitrate : use pareto optimal data for CC
+													optimal_data_nit = bd_pareto_nit_rg;
+													//pho : use pareto optimal data for CC
+													optimal_data_pho = bd_pareto_pho_rg;
+												} else {
+													//nitrate : use pareto optimal data for CC
+													optimal_data_nit = blc_pareto_nit_cc;
+													//pho : use pareto optimal data for CC
+													optimal_data_pho = blc_pareto_pho_cc;
+												}
 												break;
 											case "6":
 												//nitrate : use pareto optimal data for DM
