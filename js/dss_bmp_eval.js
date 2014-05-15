@@ -75,6 +75,16 @@
 	var areaBd = 0;
 	var areaBlc = 0;
 	
+	var TPVC_ni = 14.7098374175206;
+	var CRF_ni = 0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20));
+	var WSA_bd = 10638.6; 
+	var WSA_blc = 12336.2;
+	var HTA = 2.471054;
+	var CRV_bd = 169.2;
+	var CRV_blc = 270.7;
+	var RL_bd = 4448023.52028;
+	var RL_blc = 8251860.80724;
+	
 	function getSubbasinArea()
 	{
 		$.get("/getSubbasinArea", {watershed : "bd"},
@@ -1874,12 +1884,27 @@
 	
 	function computeParetoCost(item, bmp, user_cost, area)
 	{
-		if (bmp == "cr" || bmp == "rg" || bmp == "cc" || bmp == "aa" || bmp == "fs") {
-			return item * user_cost / bmpComputationConstants[bmp]['cest_org'];
+		var CRV;
+		if ($("#wstype").val() == "bd") {
+			CRV = CRV_bd;
 		} else {
-			var var1 = (item / (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20))) - 0.5 * bmpComputationConstants[bmp]['cm'] * area) * user_cost / bmpComputationConstants[bmp]['cest_org'];
-			var var2 = 0.5 * bmpComputationConstants[bmp]['cm'] * area;
-			return var1 + var2;
+			CRV = CRV_blc;
+		}
+	
+		if (bmp == "cr" || bmp == "rg" || bmp == "cc") {
+			return item * user_cost / bmpComputationConstants[bmp]['cest_org'];
+		}
+		else if (bmp == "aa") {
+			return item * (user_cost * CRF_ni + CRV)/(bmpComputationConstants[bmp]['cest_org'] * CRF_ni + CRV)
+		} 
+		else if (bmp == "cw") {
+			return item * (0.05 * user_cost * CRF_ni + bmpComputationConstants[bmp]['cm'] + 0.05 * CRV)/(0.05 * bmpComputationConstants[bmp]['cest_org'] * CRF_ni + bmpComputationConstants[bmp]['cm'] + 0.05 * CRV)
+		}
+		else if (bmp == "dwn" || bmp == "br" || bmp == "sb") {
+			return item * (user_cost * CRF_ni + bmpComputationConstants[bmp]['cm'])/(bmpComputationConstants[bmp]['cest_org'] * CRF_ni + bmpComputationConstants[bmp]['cm']);
+		}
+		else {
+			return item * (user_cost * CRF_ni + CRV)/(bmpComputationConstants[bmp]['cest_org'] * CRF_ni + CRV);
 		}
 	}
 	

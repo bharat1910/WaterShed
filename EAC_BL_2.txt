@@ -2,15 +2,20 @@ Watershed			AVG-FLOW [mm/day]	SED-LD [mtons/day]	NIT-LD [kg/day]		PHOS-LD [kg/da
 BigDitch(bd)		0.8700501			7.960113			1019.05				17.49592			10638.6	
 BigLongCreek(blc)	0.9048264			28.80474			1158.829			35.45741	 		12336.2
 
-BMP     Cest_org	Cm		EAC_Par =										    												EAC_sim		
-CR		66.7		0		MO*Cest_cli/Cest_org																				Area_acres * Cest_cli * (0.035*(1.035)^20/(-1+1.035^20)) 
-RG		60.2		0		MO*Cest_cli/Cest_org																				Area_acres * Cest_cli * (0.035*(1.035)^20/(-1+1.035^20)) 
-CC		80.7		0		MO*Cest_cli/Cest_org																				Area_acres * Cest_cli * (0.035*(1.035)^20/(-1+1.035^20)) 
-AA		2564.8		0		MO*Cest_cli/Cest_org																				Area_acres * Cest_cli * (0.035*(1.035)^20/(-1+1.035^20)) 
-CW		2700.000	0.260	MO/(0.035*(1.035)^20/(-1+1.035^20)) - 0.5*Cm*Area_blc)  *  Cest_cli/Cest_org  + 0.5*Cm*Area_blc 	(Cest_cli * 0.5 * Area_acres + 0.5*Cm*Area_blc) * (0.035*(1.035)^20/(-1+1.035^20))
-DWM		161.631		1.200	MO/(0.035*(1.035)^20/(-1+1.035^20)) - 0.5*Cm*Area_blc)  *  Cest_cli/Cest_org  + 0.5*Cm*Area_blc 	(Cest_cli * 0.5 * Area_acres + 0.5*Cm*Area_blc) * (0.035*(1.035)^20/(-1+1.035^20))
-BR		133.000		0.991	MO/(0.035*(1.035)^20/(-1+1.035^20)) - Cm*Area_blc)  *  Cest_cli/Cest_org  + Cm*Area_blc         	(Cest_cli * 0.5 * Area_acres + Cm*Area_blc)     * (0.035*(1.035)^20/(-1+1.035^20))
-SB		125.000		1.200	MO/(0.035*(1.035)^20/(-1+1.035^20)) - 0.5*Cm*Area_blc)  *  Cest_cli/Cest_org  + 0.5*Cm*Area_blc 	(Cest_cli * 0.5 * Area_acres + 0.5*Cm*Area_blc) * (0.035*(1.035)^20/(-1+1.035^20))
-FS		500.000		0		MO*Cest_cli/Cest_org																				Area_acres * Cest_cli * (0.035*(1.035)^20/(-1+1.035^20)) 
+BMP     Cest_org	Cm			EAC_Par =										    												EAC_sim		
+CR		42.3		0			EAC_Pareto_org*Cest_cli/Cest_org																	MO*TPVC_ni*CRF_ni			 
+RG		35.9		0			EAC_Pareto_org*Cest_cli/Cest_org																	MO*TPVC_ni*CRF_ni
+CC		56.4		0			EAC_Pareto_org*Cest_cli/Cest_org																	MO*TPVC_ni*CRF_ni
+AA		2564.8		0			EAC_Pareto_org*(Cest_cli*CRF_ni + CRV)/(Cest_org*CRF_ni+CRV)										MO*(CRF_ni + CRV/Cest_cli)						 
+CW		2700.000	0.105218	EAC_Pareto_org*(0.05*Cest_cli*CRF_ni + CM + 0.05*CRV)/(0.05*Cest_org*CRF_ni + Cm + 0.05*CRV) 		MO*(CRF_ni + 20*CM/Cest_cli + CRV/Cest_cli)
+DWM		161.631		1.200		EAC_Pareto_org*(Cest_cli*CRF_ni + CM)/(Cest_org*CRF_ni+ CM)											MO*(CRF_ni + CM/Cest_cli + CRV/Cest_cli)
+BR		133.000		0.991		EAC_Pareto_org*(Cest_cli*CRF_ni + CM)/(Cest_org*CRF_ni+ CM)       									MO*(CRF_ni + CM/Cest_cli + CRV/Cest_cli)
+SB		140.2		1.200		EAC_Pareto_org*(Cest_cli*CRF_ni + CM)/(Cest_org*CRF_ni+ CM)											MO*(CRF_ni + CM/Cest_cli + CRV/Cest_cli)
+FS		500.000		0			EAC_Pareto_org*(Cest_cli*CRF_ni + CRV)/(Cest_org*CRF_ni+ CRV)										MO*(CRF_ni + CRV/Cest_cli)
 
-
+TPVC_nyr = 14.7098374175206; for n = 1 to 20 and i = 0.035
+CRF_ni (capital recovery factor) = (0.035*(1.035)^20)/(-1+1.035^20); n = 20 and i = 0.035
+WSA (watershed area): WSA_bd = 10638.6 ha; WSA_blc = 12336.2 ha
+HTA (hactre to acre) = 2.471054
+CRV (Cash rent value); CRV_bd = 169.2; CRV_blc = 270.7 ($/acre)
+RL (Revenue loss factor); RL_bd = CRV_bd*HTA*WSA_bd = 4,448,023.52028; RL_blc = CRV_blc*HTA*WSA_blc = 	
