@@ -305,7 +305,7 @@
 	}
 	
 	function getParetoData(waterShed,nutrient,fileName, arrayName){
-		$.post("/getParetoData/"+ waterShed + "/" + nutrient + "/" + fileName,
+		$.post("http://swshydromodel:4567/getParetoData/"+ waterShed + "/" + nutrient + "/" + fileName,
 			{
 			},
 			function(data,status){//callback function for handling response for POST request				
