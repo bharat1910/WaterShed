@@ -164,33 +164,6 @@ public class Server {
 			}
 		});
 		
-
-		
-		/*
-		 * Handle GET request from client.
-		 * Client posts a request to fetch pareto data
-		 */
-		get(new Route("/getParetoData") {
-			@Override
-			public Object handle(Request request, Response response) {
-				String waterShed = request.queryParams("waterShed"); 
-				String nutrientType = request.queryParams("nutrient"); 
-				String fileName = request.queryParams("fileName");
-				
-				// set the response type
-				response.type("text");
-				
-				String pareto_file_name = waterShed + "/" + nutrientType + "/" +fileName;
-				try{
-					return FileUtils.readFileToString(new File(
-							PARETO_DIR + pareto_file_name));
-				}catch (Exception e){
-					//e.printStackTrace();
-					return "";
-				}
-			}				
-		});
-		
 		get(new Route("/getSubbasinArea") {
 			private List<List<Float>> watershedResult(String f) throws IOException
 			{
@@ -566,6 +539,24 @@ public class Server {
 				
 				return output;
 			}
+		});
+		
+		/*
+		 * Handle POST request from client.
+		 * Client posts a request to fetch pareto data
+		 */
+		post(new Route("/getParetoData/:waterShed/:nutrientType/:fileName") {
+			@Override
+			public Object handle(Request request, Response response) {
+				String pareto_file_name = request.params(":waterShed") + "/" + request.params(":nutrientType") + "/" +request.params(":fileName");
+				try{
+					return FileUtils.readFileToString(new File(
+							PARETO_DIR + pareto_file_name));
+				}catch (Exception e){
+					//e.printStackTrace();
+					return "";
+				}
+			}				
 		});		
 		
 		/*
