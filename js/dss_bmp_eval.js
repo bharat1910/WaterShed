@@ -1286,9 +1286,9 @@
 												break;
 											case "6":
 												//nitrate : use pareto optimal data for DM
-												optimal_data_nit = blc_pareto_nit_dm;
+												optimal_data_nit = blc_pareto_nit_dwm;
 												//pho : use pareto optimal data for DM
-												optimal_data_pho = blc_pareto_pho_dm;
+												optimal_data_pho = blc_pareto_pho_dwm;
 												break;
 											case "7":
 												//nitrate : use pareto optimal data for SB
@@ -1906,7 +1906,7 @@
 		else if (bmp == "cw") {
 			return item * (0.05 * user_cost * CRF_ni + bmpComputationConstants[bmp]['cm'] + 0.05 * CRV)/(0.05 * bmpComputationConstants[bmp]['cest_org'] * CRF_ni + bmpComputationConstants[bmp]['cm'] + 0.05 * CRV)
 		}
-		else if (bmp == "dwn" || bmp == "br" || bmp == "sb") {
+		else if (bmp == "dwm" || bmp == "br" || bmp == "sb") {
 			return item * (user_cost * CRF_ni + bmpComputationConstants[bmp]['cm'])/(bmpComputationConstants[bmp]['cest_org'] * CRF_ni + bmpComputationConstants[bmp]['cm']);
 		}
 		else {
@@ -1940,7 +1940,7 @@
 		else if (bmp == "cw") {
 			return cost * (CRF_ni + 20 * bmpComputationConstants[bmp]['cm'] / user_cost + CRV / user_cost)
 		}
-		else if (bmp == "dwn" || bmp == "br" || bmp == "sb") {
+		else if (bmp == "dwm" || bmp == "br" || bmp == "sb") {
 			return cost * (CRF_ni + bmpComputationConstants[bmp]['cm'] / user_cost + CRV / user_cost);
 		}
 		else {
@@ -2074,22 +2074,22 @@
                     }
 	            },
 	            series: [{
-	                name: 'Optimal',
-	                color: 'rgba(0 , 0, 255, 0.9)',
+	                name: 'Pareto Optimal Front (Default Cost)',
+	                color: 'rgb(22 , 6, 232)',
 	                data: dataHOptimalUnmodified
 	    
 	            }, {
-	                name: 'Optimal normalized by user value',
-	                color: '#8B4513',
+	                name: 'Pareto Optimal Front (Client Cost)',
+	                color: 'rgb(228, 108, 10)',
 	                data: dataHOptimalNormalized
 	    
 	            }, {
-	                name: 'Evaluation',
-	                color: 'rgba(0 , 255, 255, 0.9)',
+	                name: 'Simulated Scenario (Default Cost)',
+	                color: 'rgb(6, 189, 232)',
 	                data: dataHEvaluationUnmodified
 	            }, {
-	                name: 'Evaluation based on user value',
-	                color: 'rgba(210, 105, 30, 0.9)',
+	                name: 'Simulated Scenario (Client Cost)',
+	                color: 'rgb(230, 156, 8)',
 	                data: dataHEvaluationNormalized
 	            }]
 	        });
