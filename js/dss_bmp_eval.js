@@ -1304,9 +1304,9 @@
 												break;
 											case "9":
 												//nitrate : use pareto optimal data for PC
-												optimal_data_nit = blc_pareto_nit_pc;
+												optimal_data_nit = blc_pareto_nit_aa;
 												//pho : use pareto optimal data for PC
-												optimal_data_pho = blc_pareto_pho_pc;
+												optimal_data_pho = blc_pareto_pho_aa;
 												break;
 										}
 									}
@@ -1375,9 +1375,9 @@
 												break;
 											case "9":
 												//nitrate : use pareto optimal data for PC
-												optimal_data_nit = bd_pareto_nit_pc;
+												optimal_data_nit = bd_pareto_nit_aa;
 												//pho : use pareto optimal data for PC
-												optimal_data_pho = bd_pareto_pho_pc;
+												optimal_data_pho = bd_pareto_pho_aa;
 												break;
 										}
 									}
@@ -1584,7 +1584,13 @@
 			} else if ($("#bmp_params_cc_type").val() == "2") {
 				bmp = "rg"
 			}
+			return bmp;
 		}
+		
+		if (bmp == "pc") {
+			return "aa";
+		}
+		
 		return bmp;
 	}
 	
@@ -1918,6 +1924,13 @@
 	
 	function getNormalizedOptimal(cost, user_cost, bmp)
 	{
+		var CRV;
+		if ($("#wstype").val() == "bd") {
+			CRV = CRV_bd;
+		} else {
+			CRV = CRV_blc;
+		}
+	
 		if (bmp == "cr" || bmp == "rg" || bmp == "cc") {
 			return cost * TPVC_ni * CRF_ni;
 		}
