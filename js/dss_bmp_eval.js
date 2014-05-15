@@ -1983,12 +1983,6 @@
 	            	borderWidth: 2,
 	            	borderRadius: 25
 	            },
-	            subtitle: {
-            		text: '* cest_org : ' + bmpComputationConstants[bmp]['cest_org'],
-            		align: 'right',
-            		x: -10,
-            		fontSize: '15px'
-        		},
 	            title: {
 	                text: "BMP Evaluation Chart - " + nutrientType + " Reduction",
 	                style: {
@@ -2091,11 +2085,11 @@
 	    
 	            }, {
 	                name: 'Evaluation',
-	                color: 'rgba(210, 105, 30, 0.9)',
+	                color: 'rgba(0 , 255, 255, 0.9)',
 	                data: dataHEvaluationUnmodified
 	            }, {
 	                name: 'Evaluation based on user value',
-	                color: 'rgba(0 , 255, 255, 0.9)',
+	                color: 'rgba(210, 105, 30, 0.9)',
 	                data: dataHEvaluationNormalized
 	            }]
 	        });
