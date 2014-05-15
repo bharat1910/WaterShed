@@ -1970,6 +1970,12 @@
 	            	borderWidth: 2,
 	            	borderRadius: 25
 	            },
+	            subtitle: {
+            		text: '* cest_org : ' + bmpComputationConstants[bmp]['cest_org'],
+            		align: 'right',
+            		x: -10,
+            		fontSize: '15px'
+        		},
 	            title: {
 	                text: "BMP Evaluation Chart - " + nutrientType + " Reduction",
 	                style: {
