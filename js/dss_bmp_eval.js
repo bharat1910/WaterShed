@@ -2091,11 +2091,11 @@
 	    
 	            }, {
 	                name: 'Evaluation',
-	                color: 'rgba(0 , 255, 255, 0.9)',
+	                color: 'rgba(210, 105, 30, 0.9)',
 	                data: dataHEvaluationUnmodified
 	            }, {
 	                name: 'Evaluation based on user value',
-	                color: 'rgba(210, 105, 30, 0.9)',
+	                color: 'rgba(0 , 255, 255, 0.9)',
 	                data: dataHEvaluationNormalized
 	            }]
 	        });
