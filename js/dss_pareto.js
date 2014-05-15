@@ -11,7 +11,7 @@
 	var bd_pareto_nit_dm = new Array();
 	var bd_pareto_nit_sb = new Array();
 	var bd_pareto_nit_nm = new Array();
-	var bd_pareto_nit_pc = new Array();
+	var bd_pareto_nit_aa = new Array();
 	
 	//Arrays for pareto optimal data
 	//<Watershed>_pareto_<nutrientType>_<bmp>
@@ -26,7 +26,7 @@
 	var bd_pareto_pho_dm = new Array();
 	var bd_pareto_pho_sb = new Array();
 	var bd_pareto_pho_nm = new Array();
-	var bd_pareto_pho_pc = new Array();
+	var bd_pareto_pho_aa = new Array();
 	
 	//Arrays for pareto optimal data
 	//<Watershed>_pareto_<nutrientType>_<bmp>
@@ -41,7 +41,7 @@
 	var blc_pareto_nit_dm = new Array();
 	var blc_pareto_nit_sb = new Array();
 	var blc_pareto_nit_nm = new Array();
-	var blc_pareto_nit_pc = new Array();
+	var blc_pareto_nit_aa = new Array();
 	
 	//Arrays for pareto optimal data
 	//<Watershed>_pareto_<nutrientType>_<bmp>
@@ -56,7 +56,7 @@
 	var blc_pareto_pho_dm = new Array();
 	var blc_pareto_pho_sb = new Array();
 	var blc_pareto_pho_nm = new Array();
-	var blc_pareto_pho_pc = new Array();
+	var blc_pareto_pho_aa = new Array();
 	
 	//Load all pareto data for the "watershed X nutrient X BMP" combinations
 	//For instance, bigDitch_nitrate_filterStrip is one scuh combination
@@ -160,8 +160,8 @@
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 			case 9:
-				fileName = fileName + "_PC.txt";
-				paretoArrayName = paretoArrayName + "_pc";
+				fileName = fileName + "_AA.txt";
+				paretoArrayName = paretoArrayName + "_aa";
 				getParetoData(waterShed,nutrient,fileName,paretoArrayName);
 				break;
 		}		
@@ -199,8 +199,8 @@
 			case "bd_pareto_nit_nm":
 				bd_pareto_nit_nm[arrayIndex] = paretoValue;
 				break;
-			case "bd_pareto_nit_pc":
-				bd_pareto_nit_pc[arrayIndex] = paretoValue;
+			case "bd_pareto_nit_aa":
+				bd_pareto_nit_aa[arrayIndex] = paretoValue;
 				break;
 			case "bd_pareto_pho_fs":
 				bd_pareto_pho_fs[arrayIndex] = paretoValue;
@@ -232,8 +232,8 @@
 			case "bd_pareto_pho_nm":
 				bd_pareto_pho_nm[arrayIndex] = paretoValue;
 				break;
-			case "bd_pareto_pho_pc":
-				bd_pareto_pho_pc[arrayIndex] = paretoValue;
+			case "bd_pareto_pho_aa":
+				bd_pareto_pho_aa[arrayIndex] = paretoValue;
 				break;
 			case "blc_pareto_nit_fs":
 				blc_pareto_nit_fs[arrayIndex] = paretoValue;
@@ -265,8 +265,8 @@
 			case "blc_pareto_nit_nm":
 				blc_pareto_nit_nm[arrayIndex] = paretoValue;
 				break;
-			case "blc_pareto_nit_pc":
-				blc_pareto_nit_pc[arrayIndex] = paretoValue;
+			case "blc_pareto_nit_aa":
+				blc_pareto_nit_aa[arrayIndex] = paretoValue;
 				break;
 			case "blc_pareto_pho_fs":
 				blc_pareto_pho_fs[arrayIndex] = paretoValue;
@@ -298,8 +298,8 @@
 			case "blc_pareto_pho_nm":
 				blc_pareto_pho_nm[arrayIndex] = paretoValue;
 				break;
-			case "blc_pareto_pho_pc":
-				blc_pareto_pho_pc[arrayIndex] = paretoValue;
+			case "blc_pareto_pho_aa":
+				blc_pareto_pho_aa[arrayIndex] = paretoValue;
 				break;
 		}
 	}
