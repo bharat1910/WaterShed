@@ -122,7 +122,7 @@
 	}
 	
 	function getConstraints(waterShed,fileName,bmp){
-		$.post("/getConstraints/"+ waterShed + "/" + fileName,
+		$.post("http://swshydromodel:4567/getConstraints/"+ waterShed + "/" + fileName,
 			{
 			},
 			function(data,status){//callback function for handling response for POST request

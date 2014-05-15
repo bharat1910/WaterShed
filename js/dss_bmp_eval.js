@@ -87,7 +87,7 @@
 	
 	function getSubbasinArea()
 	{
-		$.get("/getSubbasinArea", {watershed : "bd"},
+		$.get("http://swshydromodel:4567/getSubbasinArea", {watershed : "bd"},
 		    function(data,status) {
 				subbasinAreaData['bd'] = eval(data);
 				for (var a in subbasinAreaData['bd']) {
@@ -96,7 +96,7 @@
 		    }
 		);
 		
-		$.get("/getSubbasinArea", {watershed : "blc"},
+		$.get("http://swshydromodel:4567/getSubbasinArea", {watershed : "blc"},
 			function(data,status) {
 				subbasinAreaData['blc'] = eval(data);
 				for (var a in subbasinAreaData['blc']) {
@@ -1172,7 +1172,7 @@
 						//get single simulation data
 						document.getElementById("restart").disabled = true;
 						$("#main :input").attr("disabled", true);
-						$.post("/singlerun",
+						$.post("http://swshydromodel:4567/singlerun",
 							{
 								is_single_simulation:"1",//simulation type, 1 implies single simulation
 								wshIndex:ws, //1:BD , 2:BLC
@@ -2263,9 +2263,9 @@
 	function downloadReport(){
 		var ws = $("#wstype").val();
 		var type = $("#reportFileType").val();
-		url = "http://swscypress3:4567/downloadReport?wshIndex="+ws+"&"+"fileType="+type;
+		url = "http://swshydromodel:4567/downloadReport?wshIndex="+ws+"&"+"fileType="+type;
 		
-		$.get("/downloadReport",
+		$.get("http://swshydromodel:4567/downloadReport",
 				{
 					wshIndex:ws, //bd:BD , blc:BLC
 					fileType:type
@@ -2388,7 +2388,7 @@
 	}
 
 	function loadFile() {
-	    reader.open('get', 'getComputationConstants', true); 
+	    reader.open('get', 'http://swshydromodel:4567/getComputationConstants', true); 
 	    reader.onreadystatechange = parseAndLoadContents;
 	    reader.send(null);
 	}

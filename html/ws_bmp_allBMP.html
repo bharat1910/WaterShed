@@ -181,7 +181,7 @@
 						&nbsp;				
 					   <label id="downloadUserDoc" align="left" class="dblue" style="width:15%">Download User Guide</label>
 						&nbsp;				
-					   <label id="showChartData" align="left" class="dblue" onclick="popitup('getLanduseSoilChartData')" style="width:15%;display:none">HRU/Landuse/Soil Chart</label>
+					   <label id="showChartData" align="left" class="dblue" onclick="popitup('http://swshydromodel:4567/getLanduseSoilChartData')" style="width:15%;display:none">HRU/Landuse/Soil Chart</label>
 					   &nbsp;              
                        <label id="downloadReport" align="left" class="dblue" style="width:20%;display:none">Download HRU/Landuse/Soil Report</label>
                        &nbsp;
@@ -425,7 +425,7 @@
 		
 		<div id="popup">
 		  <div id="options">
-		      <select data-placeholder="Select an option ..." id="lss_select" style="width:10%" onchange="popitup('getLanduseSoilChartData')">
+		      <select data-placeholder="Select an option ..." id="lss_select" style="width:10%" onchange="popitup('http://swshydromodel:4567/getLanduseSoilChartData')">
                 <option value="1">Landuse</option>
                 <option value="2">Soil</option>
                 <option value="3">Slope</option>
@@ -600,7 +600,7 @@
 			parameters['profession'] = $("#user_profession").val();
 			parameters['email'] = $("#user_email").val();
 			
-			$.get('updateUserInfo', parameters, function(data) {
+			$.get('http://swshydromodel:4567/updateUserInfo', parameters, function(data) {
 				$("#user_info_popup").dialog("close");
 			});
 		});
