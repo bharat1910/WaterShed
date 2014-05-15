@@ -1918,7 +1918,6 @@
 	
 	function getNormalizedOptimal(cost, user_cost, bmp)
 	{
-		return cost * bmpComputationConstants[bmp]['cest_org'] / user_cost;
 		if (bmp == "cr" || bmp == "rg" || bmp == "cc") {
 			return cost * TPVC_ni * CRF_ni;
 		}
