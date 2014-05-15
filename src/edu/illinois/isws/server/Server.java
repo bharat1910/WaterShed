@@ -30,6 +30,18 @@ public class Server {
 	static int executableToUse = 0;
 	final static int N0_OF_EXECUTABLES = 10; 
 
+	private static void enableCORS(final String origin, final String methods, final String headers)
+	{
+	    before(new Filter() {
+	        @Override
+	        public void handle(Request request, Response response) {
+	            response.header("Access-Control-Allow-Origin", origin);
+	            response.header("Access-Control-Request-Method", methods);
+	            response.header("Access-Control-Allow-Headers", headers);
+	        }
+	    });
+	}
+	
 	public static void main(String[] args) {
 		final String NEW_LINE = System.getProperty("line.separator");
 		final String PARETO_DIR = "paretoData/";
@@ -38,6 +50,8 @@ public class Server {
 		final String SUBBASIN_REDUCTION = "subbasin_reduction.txt";
 		final String DSS_HOME_PAGE = "html/ws_bmp_allBMP.html";
 		final String JS_DIR = "js/";
+		
+		enableCORS("*", "*", "*");
 		
 		/* 
 		 * Home page for the Decision Support System
