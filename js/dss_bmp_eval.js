@@ -1916,6 +1916,26 @@
 	    });
 	};
 	
+	function getNormalizedOptimal(cost, user_cost, bmp)
+	{
+		return cost * bmpComputationConstants[bmp]['cest_org'] / user_cost;
+		if (bmp == "cr" || bmp == "rg" || bmp == "cc") {
+			return cost * TPVC_ni * CRF_ni;
+		}
+		else if (bmp == "aa") {
+			return cost * (CRF_ni + CRV / user_cost);
+		} 
+		else if (bmp == "cw") {
+			return cost * (CRF_ni + 20 * bmpComputationConstants[bmp]['cm'] / user_cost + CRV / user_cost)
+		}
+		else if (bmp == "dwn" || bmp == "br" || bmp == "sb") {
+			return cost * (CRF_ni + bmpComputationConstants[bmp]['cm'] / user_cost + CRV / user_cost);
+		}
+		else {
+			return cost * (CRF_ni + CRV / user_cost)
+		}
+	}
+	
 	function plotHighChart(dataHOptimal, dataHEvaluation, nutrientType, user_cost)
 	{
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
@@ -1933,7 +1953,7 @@
 		var dataHOptimalNormalized = prepareUserNormalizedOptimal(dataHOptimal, user_cost, bmp, area, watershedIndex);
 		
 		var dataHEvaluationNormalized = new Array();
-		var temp = {x : dataHEvaluation[0][0], y : dataHEvaluation[0][1] * bmpComputationConstants[bmp]['cest_org'] / user_cost, marker : {radius : 6}};
+		var temp = {x : dataHEvaluation[0][0], y : getNormalizedOptimal(dataHEvaluation[0][1], user_cost, bmp), marker : {radius : 6}};
 		dataHEvaluationNormalized.push(temp);
 		
 		var dataHEvaluationUnmodified = new Array();
