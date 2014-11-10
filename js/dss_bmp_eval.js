@@ -1569,7 +1569,10 @@
 	
 	function computeUserSelectedCost(output, bmp, watershedIndex)
 	{
-		if (bmp == "cr" || bmp == "rg" || bmp == "cc" || bmp == "aa" || bmp == "fs") {
+		if (bmp == "nm") {
+			return 0.0;
+		}
+		else if (bmp == "cr" || bmp == "rg" || bmp == "cc" || bmp == "aa" || bmp == "fs") {
 			return output * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
 		} else {
 			return (output * 0.5 + 0.5 * bmpComputationConstants[bmp]['cm'] * waterShedComputationConstants[watershedIndex]['area']) * (0.035 * Math.pow(1.035, 20) / (-1 + Math.pow(1.035, 20)));
@@ -1952,6 +1955,18 @@
 	{
 		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
 		var bmp = resolveBMP(list[list.length - 2].toLowerCase());
+		
+		if (bmp == "nm") {
+			if ($("#wstype").val() == "bd") {
+				$("#bd_nm_table").show();
+			} else {
+				$("#blc_nm_table").show();
+			}
+			return;
+		} else {
+			$("#bd_nm_table").hide();
+			$("#blc_nm_table").hide();
+		}
 		
 		var watershedIndex;
 		if ($("#wstype").val() == "bd") {
