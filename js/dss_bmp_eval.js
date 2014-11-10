@@ -2136,6 +2136,14 @@
 		
 		bmpParamDisplayOff();
 		
+		var list = $("#bmp option:selected").text().replace(/\(|\)/g, ',').split(',');
+		var bmp = resolveBMP(list[list.length - 2].toLowerCase());
+		
+		
+		if (bmp != 'nm') {
+			$('.bmp_params_default_cost').val(bmpComputationConstants[bmp]['cest_org']);
+		}
+		
 		if(document.getElementById("bmp").value == "default"){
 			return;
 		}
