@@ -66,7 +66,7 @@
 	bmp_map[3] = "Constructed Wetland (CW)";
 	bmp_map[4] = "Bioreactors (BR)";
 	bmp_map[5] = "Crop Cover (CC)";
-	bmp_map[6] = "Drainage Water Management (DM)";
+	bmp_map[6] = "Drainage Water Management (DWM)";
 	bmp_map[7] = "Saturated Buffer (SB)";
 	bmp_map[8] = "Nutrient Management (NM)";
 	bmp_map[9] = "Perennial Crops (PC)";
@@ -1357,9 +1357,9 @@
 												break;
 											case "6":
 												//nitrate : use pareto optimal data for DM
-												optimal_data_nit = bd_pareto_nit_dm;
+												optimal_data_nit = bd_pareto_nit_dwm;
 												//pho : use pareto optimal data for DM
-												optimal_data_pho = bd_pareto_pho_dm;
+												optimal_data_pho = bd_pareto_pho_dwm;
 												break;
 											case "7":
 												//nitrate : use pareto optimal data for SB
