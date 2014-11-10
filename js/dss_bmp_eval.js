@@ -1481,7 +1481,7 @@
 									}
 									
 									//draw the consolidated results table
-									drawTable(single_simu_bmp);
+									drawTable(single_simu_bmp, temp_cost);
 									
 									//draw the chart for nitrate
 									drawChart(optimal_pol_red_nit,optimal_cost_nit,single_simu_result[3],single_simu_result[8],temp_cost,"Nitrate",single_simu_bmp,supplementaryData);
@@ -1598,7 +1598,7 @@
 	}
 	
 	//Display single simulation results in a table
-	function drawTable(bmp_id){
+	function drawTable(bmp_id, user_cost){
 		
 		var watershedIndex;
 		if ($("#wstype").val() == "bd") {
@@ -1651,7 +1651,7 @@
     			'<td align="center">n/a</td>' +
     			'<td align="center">n/a</td>' +
     			'<td align="center">n/a</td>' +
-    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], bmp, watershedIndex).toFixed(4) + '</td></tr>');
+    			'<td align="center">' +	getNormalizedOptimal(single_simu_result[8], user_cost, bmp).toFixed(4) + '</td></tr>');
     	} else {
     			$('#supplementary_information tr:last').after('<tr><td align="center">' + 'Scenario Simulated' + '</td>' +
     			'<td align="center">' + areaSimulated.toFixed(4) + '</td>' +
@@ -1661,7 +1661,7 @@
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['phos-ld'] - single_simu_result[4]) / waterShedComputationConstants[watershedIndex]['phos-ld'] * 100).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['sed-ld'] * 100).toFixed(4) + '</td>' +
-    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], bmp, watershedIndex).toFixed(4) + '</td></tr>');
+    			'<td align="center">' +	getNormalizedOptimal(single_simu_result[8], user_cost, bmp).toFixed(4) + '</td></tr>');
     	}
 		$('#supplementary_information').show();
 	}
@@ -1996,7 +1996,7 @@
 		dataHEvaluationNormalized.push(temp);
 		
 		var dataHEvaluationUnmodified = new Array();
-		temp = {x : dataHEvaluation[0][0], y : dataHEvaluation[0][1], marker : {radius : 6}};
+		temp = {x : dataHEvaluation[0][0], y : getNormalizedOptimal(dataHEvaluation[0][1],  bmpComputationConstants[bmp]['cest_org'], bmp), marker : {radius : 6}};
 		dataHEvaluationUnmodified.push(temp);
 		
 		$('#bmp_chart_temp').show();

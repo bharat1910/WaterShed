@@ -9,7 +9,7 @@ CC		56.4		0			EAC_Pareto_org*Cest_cli/Cest_org																	MO*TPVC_ni*CRF_ni
 AA		2564.8		0			EAC_Pareto_org*(Cest_cli*CRF_ni + CRV)/(Cest_org*CRF_ni+CRV)										MO*(CRF_ni + CRV/Cest_cli)						 
 CW		2700.000	0.105218	EAC_Pareto_org*(0.05*Cest_cli*CRF_ni + CM + 0.05*CRV)/(0.05*Cest_org*CRF_ni + Cm + 0.05*CRV) 		MO*(CRF_ni + 20*CM/Cest_cli + CRV/Cest_cli)
 DWM		161.631		1.200		EAC_Pareto_org*(Cest_cli*CRF_ni + CM)/(Cest_org*CRF_ni+ CM)											MO*(CRF_ni + CM/Cest_cli + CRV/Cest_cli)
-BR		133.000		0.991		EAC_Pareto_org*(Cest_cli*CRF_ni + CM)/(Cest_org*CRF_ni+ CM)       									MO*(CRF_ni + CM/Cest_cli + CRV/Cest_cli)
+BR		133.000		0.991		EAC_Pareto_org*(Cest_cli*CRF_ni + CM)/(Cest_org*CRF_ni+ CM)       									2*MO*(CRF_ni + CM/Cest_cli + CRV/Cest_cli)
 SB		140.2		1.200		EAC_Pareto_org*(Cest_cli*CRF_ni + CM)/(Cest_org*CRF_ni+ CM)											MO*(CRF_ni + CM/Cest_cli + CRV/Cest_cli)
 FS		500.000		0			EAC_Pareto_org*(Cest_cli*CRF_ni + CRV)/(Cest_org*CRF_ni+ CRV)										MO*(CRF_ni + CRV/Cest_cli)
 
