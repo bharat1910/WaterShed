@@ -479,30 +479,13 @@
 				constraintArray = blc_hru_const_sb;
 				break;
 			}	
+		}		
+		
+		for (var i=0; i<constraintArray.length; i++) {
+			constraintArray[i] = parseInt(constraintArray[i]);
 		}
-		//select which constraint array to choose ENDS
 		
-		/*If the bmp does not have any constraints
-		 * then just return 
-		 */		
-		if(constraintArray == "") return "";
-		
-		//check if the HRUs are in the constraint array
-		//collect the restricted HRUs
-		$("#hru_info_temp_select option:selected").each(function() {
-			var id = $(this).val();
-			for(j=0; j<constraintArray.length; j++){
-				if(parseInt(id) == parseInt(constraintArray[j])){
-					$(this).attr('selected', false);
-					restrictedHRUs = restrictedHRUs + "," + id;
-					break;
-				}						
-			}
-		});
-		
-		$("#hru_info_temp_select").trigger("chosen:updated");		
-		
-		return restrictedHRUs;
+		return constraintArray;
 	}
 	
 	function assignBMP(){
@@ -2167,6 +2150,17 @@
 		else if(document.getElementById("bmp").value == "7"){
 			document.getElementById("bmp_params_sb").style.display="block";
 		}
+		
+		constraintArray = checkHRUBMPConstraints();
+		
+		$("#hru_info_temp_select option").each(function() {
+			var val = parseInt($(this).val());
+			if (constraintArray.indexOf(val) != -1) {
+				$(this).remove();
+			}
+		});
+		
+		$("#hru_info_temp_select").trigger("chosen:updated")
 	}
 	
 	function addProgressBar(){
