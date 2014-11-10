@@ -1994,7 +1994,7 @@
 	            xAxis: {
 	                title: {
 	                    enabled: true,
-	                    text: nutrientType +' Reduction (%)',
+	                    text: nutrientType +'-N Reduction (%)',
 	                    style: {
 	                    	fontSize : '20px'
 	                    }
@@ -2003,7 +2003,7 @@
 	            },
 	            yAxis: {
 	                title: {
-	                    text: 'Equal Amount Cost (EAC) [$/yr]',
+	                    text: 'BMP Equal Amount Cost (EAC) [$/yr]',
 	                    style: {
 	                    	fontSize : '20px'
 	                    }
