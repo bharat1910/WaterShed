@@ -1642,7 +1642,18 @@
     		areaSimulated = areaSimulated / areaBlc * 100;
     	}
     	
-		$('#supplementary_information tr:last').after('<tr><td align="center">' + 'Scenario Simulated' + '</td>' +
+    	if (bmp == "br" || bmp == "sb" || bmp == "dwm") {
+    			$('#supplementary_information tr:last').after('<tr><td align="center">' + 'Scenario Simulated' + '</td>' +
+    			'<td align="center">' + areaSimulated.toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
+    			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(4) + '</td>' +
+    			'<td align="center">n/a</td>' +
+    			'<td align="center">n/a</td>' +
+    			'<td align="center">n/a</td>' +
+    			'<td align="center">n/a</td>' +
+    			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], bmp, watershedIndex).toFixed(4) + '</td></tr>');
+    	} else {
+    			$('#supplementary_information tr:last').after('<tr><td align="center">' + 'Scenario Simulated' + '</td>' +
     			'<td align="center">' + areaSimulated.toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['nit-ld'] - single_simu_result[2]) / waterShedComputationConstants[watershedIndex]['nit-ld'] * 100).toFixed(4) + '</td>' +
@@ -1651,6 +1662,7 @@
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['area'] * 365).toFixed(4) + '</td>' +
     			'<td align="center">' + ((waterShedComputationConstants[watershedIndex]['sed-ld'] - single_simu_result[0]) / waterShedComputationConstants[watershedIndex]['sed-ld'] * 100).toFixed(4) + '</td>' +
     			'<td align="center">' +	computeUserSelectedCost(single_simu_result[8], bmp, watershedIndex).toFixed(4) + '</td></tr>');
+    	}
 		$('#supplementary_information').show();
 	}
 	
