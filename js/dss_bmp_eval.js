@@ -2003,7 +2003,7 @@
 	            },
 	            yAxis: {
 	                title: {
-	                    text: 'BMP Cost (USD)',
+	                    text: 'Equal Amount Cost (EAC) [$/yr]',
 	                    style: {
 	                    	fontSize : '20px'
 	                    }
