@@ -519,14 +519,6 @@
 		
 		if(! verifyBMPParams(document.getElementById("bmp").options[document.getElementById("bmp").selectedIndex].value)) return;
 		
-		var restrictHRU = checkHRUBMPConstraints();
-		if(restrictHRU != ""){
-			$("#info_label").empty().append($("#bmp option:selected").text() + " cannot be applied in the HRUs: "+ restrictHRU + " .So, they have been unselected.").show(1000);
-			if(! confirm("Do you want to assign BMPs for the remaining selected HRUs ?")){
-				return;
-			}
-		}
-		
 		area_fraction = 0;
 		$("#hru_info_temp_select option:selected").each(function() {
 			$(this).attr('bmp', $("#bmp").val());
